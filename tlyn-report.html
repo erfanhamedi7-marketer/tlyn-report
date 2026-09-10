@@ -278,11 +278,11 @@ footer ul{ margin:0; padding:0; list-style:none; display:flex; flex-direction:co
       </div>
       <div class="insight-card pos">
         <span class="tag">جایگاه رقابتی</span>
-        <p>طلاین در وب با نرخ کلیک <b>۱.۴۹٪</b> تقریباً <b>سه‌برابر</b> نزدیک‌ترین رقیب طلای دیجیتال (ملی‌گلد ۰.۴۹٪) عمل می‌کند.</p>
+        <p>طلاین در وب با نرخ کلیک <b>۱.۴۹٪</b> نزدیک به <b>۵.۴ برابر</b> میانگین صنعت طلای دیجیتال (۰.۲۸٪) عمل می‌کند.</p>
       </div>
       <div class="insight-card neg">
         <span class="tag">نقطهٔ بهبود</span>
-        <p>با وجود بهترین CTR وب، نرخ تبدیل سشن‌به‌ثبت‌نام طلاین (<b>۰.۶۷٪</b>) از دو رقیب کوچک‌تر (Tochal ۳.۰۹٪ و ملی‌گلد ۲.۰۶٪) پایین‌تر است.</p>
+        <p>با وجود بهترین CTR وب، نرخ تبدیل سشن‌به‌ثبت‌نام طلاین (<b>۰.۶۷٪</b>) حدود یک‌سوم میانگین صنعت (۱.۸۹٪) است.</p>
       </div>
     </div>
   </div>
@@ -421,80 +421,47 @@ footer ul{ margin:0; padding:0; list-style:none; display:flex; flex-direction:co
       <div class="section-num">۲</div>
       <h2 class="section-title">مقایسهٔ رقابتی با بازار</h2>
     </div>
-    <p class="section-desc">جایگاه طلاین در برابر سایر پلتفرم‌های خرید طلای دیجیتال، بر پایهٔ دادهٔ بنچمارک همان بازهٔ ۱ مرداد تا ۱۵ شهریور؛ به‌همراه نگاهی به صرافی‌های ارز دیجیتال و بانک‌های دیجیتال به‌عنوان زمینهٔ گسترده‌تر بازار.</p>
+    <p class="section-desc">جایگاه طلاین در برابر میانگین صنعت طلای دیجیتال (اپلیکیشن و وب)، بر پایهٔ دادهٔ بنچمارک همان بازهٔ ۱ مرداد تا ۱۵ شهریور. تمرکز این بخش صرفاً بر پلتفرم‌های خرید طلای دیجیتال است؛ رقبا به‌صورت مجزا نام‌گذاری نشده‌اند و به‌جای آن میانگین صنعت گزارش می‌شود.</p>
 
-    <!-- 2.1 App gold -->
+    <!-- 2.1 App gold funnel vs industry -->
     <div class="subhead">
       <span class="chip app">اپلیکیشن</span>
-      <h3>۲.۱ طلاین در برابر رقبای طلای دیجیتال</h3>
-      <p class="note">۷ رقیب ردیابی‌شده در این بازه</p>
+      <h3>۲.۱ قیف تبدیل: طلاین در برابر میانگین صنعت</h3>
+      <p class="note">میانگین ۶ رقیب طلای دیجیتال ردیابی‌شده در اپ</p>
     </div>
-    <div class="grid-2 even">
-      <div class="panel">
-        <div class="panel-title"><h4>نرخ کلیک (CTR)</h4></div>
-        <div class="chart-box"><canvas id="chartGoldAppCtr"></canvas></div>
-      </div>
-      <div class="panel">
-        <div class="panel-title"><h4>نرخ نصب از کلیک</h4></div>
-        <div class="chart-box"><canvas id="chartGoldAppInstall"></canvas></div>
-      </div>
+    <div class="panel">
+      <div class="panel-title"><h4>نرخ‌های قیف تبدیل — اپلیکیشن</h4><span class="legend-note">CTR ← نرخ نصب ← نرخ ثبت‌نام ← نرخ KYC</span></div>
+      <div class="chart-box tall"><canvas id="chartGoldAppFunnelCmp"></canvas></div>
     </div>
     <div class="table-wrap" style="margin-top:20px;">
       <table>
-        <thead><tr>
-          <th>پلتفرم</th><th class="num">نمایش</th><th class="num">کلیک</th><th class="num">CTR</th>
-          <th class="num">نصب</th><th class="num">نرخ نصب</th><th class="num">ثبت‌نام</th><th class="num">KYC/ثبت‌نام</th>
-        </tr></thead>
-        <tbody id="tbl-gold-app"></tbody>
+        <thead><tr><th>معیار قیف</th><th class="num">طلاین</th><th class="num">میانگین صنعت</th><th class="num">نسبت به صنعت</th></tr></thead>
+        <tbody id="tbl-gold-app-cmp"></tbody>
       </table>
     </div>
-    <p class="footnote">* برخی رقبا حجم نمایش/کلیک بسیار کمی دارند (نمونهٔ کوچک)؛ مقایسهٔ نرخ‌ها در این موارد باید با احتیاط خوانده شود. نسبت KYC به ثبت‌نام بالای ۱۰۰٪ در برخی سطرها به‌دلیل عدم هم‌گروه‌بودن ثبت‌نام و KYC در بازهٔ زمانی گزارش (اثر دنباله/لگ) رخ می‌دهد.</p>
+    <p class="footnote">* میانگین صنعت از رقبای طلای دیجیتال ردیابی‌شده (بدون طلاین) محاسبه شده؛ هرجا رقیبی یک مرحله از قیف را گزارش نکرده بود، آن رقیب از میانگین همان مرحله کنار گذاشته شد — که معادل جایگزینی آن با میانگین سایر رقباست. نسبت KYC به ثبت‌نام بالای ۱۰۰٪ به‌دلیل عدم هم‌گروه‌بودن ثبت‌نام و KYC در بازهٔ گزارش (اثر دنباله/لگ) است و در سطح صنعت هم دیده می‌شود، نه فقط طلاین.</p>
 
-    <!-- 2.2 Web gold -->
+    <!-- 2.2 Web gold funnel vs industry -->
     <div class="subhead" style="margin-top:60px;">
       <span class="chip web">وب</span>
-      <h3>۲.۲ طلاین در برابر رقبای طلای دیجیتال</h3>
-      <p class="note">۸ رقیب ردیابی‌شده در این بازه</p>
+      <h3>۲.۲ قیف تبدیل: طلاین در برابر میانگین صنعت</h3>
+      <p class="note">میانگین ۳ رقیب طلای دیجیتال دارای دادهٔ فعال در وب</p>
     </div>
-    <div class="grid-2 even">
-      <div class="panel">
-        <div class="panel-title"><h4>نرخ کلیک (CTR)</h4></div>
-        <div class="chart-box"><canvas id="chartGoldWebCtr"></canvas></div>
-      </div>
-      <div class="panel">
-        <div class="panel-title"><h4>نرخ ثبت‌نام از سشن در برابر نرخ KYC از ثبت‌نام</h4></div>
-        <div class="chart-box"><canvas id="chartGoldWebFunnelCompare"></canvas></div>
-      </div>
+    <div class="panel">
+      <div class="panel-title"><h4>نرخ‌های قیف تبدیل — وب</h4><span class="legend-note">CTR ← نرخ سشن ← نرخ ثبت‌نام ← نرخ KYC</span></div>
+      <div class="chart-box tall"><canvas id="chartGoldWebFunnelCmp"></canvas></div>
     </div>
     <div class="table-wrap" style="margin-top:20px;">
       <table>
-        <thead><tr>
-          <th>پلتفرم</th><th class="num">نمایش</th><th class="num">کلیک</th><th class="num">CTR</th>
-          <th class="num">سشن</th><th class="num">ثبت‌نام</th><th class="num">نرخ ثبت‌نام</th><th class="num">KYC/ثبت‌نام</th>
-        </tr></thead>
-        <tbody id="tbl-gold-web"></tbody>
+        <thead><tr><th>معیار قیف</th><th class="num">طلاین</th><th class="num">میانگین صنعت</th><th class="num">نسبت به صنعت</th></tr></thead>
+        <tbody id="tbl-gold-web-cmp"></tbody>
       </table>
     </div>
+    <p class="footnote">* از ۸ رقیب ردیابی‌شدهٔ وب، ۴ رقیب در این بازه دادهٔ فعالی ثبت نکرده‌اند یا کمپین‌شان متوقف بوده و از محاسبهٔ میانگین کنار گذاشته شدند؛ میانگین صنعت بر پایهٔ ۳ رقیب دارای دادهٔ فعال محاسبه شده است.</p>
 
-    <!-- 2.3 broader market -->
+    <!-- 2.3 historical -->
     <div class="subhead" style="margin-top:60px;">
-      <h3>۲.۳ زمینهٔ گسترده‌تر بازار — صرافی‌ها و بانک‌های دیجیتال</h3>
-      <p class="note">فقط برای مرجعیت؛ این پلتفرم‌ها هم‌صنف مستقیم طلا نیستند</p>
-    </div>
-    <div class="grid-2">
-      <div class="panel">
-        <div class="panel-title"><h4>CTR صرافی‌های ارز دیجیتال (اپ) در برابر طلاین</h4></div>
-        <div class="chart-box"><canvas id="chartExchApp"></canvas></div>
-      </div>
-      <div class="panel">
-        <div class="panel-title"><h4>CTR بانک‌های دیجیتال (اپ) در برابر طلاین</h4></div>
-        <div class="chart-box"><canvas id="chartBankApp"></canvas></div>
-      </div>
-    </div>
-
-    <!-- 2.4 historical -->
-    <div class="subhead" style="margin-top:60px;">
-      <h3>۲.۴ اثر رویدادهای اخیر بر بازار — پیش و پس از جنگ</h3>
+      <h3>۲.۳ اثر رویدادهای اخیر بر بازار — پیش و پس از جنگ</h3>
       <p class="note">دادهٔ تاریخی مرجع (بازهٔ متفاوت از گزارش اصلی): قبل از جنگ (۲۲ خرداد تا ۵ تیر) و بعد از جنگ (۵ تا ۲۵ تیر)</p>
     </div>
     <div class="grid-2 even">
@@ -503,33 +470,33 @@ footer ul{ margin:0; padding:0; list-style:none; display:flex; flex-direction:co
         <div class="chart-box"><canvas id="chartWarTlyn"></canvas></div>
       </div>
       <div class="panel">
-        <div class="panel-title"><h4>مقایسهٔ بازار: تغییر CTR پیش/پس از جنگ (اپ)</h4></div>
+        <div class="panel-title"><h4>میانگین صنعت: تغییر CTR پیش/پس از جنگ (اپ)</h4></div>
         <div class="chart-box"><canvas id="chartWarMarket"></canvas></div>
       </div>
     </div>
-    <p class="footnote">دادهٔ این بخش از بازهٔ زمانی متفاوتی نسبت به گزارش عملکرد اصلی (بخش ۱) گرفته شده و صرفاً برای نمایش الگوی کلان بازار در واکنش به یک رویداد بیرونی آورده شده است؛ برچسب‌های «قبل/بعد از جنگ» عیناً از فایل دادهٔ منبع گرفته شده‌اند.</p>
+    <p class="footnote">دادهٔ این بخش از بازهٔ زمانی متفاوتی نسبت به گزارش عملکرد اصلی (بخش ۱) گرفته شده و صرفاً برای نمایش الگوی کلان بازار در واکنش به یک رویداد بیرونی آورده شده است؛ برچسب‌های «قبل/بعد از جنگ» عیناً از فایل دادهٔ منبع گرفته شده‌اند. میانگین صنعت «بعد از جنگ» تنها بر پایهٔ یک رقیب دارای داده در این بازهٔ تاریخی محاسبه شده و باید با احتیاط خوانده شود.</p>
 
-    <div class="subhead"><h3>۲.۵ جمع‌بندی رقابتی</h3></div>
+    <div class="subhead"><h3>۲.۴ جمع‌بندی رقابتی</h3></div>
     <div class="insights">
       <div class="insight-card pos">
-        <span class="tag">رهبری حجمی در اپ</span>
-        <p>با وجود نمایش کمتر از برخی رقبا (Tala Sea)، طلاین با <b>۸۵٬۲۴۶ نصب</b> بیش از سه‌برابر نزدیک‌ترین رقیب ردیابی‌شده (Tala Sea با ۲۷٬۲۶۵ نصب) حجم نصب دارد.</p>
+        <span class="tag">برتری CTR در اپ</span>
+        <p>CTR اپلیکیشن طلاین (<b>۱۲.۳۲٪</b>) حدود <b>۲ برابر</b> میانگین صنعت (۶.۰۸٪) است.</p>
       </div>
       <div class="insight-card pos">
         <span class="tag">برتری CTR در وب</span>
-        <p>CTR وب طلاین (<b>۱.۴۹٪</b>) به‌وضوح بالاترین رقم در میان پلتفرم‌های طلای دیجیتال ردیابی‌شده است — نزدیک به سه‌برابر ملی‌گلد وب.</p>
+        <p>CTR وب طلاین (<b>۱.۴۹٪</b>) نزدیک به <b>۵.۴ برابر</b> میانگین صنعت (۰.۲۸٪) است — بزرگ‌ترین شکاف مثبت طلاین با صنعت.</p>
       </div>
       <div class="insight-card">
-        <span class="tag">قدرت KYC وب</span>
-        <p>از میان کاربرانی که در وب ثبت‌نام می‌کنند، <b>۶۳٪</b> در طلاین به KYC می‌رسند — بالاترین نرخ در میان رقبای طلا (Tochal ۶۰٪، ملی‌گلد ۴۹.۹٪).</p>
+        <span class="tag">قدرت KYC نسبت به صنعت</span>
+        <p>نرخ KYC از ثبت‌نام طلاین هم در اپ (۱۱۵.۸٪) و هم در وب (۶۳٪) بالاتر از میانگین صنعت (به‌ترتیب ۹۴٪ و ۴۷.۷٪) است.</p>
       </div>
       <div class="insight-card neg">
-        <span class="tag">فرصت بهبود ثبت‌نام وب</span>
-        <p>نرخ ثبت‌نام از سشن در وب طلاین (۰.۶۷٪) پایین‌تر از دو رقیب کوچک‌تر است؛ نشانه‌ای از فرصت بهینه‌سازی مسیر بعد از سشن.</p>
+        <span class="tag">فرصت بهبود ثبت‌نام</span>
+        <p>نرخ ثبت‌نام طلاین در هر دو پلتفرم از میانگین صنعت پایین‌تر است — در اپ حدود نصف صنعت (۱۱.۸٪ در برابر ۲۳.۵٪) و در وب حدود یک‌سوم صنعت (۰.۶۷٪ در برابر ۱.۸۹٪)؛ روشن‌ترین فرصت بهینه‌سازی مسیر «نصب/سشن تا ثبت‌نام».</p>
       </div>
       <div class="insight-card">
         <span class="tag">الگوی کلان بازار پس از جنگ</span>
-        <p>هم طلاین و هم Talasea پس از رویداد، رشد چشمگیر نمایش (طلاین ۲.۸x، Talasea ۵.۹x) اما افت CTR را تجربه کردند — الگویی سراسر بازار، نه اختصاصی طلاین.</p>
+        <p>هم طلاین و هم میانگین صنعت پس از رویداد، رشد چشمگیر نمایش (طلاین ۲.۸x) اما افت CTR را تجربه کردند — الگویی سراسر بازار، نه اختصاصی طلاین؛ افت نسبی CTR طلاین (۳۱٪-) بیشتر از صنعت (۱۷٪-) بوده است.</p>
       </div>
     </div>
   </div>
@@ -780,120 +747,62 @@ wc.forEach(c=>{
 });
 
 
-/* ================= PART 2 — COMPETITIVE BENCHMARK ================= */
-function barColorsFixed(names){
-  let i=0;
-  return names.map(n => n==='Tlyn' ? GOLD : MUTED_BARS[(i++)%MUTED_BARS.length]);
+/* ================= PART 2 — COMPETITIVE BENCHMARK (gold only, anonymized) ================= */
+/* Industry average = simple mean across gold competitors (Tlyn excluded) for each funnel
+   step separately; a competitor missing a given step is left out of that step's average,
+   which is mathematically equivalent to imputing it with the peer average. A competitor
+   with no usable data at all for a vertical (e.g. a paused web campaign) is excluded
+   entirely rather than fabricated. */
+function industryAvg(rows, field){
+  const vals = rows.filter(r=>r.name!=='Tlyn' && typeof r[field]==='number' && !Number.isNaN(r[field])).map(r=>r[field]);
+  if(!vals.length) return null;
+  return vals.reduce((a,b)=>a+b,0)/vals.length;
 }
-function borderColorsFixed(names){
-  let i=0;
-  return names.map(n => n==='Tlyn' ? GOLD_INK : MUTED_BARS[Math.min((i++), MUTED_BARS.length-1)]);
+function buildFunnelCmp(canvasId, tblId, steps, tlynRow, competitorRows){
+  const labels = steps.map(s=>s.label);
+  const tlynVals = steps.map(s=>tlynRow[s.field]*100);
+  const industryVals = steps.map(s=>industryAvg(competitorRows, s.field)*100);
+  new Chart(document.getElementById(canvasId), {
+    type:'bar',
+    data:{ labels, datasets:[
+      { label:'طلاین', data: tlynVals, backgroundColor:'rgba(255,199,44,0.75)', borderColor:GOLD_INK, borderWidth:1, borderRadius:3 },
+      { label:'میانگین صنعت', data: industryVals, backgroundColor:'#DAD1E8', borderColor:'#9A7EBB', borderWidth:1, borderRadius:3 }
+    ]},
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      scales:{ x:{ grid:{display:false}, ticks:baseTicks }, y:{ grid:baseGrid, ticks:{...baseTicks, callback:v=>faCompact(v)+'٪'} } },
+      plugins:{ legend:{position:'top', align:'end'}, tooltip:{ callbacks:{ label:c=>c.dataset.label+': '+faPct(c.parsed.y/100,2) } } }
+    }
+  });
+  const tbl = document.getElementById(tblId);
+  steps.forEach((s,i)=>{
+    const t = tlynVals[i], ind = industryVals[i];
+    const ratio = ind ? t/ind : null;
+    tbl.insertAdjacentHTML('beforeend', `<tr>
+      <td>${s.label}</td><td class="num">${faPct(t/100,2)}</td><td class="num">${faPct(ind/100,2)}</td>
+      <td class="num">${ratio?faNum(ratio,2)+'×':'—'}</td></tr>`);
+  });
 }
 
-/* ---- 2.1 gold app ---- */
-const gApp = BENCH.current.gold_app.filter(x=>x.ctr!==null).slice().sort((a,b)=>b.ctr-a.ctr);
-new Chart(document.getElementById('chartGoldAppCtr'), {
-  type:'bar',
-  data:{ labels: gApp.map(x=>x.name), datasets:[{ data: gApp.map(x=>x.ctr*100), backgroundColor: barColorsFixed(gApp.map(x=>x.name)), borderColor: borderColorsFixed(gApp.map(x=>x.name)), borderWidth:1, borderRadius:4 }] },
-  options:{
-    responsive:true, maintainAspectRatio:false,
-    scales:{ x:{ grid:{display:false}, ticks:{...baseTicks, font:{size:10.5}} }, y:{ grid:baseGrid, ticks:{...baseTicks, callback:v=>v+'٪'} } },
-    plugins:{ legend:{display:false}, tooltip:{ callbacks:{ label:c=>'CTR: '+faPct(c.parsed.y/100,2) } } }
-  }
-});
+/* ---- 2.1 gold app funnel ---- */
+const tlynGoldApp = BENCH.current.gold_app.find(x=>x.name==='Tlyn');
+buildFunnelCmp('chartGoldAppFunnelCmp', 'tbl-gold-app-cmp', [
+  {label:'CTR', field:'ctr'},
+  {label:'نرخ نصب از کلیک', field:'install_rate'},
+  {label:'نرخ ثبت‌نام از نصب', field:'register_rate'},
+  {label:'نرخ KYC از ثبت‌نام', field:'kyc_rate'}
+], tlynGoldApp, BENCH.current.gold_app);
 
-const gAppIr = BENCH.current.gold_app.filter(x=>x.install_rate!==null).slice().sort((a,b)=>b.install_rate-a.install_rate);
-new Chart(document.getElementById('chartGoldAppInstall'), {
-  type:'bar',
-  data:{ labels: gAppIr.map(x=>x.name), datasets:[{ data: gAppIr.map(x=>x.install_rate*100), backgroundColor: barColorsFixed(gAppIr.map(x=>x.name)), borderColor: borderColorsFixed(gAppIr.map(x=>x.name)), borderWidth:1, borderRadius:4 }] },
-  options:{
-    responsive:true, maintainAspectRatio:false,
-    scales:{ x:{ grid:{display:false}, ticks:{...baseTicks, font:{size:10.5}} }, y:{ grid:baseGrid, ticks:{...baseTicks, callback:v=>v+'٪'} } },
-    plugins:{ legend:{display:false}, tooltip:{ callbacks:{ label:c=>'نرخ نصب: '+faPct(c.parsed.y/100,2) } } }
-  }
-});
+/* ---- 2.2 gold web funnel ---- */
+const tlynGoldWeb = BENCH.current.gold_web.find(x=>x.name==='Tlyn');
+buildFunnelCmp('chartGoldWebFunnelCmp', 'tbl-gold-web-cmp', [
+  {label:'CTR', field:'ctr'},
+  {label:'نرخ سشن از کلیک', field:'session_rate'},
+  {label:'نرخ ثبت‌نام از سشن', field:'register_rate'},
+  {label:'نرخ KYC از ثبت‌نام', field:'kyc_rate'}
+], tlynGoldWeb, BENCH.current.gold_web);
 
-const tblGoldApp = document.getElementById('tbl-gold-app');
-BENCH.current.gold_app.forEach(r=>{
-  const isYou = r.name==='Tlyn';
-  tblGoldApp.insertAdjacentHTML('beforeend', `<tr class="${isYou?'hl':''}">
-    <td><div class="name-cell">${r.name}${isYou?'<span class="tag-you">طلاین</span>':''}</div></td>
-    <td class="num">${faCompact(r.view)}</td><td class="num">${faCompact(r.click)}</td><td class="num">${r.ctr?faPct(r.ctr,2):'—'}</td>
-    <td class="num">${faInt(r.install)}</td><td class="num">${r.install_rate?faPct(r.install_rate,2):'—'}</td>
-    <td class="num">${faInt(r.register)}</td><td class="num">${r.kyc_rate?faPct(r.kyc_rate,0):'—'}</td></tr>`);
-});
-
-/* ---- 2.2 gold web ---- */
-const gWeb = BENCH.current.gold_web.filter(x=>x.ctr!==null).slice().sort((a,b)=>b.ctr-a.ctr);
-new Chart(document.getElementById('chartGoldWebCtr'), {
-  type:'bar',
-  data:{ labels: gWeb.map(x=>x.name), datasets:[{ data: gWeb.map(x=>x.ctr*100), backgroundColor: barColorsFixed(gWeb.map(x=>x.name)), borderColor: borderColorsFixed(gWeb.map(x=>x.name)), borderWidth:1, borderRadius:4 }] },
-  options:{
-    responsive:true, maintainAspectRatio:false,
-    scales:{ x:{ grid:{display:false}, ticks:{...baseTicks, font:{size:10.5}} }, y:{ grid:baseGrid, ticks:{...baseTicks, callback:v=>v+'٪'} } },
-    plugins:{ legend:{display:false}, tooltip:{ callbacks:{ label:c=>'CTR: '+faPct(c.parsed.y/100,2) } } }
-  }
-});
-
-const gWebFunnel = BENCH.current.gold_web.filter(x=>x.register_rate!==null || x.kyc_rate!==null);
-new Chart(document.getElementById('chartGoldWebFunnelCompare'), {
-  type:'bar',
-  data:{ labels: gWebFunnel.map(x=>x.name), datasets:[
-    { label:'نرخ ثبت‌نام از سشن', data: gWebFunnel.map(x=>x.register_rate? x.register_rate*100:null), backgroundColor:'rgba(61,0,102,0.55)', borderRadius:3 },
-    { label:'نرخ KYC از ثبت‌نام', data: gWebFunnel.map(x=>x.kyc_rate? x.kyc_rate*100:null), backgroundColor:'rgba(255,199,44,0.75)', borderColor:GOLD_INK, borderWidth:1, borderRadius:3 }
-  ]},
-  options:{
-    responsive:true, maintainAspectRatio:false,
-    scales:{ x:{ grid:{display:false}, ticks:{...baseTicks, font:{size:10.5}} }, y:{ grid:baseGrid, ticks:{...baseTicks, callback:v=>v+'٪'} } },
-    plugins:{ legend:{position:'top', align:'end'}, tooltip:{ callbacks:{ label:c=>c.dataset.label+': '+faPct(c.parsed.y/100,2) } } }
-  }
-});
-
-const tblGoldWeb = document.getElementById('tbl-gold-web');
-BENCH.current.gold_web.forEach(r=>{
-  const isYou = r.name==='Tlyn';
-  tblGoldWeb.insertAdjacentHTML('beforeend', `<tr class="${isYou?'hl':''}">
-    <td><div class="name-cell">${r.name}${isYou?'<span class="tag-you">طلاین</span>':''}</div></td>
-    <td class="num">${faCompact(r.view)}</td><td class="num">${faCompact(r.click)}</td><td class="num">${r.ctr?faPct(r.ctr,2):'—'}</td>
-    <td class="num">${faCompact(r.session)}</td><td class="num">${faInt(r.register)}</td>
-    <td class="num">${r.register_rate?faPct(r.register_rate,2):'—'}</td><td class="num">${r.kyc_rate?faPct(r.kyc_rate,0):'—'}</td></tr>`);
-});
-
-/* ---- 2.3 broader market ---- */
-const tlynAppCtr = BENCH.current.gold_app.find(x=>x.name==='Tlyn').ctr;
-const tlynWebCtr = BENCH.current.gold_web.find(x=>x.name==='Tlyn').ctr;
-
-const exApp = BENCH.current.exch_app.filter(x=>x.ctr!==null).map(x=>({name:x.name, ctr:x.ctr}));
-exApp.push({name:'Tlyn (طلا)', ctr: tlynAppCtr});
-exApp.sort((a,b)=>b.ctr-a.ctr);
-new Chart(document.getElementById('chartExchApp'), {
-  type:'bar',
-  data:{ labels: exApp.map(x=>x.name), datasets:[{ data: exApp.map(x=>x.ctr*100),
-    backgroundColor: exApp.map(x=>x.name.startsWith('Tlyn')?GOLD:'#D6C9E8'),
-    borderColor: exApp.map(x=>x.name.startsWith('Tlyn')?GOLD_INK:'#B39DCC'), borderWidth:1, borderRadius:4 }] },
-  options:{
-    indexAxis:'y', responsive:true, maintainAspectRatio:false,
-    scales:{ x:{ grid:baseGrid, ticks:{...baseTicks, callback:v=>v+'٪'} }, y:{ grid:{display:false}, ticks:{...baseTicks, font:{size:11}} } },
-    plugins:{ legend:{display:false}, tooltip:{ callbacks:{ label:c=>'CTR: '+faPct(c.parsed.x/100,2) } } }
-  }
-});
-
-const bkApp = BENCH.current.bank_app.filter(x=>x.ctr!==null).map(x=>({name:x.name, ctr:x.ctr}));
-bkApp.push({name:'Tlyn (طلا)', ctr: tlynAppCtr});
-bkApp.sort((a,b)=>b.ctr-a.ctr);
-new Chart(document.getElementById('chartBankApp'), {
-  type:'bar',
-  data:{ labels: bkApp.map(x=>x.name), datasets:[{ data: bkApp.map(x=>x.ctr*100),
-    backgroundColor: bkApp.map(x=>x.name.startsWith('Tlyn')?GOLD:'#D6C9E8'),
-    borderColor: bkApp.map(x=>x.name.startsWith('Tlyn')?GOLD_INK:'#B39DCC'), borderWidth:1, borderRadius:4 }] },
-  options:{
-    indexAxis:'y', responsive:true, maintainAspectRatio:false,
-    scales:{ x:{ grid:baseGrid, ticks:{...baseTicks, callback:v=>v+'٪'} }, y:{ grid:{display:false}, ticks:{...baseTicks, font:{size:11}} } },
-    plugins:{ legend:{display:false}, tooltip:{ callbacks:{ label:c=>'CTR: '+faPct(c.parsed.x/100,2) } } }
-  }
-});
-
-/* ---- 2.4 historical before/after war ---- */
+/* ---- 2.3 historical before/after war (gold app only) ---- */
 const hTlyn = BENCH.historical.gold_app.filter(x=>x.name==='Tlyn');
 const hBefore = hTlyn.find(x=>x.state==='Before War');
 const hAfter = hTlyn.find(x=>x.state==='After War');
@@ -910,13 +819,15 @@ new Chart(document.getElementById('chartWarTlyn'), {
   }
 });
 
-const hTala = BENCH.historical.gold_app.filter(x=>x.name==='Talasea');
-const htB = hTala.find(x=>x.state==='Before War'), htA = hTala.find(x=>x.state==='After War');
+const hCompetitorsBefore = BENCH.historical.gold_app.filter(x=>x.name!=='Tlyn' && x.state==='Before War');
+const hCompetitorsAfter = BENCH.historical.gold_app.filter(x=>x.name!=='Tlyn' && x.state==='After War');
+const indWarBeforeCtr = industryAvg(hCompetitorsBefore, 'ctr');
+const indWarAfterCtr = industryAvg(hCompetitorsAfter, 'ctr');
 new Chart(document.getElementById('chartWarMarket'), {
   type:'bar',
-  data:{ labels:['Tlyn','Talasea'], datasets:[
-    { label:'قبل از جنگ', data:[hBefore.ctr*100, htB.ctr*100], backgroundColor:'#E7DEEF', borderColor:'#B39DCC', borderWidth:1, borderRadius:4 },
-    { label:'بعد از جنگ', data:[hAfter.ctr*100, htA.ctr*100], backgroundColor: GOLD, borderColor:GOLD_INK, borderWidth:1, borderRadius:4 }
+  data:{ labels:['طلاین','میانگین صنعت'], datasets:[
+    { label:'قبل از جنگ', data:[hBefore.ctr*100, indWarBeforeCtr*100], backgroundColor:'#E7DEEF', borderColor:'#B39DCC', borderWidth:1, borderRadius:4 },
+    { label:'بعد از جنگ', data:[hAfter.ctr*100, indWarAfterCtr*100], backgroundColor: GOLD, borderColor:GOLD_INK, borderWidth:1, borderRadius:4 }
   ]},
   options:{
     responsive:true, maintainAspectRatio:false,
