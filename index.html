@@ -203,8 +203,13 @@ footer ul{ margin:0; padding:0; list-style:none; display:flex; flex-direction:co
 .scroll-nav .wrap{ display:flex; align-items:center; gap:28px; height:56px; overflow-x:auto; }
 .scroll-nav a{ color:var(--ink-dim); text-decoration:none; font-size:13.5px; white-space:nowrap; flex:none; font-weight:500; padding-bottom:2px; border-bottom:2px solid transparent; }
 .scroll-nav a:hover{ color:var(--purple); border-bottom-color:var(--gold); }
+.scroll-nav a.active{ color:var(--purple); border-bottom-color:var(--gold); font-weight:700; }
 .scroll-nav .brand-mini{ color:var(--purple); font-weight:800; font-size:17px; flex:none; display:flex; align-items:center; gap:8px; }
 .scroll-nav .brand-mini img{ width:26px; height:26px; border-radius:50%; display:block; }
+
+/* ---------- tab panels (nav switches content instead of scrolling) ---------- */
+.tab-panel{ display:none; }
+.tab-panel.active{ display:block; }
 
 @media (max-width:640px){
   .wrap{ padding:0 18px; }
@@ -236,7 +241,7 @@ footer ul{ margin:0; padding:0; list-style:none; display:flex; flex-direction:co
   </div>
 </header>
 
-<section class="section" id="summary">
+<section class="section tab-panel" id="summary">
   <div class="wrap">
     <div class="section-head">
       <div class="section-num">۰</div>
@@ -288,7 +293,7 @@ footer ul{ margin:0; padding:0; list-style:none; display:flex; flex-direction:co
   </div>
 </section>
 
-<section class="section" id="part1">
+<section class="section tab-panel" id="part1">
   <div class="wrap">
     <div class="section-head">
       <div class="section-num">۱</div>
@@ -415,7 +420,7 @@ footer ul{ margin:0; padding:0; list-style:none; display:flex; flex-direction:co
   </div>
 </section>
 
-<section class="section" id="part2">
+<section class="section tab-panel" id="part2">
   <div class="wrap">
     <div class="section-head">
       <div class="section-num">۲</div>
@@ -502,7 +507,7 @@ footer ul{ margin:0; padding:0; list-style:none; display:flex; flex-direction:co
   </div>
 </section>
 
-<footer id="footer-note">
+<footer class="tab-panel" id="footer-note">
   <div class="wrap">
     <div class="cols">
       <div>
@@ -835,6 +840,40 @@ new Chart(document.getElementById('chartWarMarket'), {
     plugins:{ legend:{position:'top', align:'end'}, tooltip:{ callbacks:{ label:c=>c.dataset.label+': '+faPct(c.parsed.y/100,2) } } }
   }
 });
+
+
+/* ================= TAB NAVIGATION (switch panels instead of scrolling) ================= */
+const navLinks = [...document.querySelectorAll('.scroll-nav a[href^="#"]')];
+const panelIds = navLinks.map(a=>a.getAttribute('href').slice(1));
+const panels = panelIds.map(id=>document.getElementById(id));
+
+function activateTab(id){
+  if(!panelIds.includes(id)) id = panelIds[0];
+  panels.forEach(p=> p && p.classList.toggle('active', p.id===id));
+  navLinks.forEach(a=> a.classList.toggle('active', a.getAttribute('href')==='#'+id));
+  window.scrollTo({ top:0, behavior:'auto' });
+  /* Chart.js measures canvas size when created; charts built while their tab was
+     hidden (display:none) come out zero-size, so force a resize now that the
+     panel is actually visible. */
+  const activePanel = panels.find(p=>p && p.id===id);
+  if(activePanel){
+    activePanel.querySelectorAll('canvas').forEach(cv=>{
+      const ch = Chart.getChart(cv);
+      if(ch) ch.resize();
+    });
+  }
+}
+
+navLinks.forEach(a=>{
+  a.addEventListener('click', (e)=>{
+    e.preventDefault();
+    const id = a.getAttribute('href').slice(1);
+    activateTab(id);
+    history.replaceState(null, '', '#'+id);
+  });
+});
+
+activateTab((location.hash || '#'+panelIds[0]).slice(1));
 
 })();
 </script>
