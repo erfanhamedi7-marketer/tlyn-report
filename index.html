@@ -6,154 +6,190 @@
 <title>طلاین — گزارش تحلیلی جامع عملکرد و بازار</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Markazi+Text:wght@500;600;700&family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
 <style>
 :root{
-  --ink:#12181c;
-  --panel:#1a2126;
-  --panel-2:#1f2a2e;
-  --line: rgba(201,161,90,0.20);
-  --line-soft: rgba(237,231,217,0.09);
-  --gold:#c9a15a;
-  --gold-soft: rgba(201,161,90,0.14);
-  --sage:#6fa88a;
-  --sage-soft: rgba(111,168,138,0.14);
-  --rose:#c1666b;
-  --rose-soft: rgba(193,102,107,0.14);
-  --text:#ede7d9;
-  --text-dim:#9aa0a3;
-  --text-dimmer:#6d7477;
-  --radius:6px;
+  --bg:#FAF8FC;
+  --surface:#FFFFFF;
+  --surface-2:#F4EFFA;
+  --border:#E6E0EF;
+  --border-strong:#D6C9E8;
+  --ink:#1E1230;
+  --ink-dim:#5C5468;
+  --ink-dimmer:#928C9C;
+
+  --gold:#FFC72C;
+  --gold-ink:#7A5500;
+  --gold-soft:rgba(255,199,44,0.18);
+  --gold-soft-2:rgba(255,199,44,0.32);
+
+  --purple:#3D0066;
+  --purple-deep:#28024A;
+  --purple-soft:rgba(61,0,102,0.07);
+  --purple-soft-2:rgba(61,0,102,0.14);
+
+  --positive:#1F8A63;
+  --positive-soft:rgba(31,138,99,0.10);
+  --negative:#C1442E;
+  --negative-soft:rgba(193,68,46,0.10);
+
+  --radius:12px;
+  --shadow-soft:0 1px 2px rgba(40,2,74,0.04), 0 8px 24px -12px rgba(40,2,74,0.10);
 }
 *{box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 body{
   margin:0;
-  background:var(--ink);
-  color:var(--text);
+  background:var(--bg);
+  color:var(--ink);
   font-family:'Vazirmatn', 'Tahoma', sans-serif;
   font-feature-settings:"tnum" 1;
-  line-height:1.75;
+  line-height:1.8;
 }
-::selection{ background: var(--gold-soft); }
-.display{ font-family:'Markazi Text','Vazirmatn',serif; }
+::selection{ background: var(--gold-soft-2); }
 
 /* ---------- layout shells ---------- */
 .wrap{ max-width:1180px; margin:0 auto; padding:0 28px; }
-.rule{ height:1px; background:var(--line); border:none; margin:0; }
-.rule-soft{ height:1px; background:var(--line-soft); border:none; }
+.rule{ height:1px; background:var(--border-strong); border:none; }
+.rule-soft{ height:1px; background:var(--border); border:none; }
 
 /* ---------- header ---------- */
-header.masthead{ padding:64px 0 40px; border-bottom:1px solid var(--line); }
-.eyebrow{
-  color:var(--gold); font-size:14px; letter-spacing:0.02em;
-  display:flex; align-items:center; gap:10px; margin-bottom:22px;
+header.masthead{
+  position:relative;
+  padding:72px 0 46px;
+  background:linear-gradient(155deg, var(--purple-deep), var(--purple) 70%);
+  color:#F2E8FB;
+  overflow:hidden;
 }
-.eyebrow .dash{ width:34px; height:1px; background:var(--gold); display:inline-block; }
+header.masthead::after{
+  content:"";
+  position:absolute; inset:auto 0 0 0; height:4px;
+  background:linear-gradient(90deg, var(--gold), #FFE2A0 50%, var(--gold));
+}
+header.masthead::before{
+  content:"";
+  position:absolute; width:520px; height:520px; border-radius:50%;
+  background:radial-gradient(circle, rgba(255,199,44,0.16), transparent 70%);
+  top:-260px; inset-inline-end:-160px;
+}
+.eyebrow{
+  position:relative; color:var(--gold); font-size:13.5px; letter-spacing:0.06em; font-weight:600;
+  display:flex; align-items:center; gap:10px; margin-bottom:24px;
+}
+.eyebrow .dash{ width:30px; height:2px; background:var(--gold); display:inline-block; }
 h1.brand{
-  font-family:'Markazi Text',serif; font-weight:700;
-  font-size:clamp(52px,9vw,96px); line-height:0.95; margin:0 0 14px; color:var(--text);
-  letter-spacing:0.01em;
+  position:relative;
+  font-weight:800; text-wrap:balance;
+  font-size:clamp(42px,7.5vw,74px); line-height:1.06; margin:0 0 16px; color:#FFFFFF;
+  letter-spacing:-0.01em;
 }
 h1.brand span{ color:var(--gold); }
-.subtitle{ font-size:19px; color:var(--text-dim); max-width:620px; margin:0 0 30px; }
-.meta-row{ display:flex; flex-wrap:wrap; gap:34px; margin-top:6px; }
-.meta-item .k{ font-size:12.5px; color:var(--text-dimmer); margin-bottom:4px; }
-.meta-item .v{ font-size:15.5px; color:var(--text); font-weight:600; }
+.subtitle{ position:relative; font-size:18px; color:#D8C3EE; max-width:640px; margin:0 0 32px; font-weight:400; }
+.meta-row{ position:relative; display:flex; flex-wrap:wrap; gap:36px 46px; margin-top:6px; }
+.meta-item .k{ font-size:12px; color:#B497D6; margin-bottom:5px; letter-spacing:0.02em; }
+.meta-item .v{ font-size:15.5px; color:#FFFFFF; font-weight:600; }
 
 /* ---------- section scaffolding ---------- */
-.section{ padding:76px 0; }
-.section + .section{ border-top:1px solid var(--line); }
+.section{ padding:80px 0; }
+.section + .section{ border-top:1px solid var(--border); }
 .section-head{ display:flex; align-items:baseline; gap:18px; margin-bottom:8px; }
 .section-num{
-  font-family:'Markazi Text',serif; font-size:22px; color:var(--gold);
-  border:1px solid var(--line); border-radius:100px; width:40px; height:40px;
-  display:flex; align-items:center; justify-content:center; flex:none;
+  font-weight:700; font-size:19px; color:var(--purple);
+  border:1.5px solid var(--purple); border-radius:100px; width:38px; height:38px;
+  display:flex; align-items:center; justify-content:center; flex:none; background:var(--surface);
 }
-.section-title{ font-family:'Markazi Text',serif; font-weight:700; font-size:clamp(28px,4vw,40px); margin:0; }
-.section-desc{ color:var(--text-dim); font-size:16px; max-width:680px; margin:14px 0 44px; }
+.section-title{ font-weight:800; font-size:clamp(27px,4vw,38px); margin:0; letter-spacing:-0.01em; text-wrap:balance; }
+.section-desc{ color:var(--ink-dim); font-size:16px; max-width:700px; margin:16px 0 46px; }
 
-.subhead{ display:flex; align-items:center; gap:12px; margin:56px 0 20px; }
+.subhead{ display:flex; align-items:center; flex-wrap:wrap; gap:12px; margin:58px 0 20px; }
 .subhead .chip{
-  font-size:12.5px; padding:4px 11px; border-radius:100px; border:1px solid;
+  font-size:12.5px; padding:4px 12px; border-radius:100px; border:1px solid; font-weight:600;
 }
-.chip.app{ color:var(--gold); border-color:var(--gold); background:var(--gold-soft); }
-.chip.web{ color:var(--sage); border-color:var(--sage); background:var(--sage-soft); }
-.subhead h3{ font-size:21px; margin:0; font-weight:700; }
-.subhead p.note{ color:var(--text-dimmer); font-size:14px; margin:0 0 0 auto; }
+.chip.app{ color:var(--gold-ink); border-color:var(--gold); background:var(--gold-soft); }
+.chip.web{ color:var(--purple); border-color:var(--purple-soft-2); background:var(--purple-soft); }
+.subhead h3{ font-size:20.5px; margin:0; font-weight:700; }
+.subhead p.note{ color:var(--ink-dimmer); font-size:13.5px; margin:0 0 0 auto; }
 
 /* ---------- stat cards ---------- */
-.stat-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; }
-.stat-card{ background:var(--panel); padding:22px 20px; }
-.stat-card .label{ font-size:13px; color:var(--text-dim); margin-bottom:10px; }
-.stat-card .value{ font-family:'Markazi Text',serif; font-size:32px; font-weight:700; color:var(--text); }
-.stat-card .value small{ font-size:15px; color:var(--text-dim); font-weight:500; margin-right:4px; }
-.stat-card .sub{ font-size:12.5px; color:var(--text-dimmer); margin-top:6px; }
-.stat-card.accent-app .value{ color:var(--gold); }
-.stat-card.accent-web .value{ color:var(--sage); }
+.stat-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:14px; }
+.stat-card{ background:var(--surface); padding:22px 22px; border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow-soft); }
+.stat-card.accent-app{ border-inline-start:3px solid var(--gold); }
+.stat-card.accent-web{ border-inline-start:3px solid var(--purple); }
+.stat-card .label{ font-size:12.5px; color:var(--ink-dim); margin-bottom:12px; font-weight:500; }
+.stat-card .value{ font-size:30px; font-weight:800; color:var(--ink); letter-spacing:-0.01em; }
+.stat-card .value small{ font-size:14px; color:var(--ink-dim); font-weight:500; margin-right:4px; }
+.stat-card .sub{ font-size:12px; color:var(--ink-dimmer); margin-top:6px; }
+.stat-card.accent-app .value{ color:var(--gold-ink); }
+.stat-card.accent-web .value{ color:var(--purple); }
 
 /* ---------- chart panels ---------- */
-.panel{ background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:26px 24px 18px; }
+.panel{ background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:26px 24px 18px; box-shadow:var(--shadow-soft); }
 .panel-title{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:18px; flex-wrap:wrap; gap:8px;}
-.panel-title h4{ margin:0; font-size:16.5px; font-weight:700; }
-.panel-title .legend-note{ font-size:12.5px; color:var(--text-dimmer); }
+.panel-title h4{ margin:0; font-size:16px; font-weight:700; }
+.panel-title .legend-note{ font-size:12px; color:var(--ink-dimmer); }
 .chart-box{ position:relative; height:300px; }
 .chart-box.tall{ height:360px; }
-.grid-2{ display:grid; grid-template-columns:1.3fr 1fr; gap:20px; }
+.grid-2{ display:grid; grid-template-columns:1.3fr 1fr; gap:18px; }
 .grid-2.even{ grid-template-columns:1fr 1fr; }
 @media (max-width:820px){ .grid-2, .grid-2.even{ grid-template-columns:1fr; } }
 
 /* ---------- tables ---------- */
-.table-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:var(--radius); }
-table{ width:100%; border-collapse:collapse; font-size:14px; min-width:560px; }
+.table-wrap{ overflow-x:auto; border:1px solid var(--border); border-radius:var(--radius); background:var(--surface); box-shadow:var(--shadow-soft); }
+table{ width:100%; border-collapse:collapse; font-size:13.5px; min-width:560px; }
 thead th{
-  text-align:right; padding:12px 14px; background:var(--panel-2); color:var(--text-dim);
-  font-weight:600; font-size:12.5px; border-bottom:1px solid var(--line); white-space:nowrap;
+  text-align:right; padding:13px 14px; background:var(--surface-2); color:var(--ink-dim);
+  font-weight:700; font-size:12px; border-bottom:1px solid var(--border); white-space:nowrap; letter-spacing:0.01em;
 }
 thead th.num, td.num{ text-align:left; direction:ltr; }
-tbody td{ padding:11px 14px; border-bottom:1px solid var(--line-soft); white-space:nowrap; }
+tbody td{ padding:12px 14px; border-bottom:1px solid var(--border); white-space:nowrap; color:var(--ink); }
 tbody tr:last-child td{ border-bottom:none; }
-tbody tr:hover{ background:rgba(201,161,90,0.05); }
-tr.hl td{ background:rgba(201,161,90,0.09); font-weight:700; color:var(--text); }
-tr.hl td:first-child{ position:relative; }
+tbody tr:hover{ background:var(--gold-soft); }
+tr.hl td{ background:var(--gold-soft); font-weight:700; color:var(--ink); }
+tr.hl td:first-child{ border-inline-start:3px solid var(--gold-ink); }
 .name-cell{ display:flex; align-items:center; gap:8px; }
-.tag-you{ font-size:10.5px; background:var(--gold); color:#1a1408; padding:1px 7px; border-radius:100px; font-weight:700; }
-.mono-muted{ color:var(--text-dimmer); }
+.tag-you{ font-size:10.5px; background:var(--gold); color:var(--ink); padding:2px 8px; border-radius:100px; font-weight:700; }
+.mono-muted{ color:var(--ink-dimmer); }
 
 /* ---------- callouts / insights ---------- */
-.insights{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px; margin-top:28px; }
-.insight-card{ border:1px solid var(--line); border-radius:var(--radius); padding:18px 20px; background:var(--panel); }
-.insight-card .tag{ font-size:11.5px; color:var(--gold); margin-bottom:10px; display:block; }
-.insight-card p{ margin:0; font-size:14.5px; color:var(--text); }
-.insight-card p b{ color:var(--gold); font-weight:700; }
-.insight-card.neg .tag{ color:var(--rose); }
-.insight-card.neg p b{ color:var(--rose); }
-.insight-card.pos .tag{ color:var(--sage); }
-.insight-card.pos p b{ color:var(--sage); }
+.insights{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px; margin-top:28px; }
+.insight-card{ border:1px solid var(--border); border-radius:var(--radius); padding:18px 20px; background:var(--surface); border-inline-start:3px solid var(--purple); box-shadow:var(--shadow-soft); }
+.insight-card .tag{ font-size:11.5px; color:var(--purple); margin-bottom:10px; display:block; font-weight:700; letter-spacing:0.01em; }
+.insight-card p{ margin:0; font-size:14.5px; color:var(--ink); }
+.insight-card p b{ color:var(--purple); font-weight:700; }
+.insight-card.neg{ border-inline-start-color:var(--negative); background:linear-gradient(var(--negative-soft),var(--negative-soft)), var(--surface); }
+.insight-card.neg .tag{ color:var(--negative); }
+.insight-card.neg p b{ color:var(--negative); }
+.insight-card.pos{ border-inline-start-color:var(--positive); background:linear-gradient(var(--positive-soft),var(--positive-soft)), var(--surface); }
+.insight-card.pos .tag{ color:var(--positive); }
+.insight-card.pos p b{ color:var(--positive); }
 
 /* ---------- footnote / footer ---------- */
-.footnote{ font-size:12.5px; color:var(--text-dimmer); margin-top:14px; line-height:1.9; }
-footer{ padding:52px 0 70px; }
-footer .cols{ display:grid; grid-template-columns:2fr 1fr 1fr; gap:40px; }
-footer h5{ font-size:13px; color:var(--gold); margin:0 0 14px; }
-footer p, footer li{ font-size:13.5px; color:var(--text-dim); }
+.footnote{ font-size:12.5px; color:var(--ink-dimmer); margin-top:14px; line-height:1.9; }
+footer{ padding:58px 0 64px; background:linear-gradient(155deg, var(--purple-deep), var(--purple) 70%); color:#E9DBF7; position:relative; }
+footer::before{
+  content:""; position:absolute; inset:0 0 auto 0; height:4px;
+  background:linear-gradient(90deg, var(--gold), #FFE2A0 50%, var(--gold));
+}
+footer .cols{ display:grid; grid-template-columns:2fr 1fr 1fr; gap:44px; }
+footer h5{ font-size:12.5px; color:var(--gold); margin:0 0 14px; letter-spacing:0.03em; font-weight:700; }
+footer p, footer li{ font-size:13.5px; color:#CBB3E4; line-height:1.85; }
 footer ul{ margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:8px; }
 @media (max-width:820px){ footer .cols{ grid-template-columns:1fr; } }
 
 .scroll-nav{
-  position:sticky; top:0; z-index:20; background:rgba(18,24,28,0.9); backdrop-filter:blur(10px);
-  border-bottom:1px solid var(--line);
+  position:sticky; top:0; z-index:20; background:rgba(250,248,252,0.88); backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--border);
 }
-.scroll-nav .wrap{ display:flex; align-items:center; gap:26px; height:56px; overflow-x:auto; }
-.scroll-nav a{ color:var(--text-dim); text-decoration:none; font-size:13.5px; white-space:nowrap; flex:none; }
-.scroll-nav a:hover{ color:var(--gold); }
-.scroll-nav .brand-mini{ color:var(--gold); font-family:'Markazi Text',serif; font-weight:700; font-size:18px; flex:none; }
+.scroll-nav .wrap{ display:flex; align-items:center; gap:28px; height:56px; overflow-x:auto; }
+.scroll-nav a{ color:var(--ink-dim); text-decoration:none; font-size:13.5px; white-space:nowrap; flex:none; font-weight:500; padding-bottom:2px; border-bottom:2px solid transparent; }
+.scroll-nav a:hover{ color:var(--purple); border-bottom-color:var(--gold); }
+.scroll-nav .brand-mini{ color:var(--purple); font-weight:800; font-size:17px; flex:none; }
 
 @media (max-width:640px){
   .wrap{ padding:0 18px; }
-  header.masthead{ padding:44px 0 30px; }
-  .section{ padding:52px 0; }
+  header.masthead{ padding:48px 0 32px; }
+  .section{ padding:54px 0; }
 }
 </style>
 </head>
@@ -189,7 +225,7 @@ footer ul{ margin:0; padding:0; list-style:none; display:flex; flex-direction:co
       <div class="section-num">۰</div>
       <h2 class="section-title">خلاصه مدیریتی</h2>
     </div>
-    <p class="section-desc">در بازهٔ ۱ مرداد تا ۱۵ شهریور، طلاین مجموعاً بیش از <b style="color:var(--gold)">۱۲.۳ میلیارد ریال</b> در دو کانال اپلیکیشن و وب هزینه کرده و بیش از <b style="color:var(--text)">۵۰ هزار</b> کاربر احراز‌هویت‌شده (KYC) جذب کرده است. کانال وب حجم هزینهٔ بیشتری دارد اما کانال اپلیکیشن به‌ازای هر کاربر واجد شرایط، هزینهٔ کمتری می‌پردازد.</p>
+    <p class="section-desc">در بازهٔ ۱ مرداد تا ۱۵ شهریور، طلاین مجموعاً بیش از <b style="color:var(--purple)">۱۲.۳ میلیارد ریال</b> در دو کانال اپلیکیشن و وب هزینه کرده و بیش از <b style="color:var(--ink)">۵۰ هزار</b> کاربر احراز‌هویت‌شده (KYC) جذب کرده است. کانال وب حجم هزینهٔ بیشتری دارد اما کانال اپلیکیشن به‌ازای هر کاربر واجد شرایط، هزینهٔ کمتری می‌پردازد.</p>
 
     <div class="stat-grid">
       <div class="stat-card accent-app">
@@ -484,7 +520,6 @@ footer ul{ margin:0; padding:0; list-style:none; display:flex; flex-direction:co
 
 <footer id="footer-note">
   <div class="wrap">
-    <hr class="rule" style="margin-bottom:44px;">
     <div class="cols">
       <div>
         <h5>دربارهٔ این گزارش</h5>
@@ -527,32 +562,37 @@ const faRial = (n) => (n===null||n===undefined||Number.isNaN(n)) ? '—' : faInt
 
 document.getElementById('gen-date').textContent = new Date().toLocaleDateString('fa-IR', {year:'numeric', month:'long', day:'numeric'});
 
-/* ---------------- chart.js global theme ---------------- */
-const GOLD = '#c9a15a';
-const SAGE = '#6fa88a';
-const ROSE = '#c1666b';
-const TEXT = '#ede7d9';
-const TEXT_DIM = '#9aa0a3';
-const GRID = 'rgba(237,231,217,0.08)';
-const MUTED_BARS = ['#3a444a','#465158','#505b62','#5a666d','#647178','#6e7c83','#78878e'];
+/* ---------------- chart.js global theme (light, brand palette) ---------------- */
+const GOLD = '#FFC72C';
+const GOLD_INK = '#7A5500';
+const PURPLE = '#3D0066';
+const PURPLE_LIGHT = '#8A5CB8';
+const POSITIVE = '#1F8A63';
+const NEGATIVE = '#C1442E';
+const INK = '#1E1230';
+const INK_DIM = '#5C5468';
+const GRID = 'rgba(30,18,48,0.08)';
+const MUTED_BARS = ['#E7DEEF','#CDBEDE','#B39DCC','#9A7EBB','#8064A6','#6B5391'];
+const GOLD_SEQ = ['#FFE9AE','#FFDD7E','#FFC72C','#B98600'];
+const PURPLE_SEQ = ['#3D0066','#5A2789','#7B4FAA','#9C77C4','#BC9EDA','#DAC7EC'];
 
 Chart.defaults.font.family = "'Vazirmatn', 'Tahoma', sans-serif";
-Chart.defaults.color = TEXT_DIM;
+Chart.defaults.color = INK_DIM;
 Chart.defaults.borderColor = GRID;
 Chart.defaults.plugins.legend.labels.usePointStyle = true;
 Chart.defaults.plugins.legend.labels.boxWidth = 8;
 Chart.defaults.plugins.legend.labels.boxHeight = 8;
-Chart.defaults.plugins.tooltip.backgroundColor = '#0d1215';
-Chart.defaults.plugins.tooltip.titleColor = TEXT;
-Chart.defaults.plugins.tooltip.bodyColor = TEXT_DIM;
-Chart.defaults.plugins.tooltip.borderColor = 'rgba(201,161,90,0.3)';
+Chart.defaults.plugins.tooltip.backgroundColor = '#28024A';
+Chart.defaults.plugins.tooltip.titleColor = '#FFFFFF';
+Chart.defaults.plugins.tooltip.bodyColor = '#E4D6F5';
+Chart.defaults.plugins.tooltip.borderColor = 'rgba(255,199,44,0.35)';
 Chart.defaults.plugins.tooltip.borderWidth = 1;
 Chart.defaults.plugins.tooltip.padding = 10;
 Chart.defaults.plugins.tooltip.titleFont = {family:"'Vazirmatn'", weight:'700'};
 Chart.defaults.plugins.tooltip.bodyFont = {family:"'Vazirmatn'"};
 
 const baseGrid = { color: GRID, drawTicks:false };
-const baseTicks = { color: TEXT_DIM, font:{size:11} };
+const baseTicks = { color: INK_DIM, font:{size:11} };
 
 
 /* ---------------- executive summary stat cards ---------------- */
@@ -570,8 +610,8 @@ new Chart(document.getElementById('chartAppWeekly'), {
   data: {
     labels: aw.map(x=>x.week),
     datasets: [
-      { type:'bar', label:'هزینه (ریال)', data: aw.map(x=>x.cost), backgroundColor:'rgba(201,161,90,0.55)', borderRadius:3, yAxisID:'y', order:2 },
-      { type:'line', label:'نصب', data: aw.map(x=>x.installs), borderColor:GOLD, backgroundColor:GOLD, tension:.35, yAxisID:'y1', pointRadius:3, order:1 }
+      { type:'bar', label:'هزینه (ریال)', data: aw.map(x=>x.cost), backgroundColor:'rgba(255,199,44,0.55)', borderColor:GOLD_INK, borderWidth:1, borderRadius:3, yAxisID:'y', order:2 },
+      { type:'line', label:'نصب', data: aw.map(x=>x.installs), borderColor:GOLD_INK, backgroundColor:GOLD, tension:.35, yAxisID:'y1', pointRadius:3, order:1 }
     ]
   },
   options: {
@@ -588,11 +628,12 @@ new Chart(document.getElementById('chartAppWeekly'), {
 });
 
 new Chart(document.getElementById('chartAppEfficiency'), {
+  type:'line',
   data:{
     labels: aw.map(x=>x.week),
     datasets:[
-      { label:'CPI', data: aw.map(x=>x.cpi), borderColor:GOLD, backgroundColor:'rgba(201,161,90,0.12)', fill:true, tension:.35, pointRadius:3 },
-      { label:'CPA (KYC)', data: aw.map(x=>x.cpa), borderColor:ROSE, backgroundColor:'rgba(193,102,107,0.10)', fill:true, tension:.35, pointRadius:3 }
+      { label:'CPI', data: aw.map(x=>x.cpi), borderColor:GOLD_INK, backgroundColor:'rgba(255,199,44,0.16)', fill:true, tension:.35, pointRadius:3 },
+      { label:'CPA (KYC)', data: aw.map(x=>x.cpa), borderColor:PURPLE, backgroundColor:'rgba(61,0,102,0.10)', fill:true, tension:.35, pointRadius:3 }
     ]
   },
   options:{
@@ -608,7 +649,7 @@ new Chart(document.getElementById('chartAppFunnel'), {
   data:{
     labels:['نمایش','کلیک','نصب','KYC'],
     datasets:[{ data:[at.impressions, at.clicks, at.installs, at.kyc],
-      backgroundColor:[MUTED_BARS[2], MUTED_BARS[1], 'rgba(201,161,90,0.55)', GOLD], borderRadius:4 }]
+      backgroundColor:GOLD_SEQ, borderRadius:4 }]
   },
   options:{
     indexAxis:'y', responsive:true, maintainAspectRatio:false,
@@ -620,7 +661,7 @@ new Chart(document.getElementById('chartAppFunnel'), {
 const ac = CAMP.app_campaigns.slice().sort((a,b)=>a.cost-b.cost);
 new Chart(document.getElementById('chartAppCampCost'), {
   type:'bar',
-  data:{ labels: ac.map(x=>x.name), datasets:[{ data: ac.map(x=>x.cost), backgroundColor:'rgba(201,161,90,0.6)', borderRadius:3 }] },
+  data:{ labels: ac.map(x=>x.name), datasets:[{ data: ac.map(x=>x.cost), backgroundColor:'rgba(255,199,44,0.65)', borderColor:GOLD_INK, borderWidth:1, borderRadius:3 }] },
   options:{
     indexAxis:'y', responsive:true, maintainAspectRatio:false,
     scales:{ x:{ grid:baseGrid, ticks:{...baseTicks, callback:v=>faCompact(v)} }, y:{ grid:{display:false}, ticks:{...baseTicks, font:{size:10.5}} } },
@@ -633,13 +674,13 @@ new Chart(document.getElementById('chartAppScatter'), {
   data:{ datasets:[{
     label:'کمپین',
     data: CAMP.app_campaigns.filter(x=>x.cpa).map(x=>({ x:x.installs, y:x.cpa, r: Math.max(5, Math.sqrt(x.cost/1e6)) , name:x.name })),
-    backgroundColor:'rgba(201,161,90,0.45)', borderColor:GOLD, borderWidth:1
+    backgroundColor:'rgba(255,199,44,0.5)', borderColor:GOLD_INK, borderWidth:1.5
   }]},
   options:{
     responsive:true, maintainAspectRatio:false,
     scales:{
-      x:{ title:{display:true,text:'تعداد نصب', color:TEXT_DIM, font:{size:11}}, grid:baseGrid, ticks:{...baseTicks, callback:v=>faInt(v)} },
-      y:{ title:{display:true,text:'CPA (ریال)', color:TEXT_DIM, font:{size:11}}, grid:baseGrid, ticks:{...baseTicks, callback:v=>faCompact(v)} }
+      x:{ title:{display:true,text:'تعداد نصب', color:INK_DIM, font:{size:11}}, grid:baseGrid, ticks:{...baseTicks, callback:v=>faInt(v)} },
+      y:{ title:{display:true,text:'CPA (ریال)', color:INK_DIM, font:{size:11}}, grid:baseGrid, ticks:{...baseTicks, callback:v=>faCompact(v)} }
     },
     plugins:{ legend:{display:false}, tooltip:{ callbacks:{
       title:(c)=> c[0].raw.name,
@@ -662,8 +703,8 @@ new Chart(document.getElementById('chartWebWeekly'), {
   data:{
     labels: ww.map(x=>x.week),
     datasets:[
-      { type:'bar', label:'هزینه (ریال)', data: ww.map(x=>x.cost), backgroundColor:'rgba(111,168,138,0.5)', borderRadius:3, yAxisID:'y', order:2 },
-      { type:'line', label:'تایید‌شده', data: ww.map(x=>x.verified), borderColor:SAGE, backgroundColor:SAGE, tension:.35, yAxisID:'y1', pointRadius:3, order:1 }
+      { type:'bar', label:'هزینه (ریال)', data: ww.map(x=>x.cost), backgroundColor:'rgba(61,0,102,0.14)', borderColor:PURPLE, borderWidth:1, borderRadius:3, yAxisID:'y', order:2 },
+      { type:'line', label:'تایید‌شده', data: ww.map(x=>x.verified), borderColor:PURPLE, backgroundColor:PURPLE, tension:.35, yAxisID:'y1', pointRadius:3, order:1 }
     ]
   },
   options:{
@@ -679,8 +720,9 @@ new Chart(document.getElementById('chartWebWeekly'), {
 });
 
 new Chart(document.getElementById('chartWebEfficiency'), {
+  type:'line',
   data:{ labels: ww.map(x=>x.week), datasets:[
-    { label:'CPA (تایید‌شده)', data: ww.map(x=>x.cpa), borderColor:SAGE, backgroundColor:'rgba(111,168,138,0.12)', fill:true, tension:.35, pointRadius:3 }
+    { label:'CPA (تایید‌شده)', data: ww.map(x=>x.cpa), borderColor:PURPLE, backgroundColor:'rgba(61,0,102,0.12)', fill:true, tension:.35, pointRadius:3 }
   ]},
   options:{
     responsive:true, maintainAspectRatio:false,
@@ -693,11 +735,11 @@ const wc = CAMP.web_campaigns;
 new Chart(document.getElementById('chartWebDonut'), {
   type:'doughnut',
   data:{ labels: wc.map(x=>x.name), datasets:[{ data: wc.map(x=>x.cost),
-    backgroundColor:[GOLD,'#b9935a','#a6854f','#937645','#80683c','#6d5a33','#5a4c2a','#8a9a8f','#6c7d72','#4f6055','#3a444a'],
-    borderColor:'#1a2126', borderWidth:2 }] },
+    backgroundColor:[...PURPLE_SEQ, '#C9BCA8'],
+    borderColor:'#FFFFFF', borderWidth:2 }] },
   options:{
     responsive:true, maintainAspectRatio:false, cutout:'62%',
-    plugins:{ legend:{ position:'right', labels:{ font:{size:10.5}, color:TEXT_DIM } },
+    plugins:{ legend:{ position:'right', labels:{ font:{size:10.5}, color:INK_DIM } },
       tooltip:{ callbacks:{ label:c=> c.label+': '+faRial(c.parsed) } } }
   }
 });
@@ -706,7 +748,8 @@ const wcTop = wc.filter(x=>!x.name.startsWith('سایر')).slice().sort((a,b)=>a
 new Chart(document.getElementById('chartWebCampCpa'), {
   type:'bar',
   data:{ labels: wcTop.map(x=>x.name), datasets:[{ data: wcTop.map(x=>x.cpa),
-    backgroundColor: wcTop.map(x=> x.cpa < CAMP.totals.web.cpa ? 'rgba(111,168,138,0.55)' : 'rgba(193,102,107,0.5)'), borderRadius:3 }] },
+    backgroundColor: wcTop.map(x=> x.cpa < CAMP.totals.web.cpa ? 'rgba(31,138,99,0.5)' : 'rgba(193,68,46,0.45)'),
+    borderColor: wcTop.map(x=> x.cpa < CAMP.totals.web.cpa ? POSITIVE : NEGATIVE), borderWidth:1, borderRadius:3 }] },
   options:{
     indexAxis:'y', responsive:true, maintainAspectRatio:false,
     scales:{ x:{ grid:baseGrid, ticks:{...baseTicks, callback:v=>faCompact(v)} }, y:{ grid:{display:false}, ticks:{...baseTicks, font:{size:10.5}} } },
@@ -723,19 +766,20 @@ wc.forEach(c=>{
 
 
 /* ================= PART 2 — COMPETITIVE BENCHMARK ================= */
-function barColors(names){
-  return names.map(n => n==='Tlyn' ? GOLD : MUTED_BARS[Math.floor(Math.random()*MUTED_BARS.length)]);
-}
 function barColorsFixed(names){
   let i=0;
   return names.map(n => n==='Tlyn' ? GOLD : MUTED_BARS[(i++)%MUTED_BARS.length]);
+}
+function borderColorsFixed(names){
+  let i=0;
+  return names.map(n => n==='Tlyn' ? GOLD_INK : MUTED_BARS[Math.min((i++), MUTED_BARS.length-1)]);
 }
 
 /* ---- 2.1 gold app ---- */
 const gApp = BENCH.current.gold_app.filter(x=>x.ctr!==null).slice().sort((a,b)=>b.ctr-a.ctr);
 new Chart(document.getElementById('chartGoldAppCtr'), {
   type:'bar',
-  data:{ labels: gApp.map(x=>x.name), datasets:[{ data: gApp.map(x=>x.ctr*100), backgroundColor: barColorsFixed(gApp.map(x=>x.name)), borderRadius:4 }] },
+  data:{ labels: gApp.map(x=>x.name), datasets:[{ data: gApp.map(x=>x.ctr*100), backgroundColor: barColorsFixed(gApp.map(x=>x.name)), borderColor: borderColorsFixed(gApp.map(x=>x.name)), borderWidth:1, borderRadius:4 }] },
   options:{
     responsive:true, maintainAspectRatio:false,
     scales:{ x:{ grid:{display:false}, ticks:{...baseTicks, font:{size:10.5}} }, y:{ grid:baseGrid, ticks:{...baseTicks, callback:v=>v+'٪'} } },
@@ -746,7 +790,7 @@ new Chart(document.getElementById('chartGoldAppCtr'), {
 const gAppIr = BENCH.current.gold_app.filter(x=>x.install_rate!==null).slice().sort((a,b)=>b.install_rate-a.install_rate);
 new Chart(document.getElementById('chartGoldAppInstall'), {
   type:'bar',
-  data:{ labels: gAppIr.map(x=>x.name), datasets:[{ data: gAppIr.map(x=>x.install_rate*100), backgroundColor: barColorsFixed(gAppIr.map(x=>x.name)), borderRadius:4 }] },
+  data:{ labels: gAppIr.map(x=>x.name), datasets:[{ data: gAppIr.map(x=>x.install_rate*100), backgroundColor: barColorsFixed(gAppIr.map(x=>x.name)), borderColor: borderColorsFixed(gAppIr.map(x=>x.name)), borderWidth:1, borderRadius:4 }] },
   options:{
     responsive:true, maintainAspectRatio:false,
     scales:{ x:{ grid:{display:false}, ticks:{...baseTicks, font:{size:10.5}} }, y:{ grid:baseGrid, ticks:{...baseTicks, callback:v=>v+'٪'} } },
@@ -768,7 +812,7 @@ BENCH.current.gold_app.forEach(r=>{
 const gWeb = BENCH.current.gold_web.filter(x=>x.ctr!==null).slice().sort((a,b)=>b.ctr-a.ctr);
 new Chart(document.getElementById('chartGoldWebCtr'), {
   type:'bar',
-  data:{ labels: gWeb.map(x=>x.name), datasets:[{ data: gWeb.map(x=>x.ctr*100), backgroundColor: barColorsFixed(gWeb.map(x=>x.name)), borderRadius:4 }] },
+  data:{ labels: gWeb.map(x=>x.name), datasets:[{ data: gWeb.map(x=>x.ctr*100), backgroundColor: barColorsFixed(gWeb.map(x=>x.name)), borderColor: borderColorsFixed(gWeb.map(x=>x.name)), borderWidth:1, borderRadius:4 }] },
   options:{
     responsive:true, maintainAspectRatio:false,
     scales:{ x:{ grid:{display:false}, ticks:{...baseTicks, font:{size:10.5}} }, y:{ grid:baseGrid, ticks:{...baseTicks, callback:v=>v+'٪'} } },
@@ -780,8 +824,8 @@ const gWebFunnel = BENCH.current.gold_web.filter(x=>x.register_rate!==null || x.
 new Chart(document.getElementById('chartGoldWebFunnelCompare'), {
   type:'bar',
   data:{ labels: gWebFunnel.map(x=>x.name), datasets:[
-    { label:'نرخ ثبت‌نام از سشن', data: gWebFunnel.map(x=>x.register_rate? x.register_rate*100:null), backgroundColor:'rgba(111,168,138,0.55)', borderRadius:3 },
-    { label:'نرخ KYC از ثبت‌نام', data: gWebFunnel.map(x=>x.kyc_rate? x.kyc_rate*100:null), backgroundColor:'rgba(201,161,90,0.6)', borderRadius:3 }
+    { label:'نرخ ثبت‌نام از سشن', data: gWebFunnel.map(x=>x.register_rate? x.register_rate*100:null), backgroundColor:'rgba(61,0,102,0.55)', borderRadius:3 },
+    { label:'نرخ KYC از ثبت‌نام', data: gWebFunnel.map(x=>x.kyc_rate? x.kyc_rate*100:null), backgroundColor:'rgba(255,199,44,0.75)', borderColor:GOLD_INK, borderWidth:1, borderRadius:3 }
   ]},
   options:{
     responsive:true, maintainAspectRatio:false,
@@ -810,7 +854,8 @@ exApp.sort((a,b)=>b.ctr-a.ctr);
 new Chart(document.getElementById('chartExchApp'), {
   type:'bar',
   data:{ labels: exApp.map(x=>x.name), datasets:[{ data: exApp.map(x=>x.ctr*100),
-    backgroundColor: exApp.map(x=>x.name.startsWith('Tlyn')?GOLD:'#465158'), borderRadius:4 }] },
+    backgroundColor: exApp.map(x=>x.name.startsWith('Tlyn')?GOLD:'#D6C9E8'),
+    borderColor: exApp.map(x=>x.name.startsWith('Tlyn')?GOLD_INK:'#B39DCC'), borderWidth:1, borderRadius:4 }] },
   options:{
     indexAxis:'y', responsive:true, maintainAspectRatio:false,
     scales:{ x:{ grid:baseGrid, ticks:{...baseTicks, callback:v=>v+'٪'} }, y:{ grid:{display:false}, ticks:{...baseTicks, font:{size:11}} } },
@@ -824,7 +869,8 @@ bkApp.sort((a,b)=>b.ctr-a.ctr);
 new Chart(document.getElementById('chartBankApp'), {
   type:'bar',
   data:{ labels: bkApp.map(x=>x.name), datasets:[{ data: bkApp.map(x=>x.ctr*100),
-    backgroundColor: bkApp.map(x=>x.name.startsWith('Tlyn')?GOLD:'#465158'), borderRadius:4 }] },
+    backgroundColor: bkApp.map(x=>x.name.startsWith('Tlyn')?GOLD:'#D6C9E8'),
+    borderColor: bkApp.map(x=>x.name.startsWith('Tlyn')?GOLD_INK:'#B39DCC'), borderWidth:1, borderRadius:4 }] },
   options:{
     indexAxis:'y', responsive:true, maintainAspectRatio:false,
     scales:{ x:{ grid:baseGrid, ticks:{...baseTicks, callback:v=>v+'٪'} }, y:{ grid:{display:false}, ticks:{...baseTicks, font:{size:11}} } },
@@ -839,8 +885,8 @@ const hAfter = hTlyn.find(x=>x.state==='After War');
 new Chart(document.getElementById('chartWarTlyn'), {
   type:'bar',
   data:{ labels:['CTR','نرخ نصب از کلیک'], datasets:[
-    { label:'قبل از جنگ', data:[hBefore.ctr*100, hBefore.install_rate*100], backgroundColor:'rgba(154,160,163,0.5)', borderRadius:4 },
-    { label:'بعد از جنگ', data:[hAfter.ctr*100, hAfter.install_rate*100], backgroundColor: GOLD, borderRadius:4 }
+    { label:'قبل از جنگ', data:[hBefore.ctr*100, hBefore.install_rate*100], backgroundColor:'#E7DEEF', borderColor:'#B39DCC', borderWidth:1, borderRadius:4 },
+    { label:'بعد از جنگ', data:[hAfter.ctr*100, hAfter.install_rate*100], backgroundColor: GOLD, borderColor:GOLD_INK, borderWidth:1, borderRadius:4 }
   ]},
   options:{
     responsive:true, maintainAspectRatio:false,
@@ -854,8 +900,8 @@ const htB = hTala.find(x=>x.state==='Before War'), htA = hTala.find(x=>x.state==
 new Chart(document.getElementById('chartWarMarket'), {
   type:'bar',
   data:{ labels:['Tlyn','Talasea'], datasets:[
-    { label:'قبل از جنگ', data:[hBefore.ctr*100, htB.ctr*100], backgroundColor:'rgba(154,160,163,0.5)', borderRadius:4 },
-    { label:'بعد از جنگ', data:[hAfter.ctr*100, htA.ctr*100], backgroundColor: GOLD, borderRadius:4 }
+    { label:'قبل از جنگ', data:[hBefore.ctr*100, htB.ctr*100], backgroundColor:'#E7DEEF', borderColor:'#B39DCC', borderWidth:1, borderRadius:4 },
+    { label:'بعد از جنگ', data:[hAfter.ctr*100, htA.ctr*100], backgroundColor: GOLD, borderColor:GOLD_INK, borderWidth:1, borderRadius:4 }
   ]},
   options:{
     responsive:true, maintainAspectRatio:false,
