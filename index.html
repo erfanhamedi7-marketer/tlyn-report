@@ -93,6 +93,9 @@ html, body{
 .deck-btn:hover{ background:var(--gold-soft); }
 .deck-btn:disabled{ opacity:.35; cursor:default; }
 .deck-btn:disabled:hover{ background:var(--surface); }
+
+.deck-progress{ position:fixed; top:0; inset-inline:0; height:3px; z-index:40; background:transparent; pointer-events:none; }
+.deck-progress-bar{ height:100%; width:0%; background:linear-gradient(90deg, var(--gold), #FFE2A0); transition:width .55s cubic-bezier(.22,1,.36,1); }
 .slide-counter{ font-size:12px; color:var(--ink-dimmer); font-variant-numeric:tabular-nums; min-width:44px; text-align:center; }
 
 /* ---------- the deck: one scroll container, hard-snapped per slide ---------- */
@@ -115,6 +118,58 @@ html, body{
 }
 .slide .wrap{ width:100%; }
 .slide .table-wrap{ max-height:calc(100vh - var(--nav-h) - 230px); overflow-y:auto; }
+
+/* ---------- per-slide "build" animation, replayed each time a slide becomes active ---------- */
+@keyframes slideReveal{
+  from{ opacity:0; transform:translateY(20px) scale(.98); }
+  to{ opacity:1; transform:translateY(0) scale(1); }
+}
+.slide.is-active .section-head{ animation:slideReveal .6s cubic-bezier(.22,1,.36,1) both; }
+.slide.is-active .section-desc{ animation:slideReveal .6s cubic-bezier(.22,1,.36,1) .10s both; }
+.slide.is-active .subhead{ animation:slideReveal .55s cubic-bezier(.22,1,.36,1) both; }
+.slide.is-active .table-wrap{ animation:slideReveal .55s cubic-bezier(.22,1,.36,1) .12s both; }
+.slide.is-active .footnote{ animation:slideReveal .55s cubic-bezier(.22,1,.36,1) .22s both; }
+
+.slide.is-active .stat-card{ animation:slideReveal .55s cubic-bezier(.22,1,.36,1) both; }
+.slide.is-active .stat-card:nth-child(1){ animation-delay:.06s; }
+.slide.is-active .stat-card:nth-child(2){ animation-delay:.10s; }
+.slide.is-active .stat-card:nth-child(3){ animation-delay:.14s; }
+.slide.is-active .stat-card:nth-child(4){ animation-delay:.18s; }
+.slide.is-active .stat-card:nth-child(5){ animation-delay:.22s; }
+.slide.is-active .stat-card:nth-child(6){ animation-delay:.26s; }
+
+.slide.is-active .insight-card{ animation:slideReveal .55s cubic-bezier(.22,1,.36,1) both; }
+.slide.is-active .insight-card:nth-child(1){ animation-delay:.08s; }
+.slide.is-active .insight-card:nth-child(2){ animation-delay:.16s; }
+.slide.is-active .insight-card:nth-child(3){ animation-delay:.24s; }
+
+.slide.is-active .grid-2 > .panel,
+.slide.is-active .grid-2.even > .panel{ animation:slideReveal .6s cubic-bezier(.22,1,.36,1) both; }
+.slide.is-active .grid-2 > .panel:nth-child(1),
+.slide.is-active .grid-2.even > .panel:nth-child(1){ animation-delay:.08s; }
+.slide.is-active .grid-2 > .panel:nth-child(2),
+.slide.is-active .grid-2.even > .panel:nth-child(2){ animation-delay:.18s; }
+.slide.is-active > .wrap > .panel{ animation:slideReveal .6s cubic-bezier(.22,1,.36,1) .10s both; }
+
+.slide.cover.is-active .logo-badge{ animation:slideReveal .6s cubic-bezier(.22,1,.36,1) .05s both; }
+.slide.cover.is-active h1.brand{ animation:slideReveal .6s cubic-bezier(.22,1,.36,1) .15s both; }
+.slide.cover.is-active .subtitle{ animation:slideReveal .6s cubic-bezier(.22,1,.36,1) .25s both; }
+.slide.cover.is-active .meta-row{ animation:slideReveal .6s cubic-bezier(.22,1,.36,1) .33s both; }
+
+.slide.closing.is-active h2{ animation:slideReveal .6s cubic-bezier(.22,1,.36,1) .05s both; }
+.slide.closing.is-active .cols > div{ animation:slideReveal .6s cubic-bezier(.22,1,.36,1) both; }
+.slide.closing.is-active .cols > div:nth-child(1){ animation-delay:.14s; }
+.slide.closing.is-active .cols > div:nth-child(2){ animation-delay:.22s; }
+.slide.closing.is-active .cols > div:nth-child(3){ animation-delay:.30s; }
+
+@media (prefers-reduced-motion:reduce){
+  .slide.is-active .section-head, .slide.is-active .section-desc, .slide.is-active .subhead,
+  .slide.is-active .table-wrap, .slide.is-active .footnote, .slide.is-active .stat-card,
+  .slide.is-active .insight-card, .slide.is-active .grid-2 > .panel, .slide.is-active .grid-2.even > .panel,
+  .slide.is-active > .wrap > .panel, .slide.cover.is-active .logo-badge, .slide.cover.is-active h1.brand,
+  .slide.cover.is-active .subtitle, .slide.cover.is-active .meta-row,
+  .slide.closing.is-active h2, .slide.closing.is-active .cols > div{ animation:none !important; }
+}
 
 /* ---------- cover slide ---------- */
 .slide.cover{
@@ -284,6 +339,7 @@ tr.hl td:first-child{ border-inline-start:3px solid var(--gold-ink); }
     </div>
   </div>
 </nav>
+<div class="deck-progress"><div class="deck-progress-bar" id="deckProgressBar"></div></div>
 
 <main class="deck" id="deck">
 
@@ -1024,6 +1080,8 @@ const prevBtn = document.getElementById('prevSlide');
 const nextBtn = document.getElementById('nextSlide');
 const curEl = document.getElementById('slideCurrent');
 const totalEl = document.getElementById('slideTotal');
+const progressBar = document.getElementById('deckProgressBar');
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 totalEl.textContent = slides.length.toLocaleString('fa-IR');
 
@@ -1031,17 +1089,39 @@ totalEl.textContent = slides.length.toLocaleString('fa-IR');
 const partStarts = jumpLinks.map(a => a.getAttribute('href').slice(1));
 
 let activeIndex = 0;
+let scrollAnimId = null;
 
 function faNumLocal(n){ return n.toLocaleString('fa-IR'); }
+
+/* replay each chart's entrance animation whenever its slide becomes active,
+   the way a real slide deck "builds" a chart in on arrival rather than
+   showing it already-drawn. */
+function replayCharts(slide){
+  if (reduceMotion) return;
+  slide.querySelectorAll('canvas').forEach(cv => {
+    const chart = window.Chart && Chart.getChart ? Chart.getChart(cv) : null;
+    if (chart){ chart.reset(); chart.update(); }
+  });
+}
 
 function setActive(index){
   activeIndex = Math.max(0, Math.min(slides.length - 1, index));
   curEl.textContent = faNumLocal(activeIndex + 1);
   prevBtn.disabled = activeIndex === 0;
   nextBtn.disabled = activeIndex === slides.length - 1;
+  if (progressBar) progressBar.style.width = ((activeIndex + 1) / slides.length * 100) + '%';
+
+  const activeSlide = slides[activeIndex];
+  slides.forEach(s => { if (s !== activeSlide) s.classList.remove('is-active'); });
+  /* force a reflow so the reveal animation replays even when returning to a
+     slide that was already marked active before */
+  activeSlide.classList.remove('is-active');
+  void activeSlide.offsetWidth;
+  activeSlide.classList.add('is-active');
+  replayCharts(activeSlide);
 
   /* highlight the jump link for the current part: the last part-start at or before this slide */
-  const activeId = slides[activeIndex].id;
+  const activeId = activeSlide.id;
   let currentPart = partStarts[0];
   for (const id of partStarts){
     const idx = slides.findIndex(s => s.id === id);
@@ -1051,9 +1131,29 @@ function setActive(index){
   history.replaceState(null, '', '#' + activeId);
 }
 
+/* a hand-eased scroll (easeOutCubic) for button/keyboard/jump navigation, so
+   those transitions feel deliberately designed rather than left to the
+   browser's default smooth-scroll timing. Wheel/touch/drag keep native
+   CSS scroll-snap, which already feels direct and responsive on its own. */
+function animateScrollTo(targetTop, duration){
+  if (scrollAnimId) cancelAnimationFrame(scrollAnimId);
+  if (reduceMotion){ deck.scrollTop = targetTop; return; }
+  const startTop = deck.scrollTop;
+  const delta = targetTop - startTop;
+  if (Math.abs(delta) < 1) return;
+  const startTime = performance.now();
+  const easeOutCubic = t => 1 - Math.pow(1 - t, 3);
+  function step(now){
+    const t = Math.min(1, (now - startTime) / duration);
+    deck.scrollTop = startTop + delta * easeOutCubic(t);
+    scrollAnimId = t < 1 ? requestAnimationFrame(step) : null;
+  }
+  scrollAnimId = requestAnimationFrame(step);
+}
+
 function goTo(index){
   const target = slides[Math.max(0, Math.min(slides.length - 1, index))];
-  target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  animateScrollTo(target.offsetTop, 620);
 }
 
 /* IntersectionObserver tracks which slide is actually in view during snap-scrolling */
