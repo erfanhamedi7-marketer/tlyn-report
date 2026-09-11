@@ -98,23 +98,28 @@ html, body{
 .deck-progress-bar{ height:100%; width:0%; background:linear-gradient(90deg, var(--gold), #FFE2A0); transition:width .55s cubic-bezier(.22,1,.36,1); }
 .slide-counter{ font-size:12px; color:var(--ink-dimmer); font-variant-numeric:tabular-nums; min-width:44px; text-align:center; }
 
-/* ---------- the deck: one scroll container, hard-snapped per slide ---------- */
+/* ---------- the deck: every slide stacked in the same spot, only one ever visible ---------- */
 .deck{
   position:fixed; inset:var(--nav-h) 0 0 0;
-  overflow-y:scroll;
-  scroll-snap-type:y mandatory;
-  scroll-behavior:smooth;
-  -webkit-overflow-scrolling:touch;
+  overflow:hidden;
 }
 .slide{
-  min-height:calc(100vh - var(--nav-h));
-  scroll-snap-align:start;
-  scroll-snap-stop:always;
+  position:absolute; inset:0;
   display:flex;
   flex-direction:column;
   justify-content:center;
   padding:34px 0;
   overflow-y:auto;
+  opacity:0; visibility:hidden; pointer-events:none; z-index:1;
+  transition:opacity .72s cubic-bezier(.45,0,.15,1), visibility 0s linear .72s;
+}
+.slide.is-active{
+  opacity:1; visibility:visible; pointer-events:auto; z-index:2;
+  transition:opacity .72s cubic-bezier(.45,0,.15,1), visibility 0s linear 0s;
+}
+@media (prefers-reduced-motion:reduce){
+  .slide{ transition:opacity .01s linear, visibility 0s linear .01s; }
+  .slide.is-active{ transition:opacity .01s linear; }
 }
 .slide .wrap{ width:100%; }
 .slide .table-wrap{ max-height:calc(100vh - var(--nav-h) - 230px); overflow-y:auto; }
@@ -1073,6 +1078,12 @@ new Chart(document.getElementById('chartWarMarket'), {
 
 
 /* ================= SLIDE DECK NAVIGATION ================= */
+/* Every .slide sits stacked in the exact same spot (position:absolute,
+   inset:0); switching slides is a pure crossfade, never a scroll/translate,
+   so the deck never reads as "slides stacked underneath each other". All
+   input (wheel, touch, keyboard, buttons, jump-links) is captured directly
+   and funneled through goTo(), which is the only thing allowed to change
+   which slide is active. */
 const deck = document.getElementById('deck');
 const slides = [...deck.querySelectorAll('.slide')];
 const jumpLinks = [...document.querySelectorAll('.jump-links a[href^="#"]')];
@@ -1083,13 +1094,17 @@ const totalEl = document.getElementById('slideTotal');
 const progressBar = document.getElementById('deckProgressBar');
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+const FADE_MS = 720;      /* matches the CSS opacity transition duration */
+const PAUSE_MS = 260;     /* extra dwell after a transition before the next one is accepted */
+const LOCK_MS = reduceMotion ? 0 : FADE_MS + PAUSE_MS;
+
 totalEl.textContent = slides.length.toLocaleString('fa-IR');
 
 /* which slide id starts each "part", for highlighting the right jump link */
 const partStarts = jumpLinks.map(a => a.getAttribute('href').slice(1));
 
 let activeIndex = 0;
-let scrollAnimId = null;
+let isLocked = false;
 
 function faNumLocal(n){ return n.toLocaleString('fa-IR'); }
 
@@ -1131,41 +1146,67 @@ function setActive(index){
   history.replaceState(null, '', '#' + activeId);
 }
 
-/* a hand-eased scroll (easeOutCubic) for button/keyboard/jump navigation, so
-   those transitions feel deliberately designed rather than left to the
-   browser's default smooth-scroll timing. Wheel/touch/drag keep native
-   CSS scroll-snap, which already feels direct and responsive on its own. */
-function animateScrollTo(targetTop, duration){
-  if (scrollAnimId) cancelAnimationFrame(scrollAnimId);
-  if (reduceMotion){ deck.scrollTop = targetTop; return; }
-  const startTop = deck.scrollTop;
-  const delta = targetTop - startTop;
-  if (Math.abs(delta) < 1) return;
-  const startTime = performance.now();
-  const easeOutCubic = t => 1 - Math.pow(1 - t, 3);
-  function step(now){
-    const t = Math.min(1, (now - startTime) / duration);
-    deck.scrollTop = startTop + delta * easeOutCubic(t);
-    scrollAnimId = t < 1 ? requestAnimationFrame(step) : null;
-  }
-  scrollAnimId = requestAnimationFrame(step);
-}
-
+/* the single gate every input source goes through: one deliberate step at a
+   time, with a brief locked pause after each so quick repeated input
+   (a fast trackpad swipe, holding an arrow key) can't blow through several
+   slides in one go. */
 function goTo(index){
-  const target = slides[Math.max(0, Math.min(slides.length - 1, index))];
-  animateScrollTo(target.offsetTop, 620);
+  if (isLocked) return;
+  const clamped = Math.max(0, Math.min(slides.length - 1, index));
+  if (clamped === activeIndex) return;
+  setActive(clamped);
+  if (LOCK_MS > 0){
+    isLocked = true;
+    setTimeout(() => { isLocked = false; }, LOCK_MS);
+  }
 }
 
-/* IntersectionObserver tracks which slide is actually in view during snap-scrolling */
-const io = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting && entry.intersectionRatio >= 0.55){
-      const idx = slides.indexOf(entry.target);
-      if (idx !== -1) setActive(idx);
+/* find the nearest ancestor (up to the deck) that can itself scroll, so a
+   wheel/swipe over a tall table scrolls that table first and only changes
+   the slide once the table is already at its scroll boundary. */
+function findScrollable(node){
+  while (node && node !== deck){
+    if (node.scrollHeight > node.clientHeight + 1){
+      const oy = getComputedStyle(node).overflowY;
+      if (oy === 'auto' || oy === 'scroll') return node;
     }
-  });
-}, { root: deck, threshold: [0.55] });
-slides.forEach(s => io.observe(s));
+    node = node.parentElement;
+  }
+  return null;
+}
+
+deck.addEventListener('wheel', (e) => {
+  const scrollable = findScrollable(e.target);
+  if (scrollable){
+    const atTop = scrollable.scrollTop <= 0;
+    const atBottom = scrollable.scrollTop + scrollable.clientHeight >= scrollable.scrollHeight - 1;
+    if ((e.deltaY < 0 && !atTop) || (e.deltaY > 0 && !atBottom)) return;
+  }
+  if (Math.abs(e.deltaY) < 2) return;
+  e.preventDefault();
+  goTo(activeIndex + (e.deltaY > 0 ? 1 : -1));
+}, { passive:false });
+
+let touchStartY = null;
+let touchStartTarget = null;
+deck.addEventListener('touchstart', (e) => {
+  touchStartY = e.touches[0].clientY;
+  touchStartTarget = e.target;
+}, { passive:true });
+deck.addEventListener('touchend', (e) => {
+  if (touchStartY === null) return;
+  const dy = touchStartY - e.changedTouches[0].clientY;
+  const startTarget = touchStartTarget;
+  touchStartY = null; touchStartTarget = null;
+  if (Math.abs(dy) < 48) return;
+  const scrollable = findScrollable(startTarget);
+  if (scrollable){
+    const atTop = scrollable.scrollTop <= 0;
+    const atBottom = scrollable.scrollTop + scrollable.clientHeight >= scrollable.scrollHeight - 1;
+    if ((dy < 0 && !atTop) || (dy > 0 && !atBottom)) return;
+  }
+  goTo(activeIndex + (dy > 0 ? 1 : -1));
+}, { passive:true });
 
 prevBtn.addEventListener('click', () => goTo(activeIndex - 1));
 nextBtn.addEventListener('click', () => goTo(activeIndex + 1));
@@ -1186,12 +1227,9 @@ document.addEventListener('keydown', (e) => {
   else if (e.key === 'End'){ e.preventDefault(); goTo(slides.length - 1); }
 });
 
-/* land on the slide named by the URL hash, if any, without an animated scroll */
+/* land on the slide named by the URL hash, if any */
 const initialId = location.hash.slice(1);
 const initialIdx = initialId ? slides.findIndex(s => s.id === initialId) : 0;
-if (initialIdx > 0){
-  slides[initialIdx].scrollIntoView({ block: 'start' });
-}
 setActive(initialIdx === -1 ? 0 : initialIdx);
 
 })();
