@@ -51,67 +51,122 @@
 
   --radius:12px;
   --shadow-soft:0 1px 2px rgba(40,2,74,0.04), 0 8px 24px -12px rgba(40,2,74,0.10);
+  --nav-h:56px;
 }
 *{box-sizing:border-box;}
-html{scroll-behavior:smooth;}
-body{
+html, body{
+  height:100%;
   margin:0;
+  overflow:hidden; /* the deck owns scrolling, not the document */
   background:var(--bg);
   color:var(--ink);
   font-family:'Vazirmatn', 'Tahoma', sans-serif;
   font-feature-settings:"tnum" 1;
-  line-height:1.8;
+  line-height:1.75;
 }
 ::selection{ background: var(--gold-soft-2); }
 
 /* ---------- layout shells ---------- */
-.wrap{ max-width:1180px; margin:0 auto; padding:0 28px; }
+.wrap{ max-width:1180px; margin:0 auto; padding:0 28px; width:100%; }
 .rule{ height:1px; background:var(--border-strong); border:none; }
 .rule-soft{ height:1px; background:var(--border); border:none; }
 
-/* ---------- header ---------- */
-header.masthead{
+/* ---------- deck nav (fixed, always visible) ---------- */
+.deck-nav{
+  position:fixed; inset-inline:0; top:0; height:var(--nav-h); z-index:30;
+  background:rgba(250,248,252,0.92); backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--border);
+}
+.deck-nav .wrap{ display:flex; align-items:center; gap:22px; height:var(--nav-h); }
+.deck-nav a{ color:var(--ink-dim); text-decoration:none; font-size:13px; white-space:nowrap; flex:none; font-weight:500; padding-bottom:2px; border-bottom:2px solid transparent; }
+.deck-nav a:hover{ color:var(--purple); border-bottom-color:var(--gold); }
+.deck-nav a.active{ color:var(--purple); border-bottom-color:var(--gold); font-weight:700; }
+.deck-nav .brand-mini{ color:var(--purple); font-weight:800; font-size:16px; flex:none; display:flex; align-items:center; gap:7px; }
+.deck-nav .brand-mini img{ width:24px; height:24px; border-radius:50%; display:block; }
+.deck-nav .jump-links{ display:flex; align-items:center; gap:20px; overflow-x:auto; flex:1; }
+.deck-nav .deck-controls{ display:flex; align-items:center; gap:10px; flex:none; margin-inline-start:auto; }
+.deck-btn{
+  width:28px; height:28px; border-radius:50%; border:1px solid var(--border-strong); background:var(--surface);
+  color:var(--purple); font-size:14px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center;
+  transition:background .15s, color .15s;
+}
+.deck-btn:hover{ background:var(--gold-soft); }
+.deck-btn:disabled{ opacity:.35; cursor:default; }
+.deck-btn:disabled:hover{ background:var(--surface); }
+.slide-counter{ font-size:12px; color:var(--ink-dimmer); font-variant-numeric:tabular-nums; min-width:44px; text-align:center; }
+
+/* ---------- the deck: one scroll container, hard-snapped per slide ---------- */
+.deck{
+  position:fixed; inset:var(--nav-h) 0 0 0;
+  overflow-y:scroll;
+  scroll-snap-type:y mandatory;
+  scroll-behavior:smooth;
+  -webkit-overflow-scrolling:touch;
+}
+.slide{
+  min-height:calc(100vh - var(--nav-h));
+  scroll-snap-align:start;
+  scroll-snap-stop:always;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:34px 0;
+  overflow-y:auto;
+}
+.slide .wrap{ width:100%; }
+.slide .table-wrap{ max-height:calc(100vh - var(--nav-h) - 230px); overflow-y:auto; }
+
+/* ---------- cover slide ---------- */
+.slide.cover{
   position:relative;
-  padding:76px 0 52px;
   background:linear-gradient(155deg, var(--purple-deep), var(--purple) 70%);
   color:#F2E8FB;
   overflow:hidden;
+  justify-content:center;
 }
-header.masthead::after{
+.slide.cover::after{
   content:"";
   position:absolute; inset:auto 0 0 0; height:4px;
   background:linear-gradient(90deg, var(--gold), #FFE2A0 50%, var(--gold));
 }
-header.masthead::before{
+.slide.cover::before{
   content:"";
   position:absolute; width:560px; height:560px; border-radius:50%;
   background:radial-gradient(circle, rgba(255,199,44,0.16), transparent 70%);
   top:-320px; left:50%; transform:translateX(-50%);
 }
-header.masthead .wrap{ display:flex; flex-direction:column; align-items:center; text-align:center; }
+.slide.cover .wrap{ position:relative; display:flex; flex-direction:column; align-items:center; text-align:center; }
 .logo-badge{
   position:relative; width:84px; height:84px; margin-bottom:26px;
   box-shadow:0 10px 28px -10px rgba(0,0,0,0.35); border-radius:50%;
 }
 .logo-badge img{ width:100%; height:100%; border-radius:50%; display:block; }
 h1.brand{
-  position:relative;
   font-weight:800; text-wrap:balance;
   font-size:clamp(38px,6.5vw,60px); line-height:1.15; margin:0 0 16px; color:#FFFFFF;
   letter-spacing:-0.01em;
 }
 h1.brand span{ color:var(--gold); }
-.subtitle{ position:relative; font-size:18px; color:#D8C3EE; max-width:640px; margin:0 0 30px; font-weight:400; }
-.meta-row{ position:relative; display:flex; flex-wrap:wrap; justify-content:center; gap:14px; margin-top:6px; }
+.subtitle{ font-size:18px; color:#D8C3EE; max-width:640px; margin:0 0 30px; font-weight:400; }
+.meta-row{ display:flex; flex-wrap:wrap; justify-content:center; gap:14px; margin-top:6px; }
 .period-badge{
   display:inline-flex; align-items:center; padding:9px 24px; border-radius:100px;
   border:1px solid rgba(255,199,44,0.4); background:rgba(255,199,44,0.08);
   color:#FFFFFF; font-size:15px; font-weight:600;
 }
+.scroll-hint{
+  position:absolute; bottom:22px; left:50%; transform:translateX(-50%);
+  font-size:12.5px; color:#C9AEE0; display:flex; flex-direction:column; align-items:center; gap:6px;
+}
+.scroll-hint .chev{ animation:bob 1.6s ease-in-out infinite; }
+@keyframes bob{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(5px); } }
+@media (prefers-reduced-motion:reduce){ .scroll-hint .chev{ animation:none; } }
 
-/* ---------- section scaffolding ---------- */
-.section{ padding:80px 0; }
-.section + .section{ border-top:1px solid var(--border); }
+/* ---------- section divider slides ---------- */
+.slide.divider .section-head{ justify-content:center; }
+.slide.divider .wrap{ text-align:center; }
+.slide.divider .section-desc{ margin-inline:auto; }
+
 .section-head{ display:flex; align-items:baseline; gap:18px; margin-bottom:8px; }
 .section-num{
   font-weight:700; font-size:19px; color:var(--purple);
@@ -119,9 +174,10 @@ h1.brand span{ color:var(--gold); }
   display:flex; align-items:center; justify-content:center; flex:none; background:var(--surface);
 }
 .section-title{ font-weight:800; font-size:clamp(27px,4vw,38px); margin:0; letter-spacing:-0.01em; text-wrap:balance; }
-.section-desc{ color:var(--ink-dim); font-size:16px; max-width:700px; margin:16px 0 46px; }
+.section-desc{ color:var(--ink-dim); font-size:16px; max-width:700px; margin:16px 0 0; }
 
-.subhead{ display:flex; align-items:center; flex-wrap:wrap; gap:12px; margin:58px 0 20px; }
+/* ---------- per-slide subhead (acts as that slide's title) ---------- */
+.subhead{ display:flex; align-items:center; flex-wrap:wrap; gap:12px; margin:0 0 18px; }
 .subhead .chip{
   font-size:12.5px; padding:4px 12px; border-radius:100px; border:1px solid; font-weight:600;
 }
@@ -131,7 +187,7 @@ h1.brand span{ color:var(--gold); }
 .subhead p.note{ color:var(--ink-dimmer); font-size:13.5px; margin:0 0 0 auto; }
 
 /* ---------- stat cards ---------- */
-.stat-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:14px; }
+.stat-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:14px; }
 .stat-card{ background:var(--surface); padding:22px 22px; border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow-soft); }
 .stat-card.accent-app{ border-inline-start:3px solid var(--gold); }
 .stat-card.accent-web{ border-inline-start:3px solid var(--purple); }
@@ -147,8 +203,8 @@ h1.brand span{ color:var(--gold); }
 .panel-title{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:18px; flex-wrap:wrap; gap:8px;}
 .panel-title h4{ margin:0; font-size:16px; font-weight:700; }
 .panel-title .legend-note{ font-size:12px; color:var(--ink-dimmer); }
-.chart-box{ position:relative; height:300px; }
-.chart-box.tall{ height:360px; }
+.chart-box{ position:relative; height:min(300px, 38vh); }
+.chart-box.tall{ height:min(360px, 42vh); }
 .grid-2{ display:grid; grid-template-columns:1.3fr 1fr; gap:18px; }
 .grid-2.even{ grid-template-columns:1fr 1fr; }
 @media (max-width:820px){ .grid-2, .grid-2.even{ grid-template-columns:1fr; } }
@@ -159,9 +215,10 @@ table{ width:100%; border-collapse:collapse; font-size:13.5px; min-width:560px; 
 thead th{
   text-align:right; padding:13px 14px; background:var(--surface-2); color:var(--ink-dim);
   font-weight:700; font-size:12px; border-bottom:1px solid var(--border); white-space:nowrap; letter-spacing:0.01em;
+  position:sticky; top:0;
 }
 thead th.num, td.num{ text-align:left; direction:ltr; }
-tbody td{ padding:12px 14px; border-bottom:1px solid var(--border); white-space:nowrap; color:var(--ink); }
+tbody td{ padding:11px 14px; border-bottom:1px solid var(--border); white-space:nowrap; color:var(--ink); }
 tbody tr:last-child td{ border-bottom:none; }
 tbody tr:hover{ background:var(--gold-soft); }
 tr.hl td{ background:var(--gold-soft); font-weight:700; color:var(--ink); }
@@ -171,7 +228,7 @@ tr.hl td:first-child{ border-inline-start:3px solid var(--gold-ink); }
 .mono-muted{ color:var(--ink-dimmer); }
 
 /* ---------- callouts / insights ---------- */
-.insights{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px; margin-top:28px; }
+.insights{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px; }
 .insight-card{ border:1px solid var(--border); border-radius:var(--radius); padding:18px 20px; background:var(--surface); border-inline-start:3px solid var(--purple); box-shadow:var(--shadow-soft); }
 .insight-card .tag{ font-size:11.5px; color:var(--purple); margin-bottom:10px; display:block; font-weight:700; letter-spacing:0.01em; }
 .insight-card p{ margin:0; font-size:14.5px; color:var(--ink); }
@@ -183,354 +240,471 @@ tr.hl td:first-child{ border-inline-start:3px solid var(--gold-ink); }
 .insight-card.pos .tag{ color:var(--positive); }
 .insight-card.pos p b{ color:var(--positive); }
 
-/* ---------- footnote / footer ---------- */
-.footnote{ font-size:12.5px; color:var(--ink-dimmer); margin-top:14px; line-height:1.9; }
-footer{ padding:58px 0 64px; background:linear-gradient(155deg, var(--purple-deep), var(--purple) 70%); color:#E9DBF7; position:relative; }
-footer::before{
+/* ---------- footnote ---------- */
+.footnote{ font-size:12.5px; color:var(--ink-dimmer); margin-top:14px; line-height:1.85; }
+
+/* ---------- closing / sources slide ---------- */
+.slide.closing{
+  background:linear-gradient(155deg, var(--purple-deep), var(--purple) 70%); color:#E9DBF7; position:relative;
+}
+.slide.closing::before{
   content:""; position:absolute; inset:0 0 auto 0; height:4px;
   background:linear-gradient(90deg, var(--gold), #FFE2A0 50%, var(--gold));
 }
-footer .cols{ display:grid; grid-template-columns:2fr 1fr 1fr; gap:44px; }
-footer h5{ font-size:12.5px; color:var(--gold); margin:0 0 14px; letter-spacing:0.03em; font-weight:700; }
-footer p, footer li{ font-size:13.5px; color:#CBB3E4; line-height:1.85; }
-footer ul{ margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:8px; }
-@media (max-width:820px){ footer .cols{ grid-template-columns:1fr; } }
-
-.scroll-nav{
-  position:sticky; top:0; z-index:20; background:rgba(250,248,252,0.88); backdrop-filter:blur(10px);
-  border-bottom:1px solid var(--border);
-}
-.scroll-nav .wrap{ display:flex; align-items:center; gap:28px; height:56px; overflow-x:auto; }
-.scroll-nav a{ color:var(--ink-dim); text-decoration:none; font-size:13.5px; white-space:nowrap; flex:none; font-weight:500; padding-bottom:2px; border-bottom:2px solid transparent; }
-.scroll-nav a:hover{ color:var(--purple); border-bottom-color:var(--gold); }
-.scroll-nav a.active{ color:var(--purple); border-bottom-color:var(--gold); font-weight:700; }
-.scroll-nav .brand-mini{ color:var(--purple); font-weight:800; font-size:17px; flex:none; display:flex; align-items:center; gap:8px; }
-.scroll-nav .brand-mini img{ width:26px; height:26px; border-radius:50%; display:block; }
-
-/* ---------- tab panels (nav switches content instead of scrolling) ---------- */
-.tab-panel{ display:none; }
-.tab-panel.active{ display:block; }
+.slide.closing .cols{ display:grid; grid-template-columns:2fr 1fr 1fr; gap:44px; }
+.slide.closing h5{ font-size:12.5px; color:var(--gold); margin:0 0 14px; letter-spacing:0.03em; font-weight:700; }
+.slide.closing p, .slide.closing li{ font-size:13.5px; color:#CBB3E4; line-height:1.8; }
+.slide.closing ul{ margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:8px; }
+.slide.closing h2{ color:#FFFFFF; font-family:inherit; font-weight:800; font-size:clamp(24px,3.4vw,32px); margin:0 0 30px; }
+@media (max-width:820px){ .slide.closing .cols{ grid-template-columns:1fr; } }
 
 @media (max-width:640px){
   .wrap{ padding:0 18px; }
-  header.masthead{ padding:48px 0 32px; }
-  .section{ padding:54px 0; }
+  .deck-nav .jump-links{ display:none; }
+  .slide{ padding:26px 0; }
+  .chart-box{ height:min(260px, 34vh); }
+  .chart-box.tall{ height:min(300px, 38vh); }
 }
 </style>
-</head>
 <body>
 
-<nav class="scroll-nav">
+<nav class="deck-nav">
   <div class="wrap">
     <span class="brand-mini"><img src="data:image/jpeg;base64,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" alt="">طلاین</span>
-    <a href="#summary">خلاصه مدیریتی</a>
-    <a href="#part1">۱. عملکرد کمپین‌ها</a>
-    <a href="#part2">۲. مقایسه رقابتی</a>
-    <a href="#footer-note">منابع و روش</a>
+    <div class="jump-links">
+      <a href="#s-summary-stats" data-jump="summary">خلاصه مدیریتی</a>
+      <a href="#s-part1-divider" data-jump="part1">۱. عملکرد کمپین‌ها</a>
+      <a href="#s-part2-divider" data-jump="part2">۲. مقایسه رقابتی</a>
+      <a href="#s-closing" data-jump="footer">منابع و روش</a>
+    </div>
+    <div class="deck-controls">
+      <button class="deck-btn" id="prevSlide" type="button" aria-label="اسلاید قبلی">‹</button>
+      <span class="slide-counter"><span id="slideCurrent">۱</span> / <span id="slideTotal">—</span></span>
+      <button class="deck-btn" id="nextSlide" type="button" aria-label="اسلاید بعدی">›</button>
+    </div>
   </div>
 </nav>
 
-<header class="masthead">
-  <div class="wrap">
-    <div class="logo-badge"><img src="data:image/jpeg;base64,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" alt="طلاین"></div>
-    <h1 class="brand">گزارش تحلیلی <span>طلاین</span></h1>
-    <p class="subtitle">تحلیل جامع عملکرد کمپین‌های اپلیکیشن و وب طلاین، به‌همراه تحلیل کانورژن فانل نسبت به رقبا</p>
-    <div class="meta-row">
-      <div class="period-badge">۱ مرداد تا ۱۵ شهریور</div>
-    </div>
-  </div>
-</header>
+<main class="deck" id="deck">
 
-<section class="section tab-panel" id="summary">
-  <div class="wrap">
-    <div class="section-head">
-      <div class="section-num">۰</div>
-      <h2 class="section-title">خلاصه مدیریتی</h2>
+  <!-- S0: cover -->
+  <section class="slide cover" id="s-cover">
+    <div class="wrap">
+      <div class="logo-badge"><img src="data:image/jpeg;base64,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" alt="طلاین"></div>
+      <h1 class="brand">گزارش تحلیلی <span>طلاین</span></h1>
+      <p class="subtitle">تحلیل جامع عملکرد کمپین‌های اپلیکیشن و وب طلاین، به‌همراه تحلیل کانورژن فانل نسبت به رقبا</p>
+      <div class="meta-row">
+        <div class="period-badge">۱ مرداد تا ۱۵ شهریور</div>
+      </div>
     </div>
-    <p class="section-desc">در بازهٔ ۱ مرداد تا ۱۵ شهریور، طلاین مجموعاً بیش از <b style="color:var(--purple)">۱۲.۳ میلیارد ریال</b> در دو کانال اپلیکیشن و وب هزینه کرده و بیش از <b style="color:var(--ink)">۵۰ هزار</b> کاربر احراز‌هویت‌شده (KYC) جذب کرده است. کانال وب حجم هزینهٔ بیشتری دارد اما کانال اپلیکیشن به‌ازای هر کاربر واجد شرایط، هزینهٔ کمتری می‌پردازد.</p>
+    <div class="scroll-hint"><span>اسکرول کن</span><span class="chev">↓</span></div>
+  </section>
 
-    <div class="stat-grid">
-      <div class="stat-card accent-app">
-        <div class="label">هزینهٔ کل — اپلیکیشن</div>
-        <div class="value" id="s-app-cost">—</div>
+  <!-- S1: summary — stats -->
+  <section class="slide" id="s-summary-stats">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="section-num">۰</div>
+        <h2 class="section-title">خلاصه مدیریتی</h2>
       </div>
-      <div class="stat-card accent-app">
-        <div class="label">نصب‌های اپلیکیشن</div>
-        <div class="value" id="s-app-installs">—</div>
-      </div>
-      <div class="stat-card accent-app">
-        <div class="label">CPA احراز‌هویت (اپ)</div>
-        <div class="value" id="s-app-cpa">—</div>
-      </div>
-      <div class="stat-card accent-web">
-        <div class="label">هزینهٔ کل — وب</div>
-        <div class="value" id="s-web-cost">—</div>
-      </div>
-      <div class="stat-card accent-web">
-        <div class="label">احراز‌هویت‌شده‌های وب</div>
-        <div class="value" id="s-web-verified">—</div>
-      </div>
-      <div class="stat-card accent-web">
-        <div class="label">CPA احراز‌هویت (وب)</div>
-        <div class="value" id="s-web-cpa">—</div>
-      </div>
-    </div>
+      <p class="section-desc">در بازهٔ ۱ مرداد تا ۱۵ شهریور، طلاین مجموعاً بیش از <b style="color:var(--purple)">۱۲.۳ میلیارد ریال</b> در دو کانال اپلیکیشن و وب هزینه کرده و بیش از <b style="color:var(--ink)">۵۰ هزار</b> کاربر احراز‌هویت‌شده (KYC) جذب کرده است. کانال وب حجم هزینهٔ بیشتری دارد اما کانال اپلیکیشن به‌ازای هر کاربر واجد شرایط، هزینهٔ کمتری می‌پردازد.</p>
 
-    <div class="insights" style="margin-top:32px;">
-      <div class="insight-card">
-        <span class="tag">تمرکز بودجه</span>
-        <p>در اپلیکیشن، <b>۳ کمپین برتر</b> (inapp_CPI_11، inapp-cpi-pb-ad، inapp_ow) به‌تنهایی <b>۷۱٪</b> از کل بودجهٔ اپ را مصرف می‌کنند؛ در وب برعکس، بودجه میان <b>۶۸ کمپین فعال</b> پخش شده است.</p>
-      </div>
-      <div class="insight-card pos">
-        <span class="tag">جایگاه رقابتی</span>
-        <p>طلاین در وب با نرخ کلیک <b>۱.۴۹٪</b> نزدیک به <b>۵.۴ برابر</b> میانگین صنعت طلای دیجیتال (۰.۲۸٪) عمل می‌کند.</p>
-      </div>
-      <div class="insight-card neg">
-        <span class="tag">نقطهٔ بهبود</span>
-        <p>با وجود بهترین CTR وب، نرخ تبدیل سشن‌به‌ثبت‌نام طلاین (<b>۰.۶۷٪</b>) حدود یک‌سوم میانگین صنعت (۱.۸۹٪) است.</p>
+      <div class="stat-grid" style="margin-top:28px;">
+        <div class="stat-card accent-app">
+          <div class="label">هزینهٔ کل — اپلیکیشن</div>
+          <div class="value" id="s-app-cost">—</div>
+        </div>
+        <div class="stat-card accent-app">
+          <div class="label">نصب‌های اپلیکیشن</div>
+          <div class="value" id="s-app-installs">—</div>
+        </div>
+        <div class="stat-card accent-app">
+          <div class="label">CPA احراز‌هویت (اپ)</div>
+          <div class="value" id="s-app-cpa">—</div>
+        </div>
+        <div class="stat-card accent-web">
+          <div class="label">هزینهٔ کل — وب</div>
+          <div class="value" id="s-web-cost">—</div>
+        </div>
+        <div class="stat-card accent-web">
+          <div class="label">احراز‌هویت‌شده‌های وب</div>
+          <div class="value" id="s-web-verified">—</div>
+        </div>
+        <div class="stat-card accent-web">
+          <div class="label">CPA احراز‌هویت (وب)</div>
+          <div class="value" id="s-web-cpa">—</div>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="section tab-panel" id="part1">
-  <div class="wrap">
-    <div class="section-head">
-      <div class="section-num">۱</div>
-      <h2 class="section-title">عملکرد کمپین‌های طلاین</h2>
-    </div>
-    <p class="section-desc">مرور روند هفتگی هزینه، نصب/تایید و هزینهٔ جذب، به‌همراه تفکیک کامل کمپین‌ها برای هر دو پلتفرم اپلیکیشن و وب.</p>
-
-    <!-- APP -->
-    <div class="subhead">
-      <span class="chip app">اپلیکیشن</span>
-      <h3>۱.۱ روند هفتگی — اپلیکیشن</h3>
-      <p class="note">۱۹ کمپین تعریف‌شده، ۱۴ کمپین دارای هزینه</p>
-    </div>
-    <div class="grid-2">
-      <div class="panel">
-        <div class="panel-title"><h4>هزینه و نصب به تفکیک هفته</h4><span class="legend-note">ستون: هزینه (ریال) — خط: تعداد نصب</span></div>
-        <div class="chart-box"><canvas id="chartAppWeekly"></canvas></div>
-      </div>
-      <div class="panel">
-        <div class="panel-title"><h4>روند CPI و CPA (KYC)</h4><span class="legend-note">ریال به‌ازای هر رویداد</span></div>
-        <div class="chart-box"><canvas id="chartAppEfficiency"></canvas></div>
+  <!-- S2: summary — insights -->
+  <section class="slide" id="s-summary-insights">
+    <div class="wrap">
+      <div class="subhead"><h3>جمع‌بندی سریع</h3></div>
+      <div class="insights">
+        <div class="insight-card">
+          <span class="tag">تمرکز بودجه</span>
+          <p>در اپلیکیشن، <b>۳ کمپین برتر</b> (inapp_CPI_11، inapp-cpi-pb-ad، inapp_ow) به‌تنهایی <b>۷۱٪</b> از کل بودجهٔ اپ را مصرف می‌کنند؛ در وب برعکس، بودجه میان <b>۶۸ کمپین فعال</b> پخش شده است.</p>
+        </div>
+        <div class="insight-card pos">
+          <span class="tag">جایگاه رقابتی</span>
+          <p>طلاین در وب با نرخ کلیک <b>۱.۴۹٪</b> نزدیک به <b>۵.۴ برابر</b> میانگین صنعت طلای دیجیتال (۰.۲۸٪) عمل می‌کند.</p>
+        </div>
+        <div class="insight-card neg">
+          <span class="tag">نقطهٔ بهبود</span>
+          <p>با وجود بهترین CTR وب، نرخ تبدیل سشن‌به‌ثبت‌نام طلاین (<b>۰.۶۷٪</b>) حدود یک‌سوم میانگین صنعت (۱.۸۹٪) است.</p>
+        </div>
       </div>
     </div>
+  </section>
 
-    <div class="subhead">
-      <h3>۱.۲ قیف تبدیل اپلیکیشن</h3>
-      <p class="note">مجموع بازهٔ گزارش</p>
-    </div>
-    <div class="panel">
-      <div class="chart-box" style="height:220px;"><canvas id="chartAppFunnel"></canvas></div>
-    </div>
-
-    <div class="subhead">
-      <h3>۱.۳ تفکیک کمپین‌های اپلیکیشن</h3>
-      <p class="note">مرتب‌شده بر اساس هزینه</p>
-    </div>
-    <div class="grid-2">
-      <div class="panel">
-        <div class="panel-title"><h4>هزینه به تفکیک کمپین</h4></div>
-        <div class="chart-box tall"><canvas id="chartAppCampCost"></canvas></div>
+  <!-- S3: part1 divider -->
+  <section class="slide divider" id="s-part1-divider">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="section-num">۱</div>
+        <h2 class="section-title">عملکرد کمپین‌های طلاین</h2>
       </div>
-      <div class="panel">
-        <div class="panel-title"><h4>CPA در برابر حجم نصب</h4><span class="legend-note">اندازهٔ دایره = هزینه</span></div>
-        <div class="chart-box tall"><canvas id="chartAppScatter"></canvas></div>
+      <p class="section-desc">مرور روند هفتگی هزینه، نصب/تایید و هزینهٔ جذب، به‌همراه تفکیک کامل کمپین‌ها برای هر دو پلتفرم اپلیکیشن و وب.</p>
+    </div>
+  </section>
+
+  <!-- S4: 1.1 app weekly trend -->
+  <section class="slide" id="s-part1-app-weekly">
+    <div class="wrap">
+      <div class="subhead">
+        <span class="chip app">اپلیکیشن</span>
+        <h3>۱.۱ روند هفتگی — اپلیکیشن</h3>
+        <p class="note">۱۹ کمپین تعریف‌شده، ۱۴ کمپین دارای هزینه</p>
+      </div>
+      <div class="grid-2">
+        <div class="panel">
+          <div class="panel-title"><h4>هزینه و نصب به تفکیک هفته</h4><span class="legend-note">ستون: هزینه (ریال) — خط: تعداد نصب</span></div>
+          <div class="chart-box"><canvas id="chartAppWeekly"></canvas></div>
+        </div>
+        <div class="panel">
+          <div class="panel-title"><h4>روند CPI و CPA (KYC)</h4><span class="legend-note">ریال به‌ازای هر رویداد</span></div>
+          <div class="chart-box"><canvas id="chartAppEfficiency"></canvas></div>
+        </div>
       </div>
     </div>
-    <div class="table-wrap" style="margin-top:20px;">
-      <table>
-        <thead><tr>
-          <th>کمپین</th><th class="num">هزینه (ریال)</th><th class="num">نصب</th><th class="num">KYC</th>
-          <th class="num">CPI</th><th class="num">CPA</th><th class="num">نرخ تبدیل</th>
-        </tr></thead>
-        <tbody id="tbl-app-campaigns"></tbody>
-      </table>
-    </div>
+  </section>
 
-    <!-- WEB -->
-    <div class="subhead" style="margin-top:70px;">
-      <span class="chip web">وب</span>
-      <h3>۱.۴ روند هفتگی — وب</h3>
-      <p class="note">۹۹ کمپین تعریف‌شده، ۶۸ کمپین دارای هزینه</p>
-    </div>
-    <div class="grid-2">
-      <div class="panel">
-        <div class="panel-title"><h4>هزینه و کاربران تایید‌شده به تفکیک هفته</h4><span class="legend-note">ستون: هزینه (ریال) — خط: کاربر تایید‌شده</span></div>
-        <div class="chart-box"><canvas id="chartWebWeekly"></canvas></div>
+  <!-- S5: 1.2 app funnel -->
+  <section class="slide" id="s-part1-app-funnel">
+    <div class="wrap">
+      <div class="subhead">
+        <h3>۱.۲ قیف تبدیل اپلیکیشن</h3>
+        <p class="note">مجموع بازهٔ گزارش</p>
       </div>
       <div class="panel">
-        <div class="panel-title"><h4>روند CPA (کاربر تایید‌شده)</h4><span class="legend-note">ریال به‌ازای هر کاربر</span></div>
-        <div class="chart-box"><canvas id="chartWebEfficiency"></canvas></div>
+        <div class="chart-box" style="height:min(260px,40vh);"><canvas id="chartAppFunnel"></canvas></div>
       </div>
     </div>
+  </section>
 
-    <div class="subhead">
-      <h3>۱.۵ تفکیک کمپین‌های وب</h3>
-      <p class="note">۱۰ کمپین برتر + مجموع سایر کمپین‌ها</p>
+  <!-- S6: 1.3 app campaign charts -->
+  <section class="slide" id="s-part1-app-camp-charts">
+    <div class="wrap">
+      <div class="subhead">
+        <h3>۱.۳ تفکیک کمپین‌های اپلیکیشن</h3>
+        <p class="note">مرتب‌شده بر اساس هزینه</p>
+      </div>
+      <div class="grid-2">
+        <div class="panel">
+          <div class="panel-title"><h4>هزینه به تفکیک کمپین</h4></div>
+          <div class="chart-box tall"><canvas id="chartAppCampCost"></canvas></div>
+        </div>
+        <div class="panel">
+          <div class="panel-title"><h4>CPA در برابر حجم نصب</h4><span class="legend-note">اندازهٔ دایره = هزینه</span></div>
+          <div class="chart-box tall"><canvas id="chartAppScatter"></canvas></div>
+        </div>
+      </div>
     </div>
-    <div class="grid-2">
+  </section>
+
+  <!-- S7: 1.3 app campaign table -->
+  <section class="slide" id="s-part1-app-camp-table">
+    <div class="wrap">
+      <div class="subhead">
+        <h3>۱.۳ تفکیک کمپین‌های اپلیکیشن — جدول</h3>
+        <p class="note">مرتب‌شده بر اساس هزینه</p>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr>
+            <th>کمپین</th><th class="num">هزینه (ریال)</th><th class="num">نصب</th><th class="num">KYC</th>
+            <th class="num">CPI</th><th class="num">CPA</th><th class="num">نرخ تبدیل</th>
+          </tr></thead>
+          <tbody id="tbl-app-campaigns"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- S8: 1.4 web weekly trend -->
+  <section class="slide" id="s-part1-web-weekly">
+    <div class="wrap">
+      <div class="subhead">
+        <span class="chip web">وب</span>
+        <h3>۱.۴ روند هفتگی — وب</h3>
+        <p class="note">۹۹ کمپین تعریف‌شده، ۶۸ کمپین دارای هزینه</p>
+      </div>
+      <div class="grid-2">
+        <div class="panel">
+          <div class="panel-title"><h4>هزینه و کاربران تایید‌شده به تفکیک هفته</h4><span class="legend-note">ستون: هزینه (ریال) — خط: کاربر تایید‌شده</span></div>
+          <div class="chart-box"><canvas id="chartWebWeekly"></canvas></div>
+        </div>
+        <div class="panel">
+          <div class="panel-title"><h4>روند CPA (کاربر تایید‌شده)</h4><span class="legend-note">ریال به‌ازای هر کاربر</span></div>
+          <div class="chart-box"><canvas id="chartWebEfficiency"></canvas></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- S9: 1.5 web campaign charts -->
+  <section class="slide" id="s-part1-web-camp-charts">
+    <div class="wrap">
+      <div class="subhead">
+        <h3>۱.۵ تفکیک کمپین‌های وب</h3>
+        <p class="note">۱۰ کمپین برتر + مجموع سایر کمپین‌ها</p>
+      </div>
+      <div class="grid-2">
+        <div class="panel">
+          <div class="panel-title"><h4>سهم هزینه از کل بودجهٔ وب</h4></div>
+          <div class="chart-box tall"><canvas id="chartWebDonut"></canvas></div>
+        </div>
+        <div class="panel">
+          <div class="panel-title"><h4>CPA کمپین‌های برتر وب</h4></div>
+          <div class="chart-box tall"><canvas id="chartWebCampCpa"></canvas></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- S10: 1.5 web campaign table -->
+  <section class="slide" id="s-part1-web-camp-table">
+    <div class="wrap">
+      <div class="subhead">
+        <h3>۱.۵ تفکیک کمپین‌های وب — جدول</h3>
+        <p class="note">۱۰ کمپین برتر + مجموع سایر کمپین‌ها</p>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr>
+            <th>کمپین</th><th class="num">هزینه (ریال)</th><th class="num">تایید‌شده</th><th class="num">CPA</th><th class="num">CTR</th>
+          </tr></thead>
+          <tbody id="tbl-web-campaigns"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- S11: 1.6 trends insights A -->
+  <section class="slide" id="s-part1-insights-a">
+    <div class="wrap">
+      <div class="subhead"><h3>۱.۶ جمع‌بندی روندها</h3></div>
+      <div class="insights">
+        <div class="insight-card">
+          <span class="tag">بزرگ‌ترین کمپین اپ</span>
+          <p><b>inapp_CPI_11</b> با هزینهٔ ۱٫۰۶ میلیارد ریال، بزرگ‌ترین کمپین اپلیکیشن است؛ CPA آن (۱۵۰٬۸۶۳ ریال) پایین‌تر از میانگین کل اپ است.</p>
+        </div>
+        <div class="insight-card neg">
+          <span class="tag">کمپین کم‌بازده اپ</span>
+          <p><b>inapp-cpi-bnr</b> ارزان‌ترین CPI (۱۷٬۴۵۸ ریال) را دارد اما نرخ تبدیل آن تنها <b>۱.۸٪</b> است و CPA آن به <b>۹۸۶٬۷۴۵ ریال</b> می‌رسد — نصب ارزان، کیفیت پایین.</p>
+        </div>
+        <div class="insight-card pos">
+          <span class="tag">بهترین کمپین مقیاس‌پذیر</span>
+          <p><b>inapp_ow</b> با نرخ تبدیل <b>۴۵.۹٪</b> و CPA ۱۳۴٬۸۶۳ ریال، در مقیاس بالا (۱۵٬۷۵۳ نصب) کارآمدترین کمپین اپ محسوب می‌شود.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- S12: 1.6 trends insights B -->
+  <section class="slide" id="s-part1-insights-b">
+    <div class="wrap">
+      <div class="subhead"><h3>۱.۶ جمع‌بندی روندها (ادامه)</h3></div>
+      <div class="insights">
+        <div class="insight-card neg">
+          <span class="tag">شکاف کارایی دو پلتفرم</span>
+          <p>CPA احراز‌هویت در وب (۲۶۸٬۱۸۶ ریال) نسبت به اپ (۲۰۸٬۰۴۱ ریال) حدود <b>۲۹٪ گران‌تر</b> است، در حالی‌که حجم هزینهٔ وب تقریباً دو‌برابر اپ است.</p>
+        </div>
+        <div class="insight-card">
+          <span class="tag">دو کمپین بزرگ وب</span>
+          <p><b>sl-ch-cpa</b> (CPA ۲۲۴٬۶۲۷) و <b>inapp-cpc-pb-ad-web</b> (CPA ۳۴۳٬۵۱۷) با هم <b>۶۴٪</b> از بودجهٔ وب را مصرف می‌کنند؛ کیفیت این دو کمپین فاصلهٔ زیادی دارد.</p>
+        </div>
+        <div class="insight-card">
+          <span class="tag">دنبالهٔ بلند وب</span>
+          <p>۵۸ کمپین کوچک وب («سایر») تنها <b>۱۰.۴٪</b> بودجه ولی <b>۸.۷٪</b> از کاربران تایید‌شده را تامین می‌کنند — کمی کم‌بازده‌تر از میانگین.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- S13: part2 divider -->
+  <section class="slide divider" id="s-part2-divider">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="section-num">۲</div>
+        <h2 class="section-title">مقایسهٔ رقابتی با بازار</h2>
+      </div>
+      <p class="section-desc">جایگاه طلاین در برابر میانگین صنعت طلای دیجیتال (اپلیکیشن و وب)، بر پایهٔ دادهٔ بنچمارک همان بازهٔ ۱ مرداد تا ۱۵ شهریور. تمرکز این بخش صرفاً بر پلتفرم‌های خرید طلای دیجیتال است؛ رقبا به‌صورت مجزا نام‌گذاری نشده‌اند و به‌جای آن میانگین صنعت گزارش می‌شود.</p>
+    </div>
+  </section>
+
+  <!-- S14: 2.1 app funnel comparison chart -->
+  <section class="slide" id="s-part2-app-funnel">
+    <div class="wrap">
+      <div class="subhead">
+        <span class="chip app">اپلیکیشن</span>
+        <h3>۲.۱ قیف تبدیل: طلاین در برابر میانگین صنعت</h3>
+        <p class="note">میانگین ۶ رقیب طلای دیجیتال ردیابی‌شده در اپ</p>
+      </div>
       <div class="panel">
-        <div class="panel-title"><h4>سهم هزینه از کل بودجهٔ وب</h4></div>
-        <div class="chart-box tall"><canvas id="chartWebDonut"></canvas></div>
+        <div class="panel-title"><h4>نرخ‌های قیف تبدیل — اپلیکیشن</h4><span class="legend-note">CTR ← نرخ نصب ← نرخ ثبت‌نام ← نرخ KYC</span></div>
+        <div class="chart-box tall"><canvas id="chartGoldAppFunnelCmp"></canvas></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- S15: 2.1 app funnel comparison table -->
+  <section class="slide" id="s-part2-app-funnel-table">
+    <div class="wrap">
+      <div class="subhead">
+        <span class="chip app">اپلیکیشن</span>
+        <h3>۲.۱ قیف تبدیل — جدول</h3>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>معیار قیف</th><th class="num">طلاین</th><th class="num">میانگین صنعت</th><th class="num">نسبت به صنعت</th></tr></thead>
+          <tbody id="tbl-gold-app-cmp"></tbody>
+        </table>
+      </div>
+      <p class="footnote">* میانگین صنعت از رقبای طلای دیجیتال ردیابی‌شده (بدون طلاین) محاسبه شده؛ هرجا رقیبی یک مرحله از قیف را گزارش نکرده بود، آن رقیب از میانگین همان مرحله کنار گذاشته شد — که معادل جایگزینی آن با میانگین سایر رقباست. نسبت KYC به ثبت‌نام بالای ۱۰۰٪ به‌دلیل عدم هم‌گروه‌بودن ثبت‌نام و KYC در بازهٔ گزارش (اثر دنباله/لگ) است و در سطح صنعت هم دیده می‌شود، نه فقط طلاین.</p>
+    </div>
+  </section>
+
+  <!-- S16: 2.2 web funnel comparison chart -->
+  <section class="slide" id="s-part2-web-funnel">
+    <div class="wrap">
+      <div class="subhead">
+        <span class="chip web">وب</span>
+        <h3>۲.۲ قیف تبدیل: طلاین در برابر میانگین صنعت</h3>
+        <p class="note">میانگین ۳ رقیب طلای دیجیتال دارای دادهٔ فعال در وب</p>
       </div>
       <div class="panel">
-        <div class="panel-title"><h4>CPA کمپین‌های برتر وب</h4></div>
-        <div class="chart-box tall"><canvas id="chartWebCampCpa"></canvas></div>
+        <div class="panel-title"><h4>نرخ‌های قیف تبدیل — وب</h4><span class="legend-note">CTR ← نرخ سشن ← نرخ ثبت‌نام ← نرخ KYC</span></div>
+        <div class="chart-box tall"><canvas id="chartGoldWebFunnelCmp"></canvas></div>
       </div>
     </div>
-    <div class="table-wrap" style="margin-top:20px;">
-      <table>
-        <thead><tr>
-          <th>کمپین</th><th class="num">هزینه (ریال)</th><th class="num">تایید‌شده</th><th class="num">CPA</th><th class="num">CTR</th>
-        </tr></thead>
-        <tbody id="tbl-web-campaigns"></tbody>
-      </table>
-    </div>
+  </section>
 
-    <div class="subhead"><h3>۱.۶ جمع‌بندی روندها</h3></div>
-    <div class="insights">
-      <div class="insight-card">
-        <span class="tag">بزرگ‌ترین کمپین اپ</span>
-        <p><b>inapp_CPI_11</b> با هزینهٔ ۱٫۰۶ میلیارد ریال، بزرگ‌ترین کمپین اپلیکیشن است؛ CPA آن (۱۵۰٬۸۶۳ ریال) پایین‌تر از میانگین کل اپ است.</p>
+  <!-- S17: 2.2 web funnel comparison table -->
+  <section class="slide" id="s-part2-web-funnel-table">
+    <div class="wrap">
+      <div class="subhead">
+        <span class="chip web">وب</span>
+        <h3>۲.۲ قیف تبدیل — جدول</h3>
       </div>
-      <div class="insight-card neg">
-        <span class="tag">کمپین کم‌بازده اپ</span>
-        <p><b>inapp-cpi-bnr</b> ارزان‌ترین CPI (۱۷٬۴۵۸ ریال) را دارد اما نرخ تبدیل آن تنها <b>۱.۸٪</b> است و CPA آن به <b>۹۸۶٬۷۴۵ ریال</b> می‌رسد — نصب ارزان، کیفیت پایین.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>معیار قیف</th><th class="num">طلاین</th><th class="num">میانگین صنعت</th><th class="num">نسبت به صنعت</th></tr></thead>
+          <tbody id="tbl-gold-web-cmp"></tbody>
+        </table>
       </div>
-      <div class="insight-card pos">
-        <span class="tag">بهترین کمپین مقیاس‌پذیر</span>
-        <p><b>inapp_ow</b> با نرخ تبدیل <b>۴۵.۹٪</b> و CPA ۱۳۴٬۸۶۳ ریال، در مقیاس بالا (۱۵٬۷۵۳ نصب) کارآمدترین کمپین اپ محسوب می‌شود.</p>
-      </div>
-      <div class="insight-card neg">
-        <span class="tag">شکاف کارایی دو پلتفرم</span>
-        <p>CPA احراز‌هویت در وب (۲۶۸٬۱۸۶ ریال) نسبت به اپ (۲۰۸٬۰۴۱ ریال) حدود <b>۲۹٪ گران‌تر</b> است، در حالی‌که حجم هزینهٔ وب تقریباً دو‌برابر اپ است.</p>
-      </div>
-      <div class="insight-card">
-        <span class="tag">دو کمپین بزرگ وب</span>
-        <p><b>sl-ch-cpa</b> (CPA ۲۲۴٬۶۲۷) و <b>inapp-cpc-pb-ad-web</b> (CPA ۳۴۳٬۵۱۷) با هم <b>۶۴٪</b> از بودجهٔ وب را مصرف می‌کنند؛ کیفیت این دو کمپین فاصلهٔ زیادی دارد.</p>
-      </div>
-      <div class="insight-card">
-        <span class="tag">دنبالهٔ بلند وب</span>
-        <p>۵۸ کمپین کوچک وب («سایر») تنها <b>۱۰.۴٪</b> بودجه ولی <b>۸.۷٪</b> از کاربران تایید‌شده را تامین می‌کنند — کمی کم‌بازده‌تر از میانگین.</p>
-      </div>
+      <p class="footnote">* از ۸ رقیب ردیابی‌شدهٔ وب، ۴ رقیب در این بازه دادهٔ فعالی ثبت نکرده‌اند یا کمپین‌شان متوقف بوده و از محاسبهٔ میانگین کنار گذاشته شدند؛ میانگین صنعت بر پایهٔ ۳ رقیب دارای دادهٔ فعال محاسبه شده است.</p>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="section tab-panel" id="part2">
-  <div class="wrap">
-    <div class="section-head">
-      <div class="section-num">۲</div>
-      <h2 class="section-title">مقایسهٔ رقابتی با بازار</h2>
+  <!-- S18: 2.3 historical war charts -->
+  <section class="slide" id="s-part2-war">
+    <div class="wrap">
+      <div class="subhead">
+        <h3>۲.۳ اثر رویدادهای اخیر بر بازار — پیش و پس از جنگ</h3>
+        <p class="note">دادهٔ تاریخی مرجع (بازهٔ متفاوت از گزارش اصلی): قبل از جنگ (۲۲ خرداد تا ۵ تیر) و بعد از جنگ (۵ تا ۲۵ تیر)</p>
+      </div>
+      <div class="grid-2 even">
+        <div class="panel">
+          <div class="panel-title"><h4>طلاین: CTR و نصب — پیش/پس از جنگ</h4></div>
+          <div class="chart-box"><canvas id="chartWarTlyn"></canvas></div>
+        </div>
+        <div class="panel">
+          <div class="panel-title"><h4>میانگین صنعت: تغییر CTR پیش/پس از جنگ (اپ)</h4></div>
+          <div class="chart-box"><canvas id="chartWarMarket"></canvas></div>
+        </div>
+      </div>
+      <p class="footnote">دادهٔ این بخش از بازهٔ زمانی متفاوتی نسبت به گزارش عملکرد اصلی (بخش ۱) گرفته شده و صرفاً برای نمایش الگوی کلان بازار در واکنش به یک رویداد بیرونی آورده شده است؛ برچسب‌های «قبل/بعد از جنگ» عیناً از فایل دادهٔ منبع گرفته شده‌اند. میانگین صنعت «بعد از جنگ» تنها بر پایهٔ یک رقیب دارای داده در این بازهٔ تاریخی محاسبه شده و باید با احتیاط خوانده شود.</p>
     </div>
-    <p class="section-desc">جایگاه طلاین در برابر میانگین صنعت طلای دیجیتال (اپلیکیشن و وب)، بر پایهٔ دادهٔ بنچمارک همان بازهٔ ۱ مرداد تا ۱۵ شهریور. تمرکز این بخش صرفاً بر پلتفرم‌های خرید طلای دیجیتال است؛ رقبا به‌صورت مجزا نام‌گذاری نشده‌اند و به‌جای آن میانگین صنعت گزارش می‌شود.</p>
+  </section>
 
-    <!-- 2.1 App gold funnel vs industry -->
-    <div class="subhead">
-      <span class="chip app">اپلیکیشن</span>
-      <h3>۲.۱ قیف تبدیل: طلاین در برابر میانگین صنعت</h3>
-      <p class="note">میانگین ۶ رقیب طلای دیجیتال ردیابی‌شده در اپ</p>
+  <!-- S19: 2.4 competitive insights A -->
+  <section class="slide" id="s-part2-insights-a">
+    <div class="wrap">
+      <div class="subhead"><h3>۲.۴ جمع‌بندی رقابتی</h3></div>
+      <div class="insights">
+        <div class="insight-card pos">
+          <span class="tag">برتری CTR در اپ</span>
+          <p>CTR اپلیکیشن طلاین (<b>۱۲.۳۲٪</b>) حدود <b>۲ برابر</b> میانگین صنعت (۶.۰۸٪) است.</p>
+        </div>
+        <div class="insight-card pos">
+          <span class="tag">برتری CTR در وب</span>
+          <p>CTR وب طلاین (<b>۱.۴۹٪</b>) نزدیک به <b>۵.۴ برابر</b> میانگین صنعت (۰.۲۸٪) است — بزرگ‌ترین شکاف مثبت طلاین با صنعت.</p>
+        </div>
+        <div class="insight-card">
+          <span class="tag">قدرت KYC نسبت به صنعت</span>
+          <p>نرخ KYC از ثبت‌نام طلاین هم در اپ (۱۱۵.۸٪) و هم در وب (۶۳٪) بالاتر از میانگین صنعت (به‌ترتیب ۹۴٪ و ۴۷.۷٪) است.</p>
+        </div>
+      </div>
     </div>
-    <div class="panel">
-      <div class="panel-title"><h4>نرخ‌های قیف تبدیل — اپلیکیشن</h4><span class="legend-note">CTR ← نرخ نصب ← نرخ ثبت‌نام ← نرخ KYC</span></div>
-      <div class="chart-box tall"><canvas id="chartGoldAppFunnelCmp"></canvas></div>
-    </div>
-    <div class="table-wrap" style="margin-top:20px;">
-      <table>
-        <thead><tr><th>معیار قیف</th><th class="num">طلاین</th><th class="num">میانگین صنعت</th><th class="num">نسبت به صنعت</th></tr></thead>
-        <tbody id="tbl-gold-app-cmp"></tbody>
-      </table>
-    </div>
-    <p class="footnote">* میانگین صنعت از رقبای طلای دیجیتال ردیابی‌شده (بدون طلاین) محاسبه شده؛ هرجا رقیبی یک مرحله از قیف را گزارش نکرده بود، آن رقیب از میانگین همان مرحله کنار گذاشته شد — که معادل جایگزینی آن با میانگین سایر رقباست. نسبت KYC به ثبت‌نام بالای ۱۰۰٪ به‌دلیل عدم هم‌گروه‌بودن ثبت‌نام و KYC در بازهٔ گزارش (اثر دنباله/لگ) است و در سطح صنعت هم دیده می‌شود، نه فقط طلاین.</p>
+  </section>
 
-    <!-- 2.2 Web gold funnel vs industry -->
-    <div class="subhead" style="margin-top:60px;">
-      <span class="chip web">وب</span>
-      <h3>۲.۲ قیف تبدیل: طلاین در برابر میانگین صنعت</h3>
-      <p class="note">میانگین ۳ رقیب طلای دیجیتال دارای دادهٔ فعال در وب</p>
+  <!-- S20: 2.4 competitive insights B -->
+  <section class="slide" id="s-part2-insights-b">
+    <div class="wrap">
+      <div class="subhead"><h3>۲.۴ جمع‌بندی رقابتی (ادامه)</h3></div>
+      <div class="insights">
+        <div class="insight-card neg">
+          <span class="tag">فرصت بهبود ثبت‌نام</span>
+          <p>نرخ ثبت‌نام طلاین در هر دو پلتفرم از میانگین صنعت پایین‌تر است — در اپ حدود نصف صنعت (۱۱.۸٪ در برابر ۲۳.۵٪) و در وب حدود یک‌سوم صنعت (۰.۶۷٪ در برابر ۱.۸۹٪)؛ روشن‌ترین فرصت بهینه‌سازی مسیر «نصب/سشن تا ثبت‌نام».</p>
+        </div>
+        <div class="insight-card">
+          <span class="tag">الگوی کلان بازار پس از جنگ</span>
+          <p>هم طلاین و هم میانگین صنعت پس از رویداد، رشد چشمگیر نمایش (طلاین ۲.۸x) اما افت CTR را تجربه کردند — الگویی سراسر بازار، نه اختصاصی طلاین؛ افت نسبی CTR طلاین (۳۱٪-) بیشتر از صنعت (۱۷٪-) بوده است.</p>
+        </div>
+      </div>
     </div>
-    <div class="panel">
-      <div class="panel-title"><h4>نرخ‌های قیف تبدیل — وب</h4><span class="legend-note">CTR ← نرخ سشن ← نرخ ثبت‌نام ← نرخ KYC</span></div>
-      <div class="chart-box tall"><canvas id="chartGoldWebFunnelCmp"></canvas></div>
-    </div>
-    <div class="table-wrap" style="margin-top:20px;">
-      <table>
-        <thead><tr><th>معیار قیف</th><th class="num">طلاین</th><th class="num">میانگین صنعت</th><th class="num">نسبت به صنعت</th></tr></thead>
-        <tbody id="tbl-gold-web-cmp"></tbody>
-      </table>
-    </div>
-    <p class="footnote">* از ۸ رقیب ردیابی‌شدهٔ وب، ۴ رقیب در این بازه دادهٔ فعالی ثبت نکرده‌اند یا کمپین‌شان متوقف بوده و از محاسبهٔ میانگین کنار گذاشته شدند؛ میانگین صنعت بر پایهٔ ۳ رقیب دارای دادهٔ فعال محاسبه شده است.</p>
+  </section>
 
-    <!-- 2.3 historical -->
-    <div class="subhead" style="margin-top:60px;">
-      <h3>۲.۳ اثر رویدادهای اخیر بر بازار — پیش و پس از جنگ</h3>
-      <p class="note">دادهٔ تاریخی مرجع (بازهٔ متفاوت از گزارش اصلی): قبل از جنگ (۲۲ خرداد تا ۵ تیر) و بعد از جنگ (۵ تا ۲۵ تیر)</p>
-    </div>
-    <div class="grid-2 even">
-      <div class="panel">
-        <div class="panel-title"><h4>طلاین: CTR و نصب — پیش/پس از جنگ</h4></div>
-        <div class="chart-box"><canvas id="chartWarTlyn"></canvas></div>
+  <!-- S21: closing / sources -->
+  <section class="slide closing" id="s-closing">
+    <div class="wrap">
+      <h2>منابع و روش</h2>
+      <div class="cols">
+        <div>
+          <h5>دربارهٔ این گزارش</h5>
+          <p>این گزارش به‌صورت خودکار از چهار فایل دادهٔ خام تولید شده: جدول هزینهٔ کمپین‌های اپلیکیشن و وب طلاین، و دو فایل بنچمارک رقابتی بازار طلای دیجیتال (اپ و وب). اعداد بر پایهٔ همان ستون‌های خام محاسبه شده‌اند و هیچ عددی به‌صورت دستی وارد نشده است. واحد پولی تمام مبالغ، ریال است.</p>
+        </div>
+        <div>
+          <h5>منابع داده</h5>
+          <ul>
+            <li>Tlyn Campaign — Dashboard App</li>
+            <li>Tlyn Campaign — Dashboard Web</li>
+            <li>Gold Apps — Benchmark</li>
+            <li>Gold Web — Benchmark</li>
+          </ul>
+        </div>
+        <div>
+          <h5>یادداشت فنی</h5>
+          <p>این فایل یک HTML مستقل است و برای میزبانی روی GitHub Pages آماده است. تمام داده‌ها به‌صورت JSON در همین فایل جاسازی شده و نمودارها با Chart.js رسم می‌شوند؛ ساختار کد برای ویرایش دستی ساده نگه داشته شده است.</p>
+        </div>
       </div>
-      <div class="panel">
-        <div class="panel-title"><h4>میانگین صنعت: تغییر CTR پیش/پس از جنگ (اپ)</h4></div>
-        <div class="chart-box"><canvas id="chartWarMarket"></canvas></div>
-      </div>
     </div>
-    <p class="footnote">دادهٔ این بخش از بازهٔ زمانی متفاوتی نسبت به گزارش عملکرد اصلی (بخش ۱) گرفته شده و صرفاً برای نمایش الگوی کلان بازار در واکنش به یک رویداد بیرونی آورده شده است؛ برچسب‌های «قبل/بعد از جنگ» عیناً از فایل دادهٔ منبع گرفته شده‌اند. میانگین صنعت «بعد از جنگ» تنها بر پایهٔ یک رقیب دارای داده در این بازهٔ تاریخی محاسبه شده و باید با احتیاط خوانده شود.</p>
+  </section>
 
-    <div class="subhead"><h3>۲.۴ جمع‌بندی رقابتی</h3></div>
-    <div class="insights">
-      <div class="insight-card pos">
-        <span class="tag">برتری CTR در اپ</span>
-        <p>CTR اپلیکیشن طلاین (<b>۱۲.۳۲٪</b>) حدود <b>۲ برابر</b> میانگین صنعت (۶.۰۸٪) است.</p>
-      </div>
-      <div class="insight-card pos">
-        <span class="tag">برتری CTR در وب</span>
-        <p>CTR وب طلاین (<b>۱.۴۹٪</b>) نزدیک به <b>۵.۴ برابر</b> میانگین صنعت (۰.۲۸٪) است — بزرگ‌ترین شکاف مثبت طلاین با صنعت.</p>
-      </div>
-      <div class="insight-card">
-        <span class="tag">قدرت KYC نسبت به صنعت</span>
-        <p>نرخ KYC از ثبت‌نام طلاین هم در اپ (۱۱۵.۸٪) و هم در وب (۶۳٪) بالاتر از میانگین صنعت (به‌ترتیب ۹۴٪ و ۴۷.۷٪) است.</p>
-      </div>
-      <div class="insight-card neg">
-        <span class="tag">فرصت بهبود ثبت‌نام</span>
-        <p>نرخ ثبت‌نام طلاین در هر دو پلتفرم از میانگین صنعت پایین‌تر است — در اپ حدود نصف صنعت (۱۱.۸٪ در برابر ۲۳.۵٪) و در وب حدود یک‌سوم صنعت (۰.۶۷٪ در برابر ۱.۸۹٪)؛ روشن‌ترین فرصت بهینه‌سازی مسیر «نصب/سشن تا ثبت‌نام».</p>
-      </div>
-      <div class="insight-card">
-        <span class="tag">الگوی کلان بازار پس از جنگ</span>
-        <p>هم طلاین و هم میانگین صنعت پس از رویداد، رشد چشمگیر نمایش (طلاین ۲.۸x) اما افت CTR را تجربه کردند — الگویی سراسر بازار، نه اختصاصی طلاین؛ افت نسبی CTR طلاین (۳۱٪-) بیشتر از صنعت (۱۷٪-) بوده است.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<footer class="tab-panel" id="footer-note">
-  <div class="wrap">
-    <div class="cols">
-      <div>
-        <h5>دربارهٔ این گزارش</h5>
-        <p>این گزارش به‌صورت خودکار از چهار فایل دادهٔ خام تولید شده: جدول هزینهٔ کمپین‌های اپلیکیشن و وب طلاین، و دو فایل بنچمارک رقابتی بازار طلای دیجیتال (اپ و وب). اعداد بر پایهٔ همان ستون‌های خام محاسبه شده‌اند و هیچ عددی به‌صورت دستی وارد نشده است. واحد پولی تمام مبالغ، ریال است.</p>
-      </div>
-      <div>
-        <h5>منابع داده</h5>
-        <ul>
-          <li>Tlyn Campaign — Dashboard App</li>
-          <li>Tlyn Campaign — Dashboard Web</li>
-          <li>Gold Apps — Benchmark</li>
-          <li>Gold Web — Benchmark</li>
-        </ul>
-      </div>
-      <div>
-        <h5>یادداشت فنی</h5>
-        <p>این فایل یک HTML مستقل است و برای میزبانی روی GitHub Pages آماده است. تمام داده‌ها به‌صورت JSON در همین فایل جاسازی شده و نمودارها با Chart.js رسم می‌شوند؛ ساختار کد برای ویرایش دستی ساده نگه داشته شده است.</p>
-      </div>
-    </div>
-  </div>
-</footer>
-
+</main>
 <script id="report-data" type="application/json">
 {"campaigns": {"totals": {"app": {"cost": 4276692000.0, "installs": 105437, "kyc": 20557, "clicks": 2973297.0, "impressions": 25888744.0, "cpi": 40561.5865, "cpa": 208040.6674, "convRate": 0.195, "activeCampaigns": 14}, "web": {"cost": 8047711517.0, "verified": 30008.0, "clicks": 2448972.0, "impressions": 161062577.0, "cpa": 268185.5344, "activeCampaigns": 68}, "period": {"start": "23 Jul 2026", "end": "6 Sep 2026", "start_fa": "1 مرداد ۱۴۰۴", "end_fa": "15 شهریور ۱۴۰۴"}}, "app_weekly": [{"week": "24 Jul", "cost": 268604000.0, "installs": 6183, "kyc": 1259, "cpi": 43442.3419, "cpa": 213347.1009, "convRate": 0.2036, "impressions": 1523463.0, "clicks": 159593.0}, {"week": "31 Jul", "cost": 736175000.0, "installs": 15585, "kyc": 3803, "cpi": 47236.1245, "cpa": 193577.4389, "convRate": 0.244, "impressions": 4132289.0, "clicks": 429413.0}, {"week": "07 Aug", "cost": 668650000.0, "installs": 18159, "kyc": 2649, "cpi": 36821.9616, "cpa": 252416.006, "convRate": 0.1459, "impressions": 3621613.0, "clicks": 417276.0}, {"week": "14 Aug", "cost": 803634000.0, "installs": 22261, "kyc": 4075, "cpi": 36100.5346, "cpa": 197210.7975, "convRate": 0.1831, "impressions": 4960554.0, "clicks": 544318.0}, {"week": "21 Aug", "cost": 625025000.0, "installs": 16290, "kyc": 3039, "cpi": 38368.6311, "cpa": 205667.9829, "convRate": 0.1866, "impressions": 5041785.0, "clicks": 540032.0}, {"week": "28 Aug", "cost": 711868000.0, "installs": 16617, "kyc": 3765, "cpi": 42839.7424, "cpa": 189075.166, "convRate": 0.2266, "impressions": 3721984.0, "clicks": 515472.0}, {"week": "04 Sep", "cost": 365705000.0, "installs": 8896, "kyc": 1549, "cpi": 41108.9254, "cpa": 236091.0265, "convRate": 0.1741, "impressions": 2434008.0, "clicks": 311400.0}, {"week": "11 Sep", "cost": 97031000.0, "installs": 1446, "kyc": 418, "cpi": 67103.0429, "cpa": 232131.5789, "convRate": 0.2891, "impressions": 453048.0, "clicks": 55793.0}], "web_weekly": [{"week": "24 Jul", "cost": 330279373.0, "verified": 1735.0, "cpa": 190362.751, "impressions": 13707399.0, "clicks": 138332.0}, {"week": "31 Jul", "cost": 1295978207.0, "verified": 5234.0, "cpa": 247607.6055, "impressions": 13616088.0, "clicks": 362416.0}, {"week": "07 Aug", "cost": 1375422559.0, "verified": 5348.0, "cpa": 257184.4725, "impressions": 12707083.0, "clicks": 571680.0}, {"week": "14 Aug", "cost": 1267473840.0, "verified": 4509.0, "cpa": 281098.656, "impressions": 8590958.0, "clicks": 371326.0}, {"week": "21 Aug", "cost": 872494832.0, "verified": 3267.0, "cpa": 267063.0034, "impressions": 36295846.0, "clicks": 291940.0}, {"week": "28 Aug", "cost": 1443108000.0, "verified": 4884.0, "cpa": 295476.6585, "impressions": 46226152.0, "clicks": 341089.0}, {"week": "04 Sep", "cost": 1208786503.0, "verified": 4112.0, "cpa": 293965.5893, "impressions": 26116028.0, "clicks": 320466.0}, {"week": "11 Sep", "cost": 254168203.0, "verified": 919.0, "cpa": 276570.4059, "impressions": 3803023.0, "clicks": 51723.0}], "app_campaigns": [{"name": "inapp_CPI_11", "cost": 1056038000.0, "installs": 21062, "kyc": 7000, "cpi": 50139.4929, "cpa": 150862.5714, "convRate": 0.3324, "ctr": null}, {"name": "inapp-cpi-pb-ad", "cost": 1027027000.0, "installs": 25042, "kyc": 2059, "cpi": 41012.1795, "cpa": 498798.9315, "convRate": 0.0822, "ctr": 0.175}, {"name": "inapp_ow", "cost": 973978000.0, "installs": 15753, "kyc": 7222, "cpi": 61828.0962, "cpa": 134862.6419, "convRate": 0.4585, "ctr": 0.025}, {"name": "inapp-cpi-win", "cost": 252304000.0, "installs": 4341, "kyc": 1725, "cpi": 58121.1702, "cpa": 146263.1884, "convRate": 0.3974, "ctr": 0.0193}, {"name": "inapp-cpi-gold-u", "cost": 196306000.0, "installs": 3916, "kyc": 491, "cpi": 50129.2135, "cpa": 399808.554, "convRate": 0.1254, "ctr": 0.0188}, {"name": "inapp-cpi-bnr", "cost": 193402000.0, "installs": 11078, "kyc": 196, "cpi": 17458.2055, "cpa": 986744.898, "convRate": 0.0177, "ctr": 0.0649}, {"name": "inapp-cpi-pb-b-ad", "cost": 172357000.0, "installs": 8822, "kyc": 469, "cpi": 19537.1798, "cpa": 367498.9339, "convRate": 0.0532, "ctr": 0.1785}, {"name": "inapp-cpi-bnr-b", "cost": 168555000.0, "installs": 10992, "kyc": 401, "cpi": 15334.3341, "cpa": 420336.6584, "convRate": 0.0365, "ctr": 0.0155}, {"name": "inapp-cpi-pb-tr", "cost": 100561000.0, "installs": 1322, "kyc": 183, "cpi": 76067.3222, "cpa": 549513.6612, "convRate": 0.1384, "ctr": 0.2049}, {"name": "inapp_CPI_24", "cost": 89476000.0, "installs": 1423, "kyc": 500, "cpi": 62878.4259, "cpa": 178952.0, "convRate": 0.3514, "ctr": null}, {"name": "inapp-cpi-vid", "cost": 24189000.0, "installs": 1130, "kyc": 70, "cpi": 21406.1947, "cpa": 345557.1429, "convRate": 0.0619, "ctr": 0.113}, {"name": "inapp-cpi-31", "cost": 16196000.0, "installs": 287, "kyc": 84, "cpi": 56432.0557, "cpa": 192809.5238, "convRate": 0.2927, "ctr": null}, {"name": "inapp-cpi-crypto-u", "cost": 5989000.0, "installs": 247, "kyc": 30, "cpi": 24246.9636, "cpa": 199633.3333, "convRate": 0.1215, "ctr": 0.0172}, {"name": "inapp-cpi-dwallet-u", "cost": 314000.0, "installs": 16, "kyc": 12, "cpi": 19625.0, "cpa": 26166.6667, "convRate": 0.75, "ctr": 1.5833}], "web_campaigns": [{"name": "sl-ch-cpa", "cost": 2637350000.0, "verified": 11741.0, "cpa": 224627.3742, "ctr": null}, {"name": "inapp-cpc-pb-ad-web", "cost": 2564357100.0, "verified": 7465.0, "cpa": 343517.361, "ctr": 0.078}, {"name": "inapp-w-kyc-web", "cost": 729270000.0, "verified": 3355.0, "cpa": 217368.1073, "ctr": 0.0707}, {"name": "inapp-w-kyc-js-web", "cost": 397200000.0, "verified": 1714.0, "cpa": 231738.6231, "ctr": 0.0664}, {"name": "inapp-cpc-pb-ad-b-web", "cost": 340460700.0, "verified": 797.0, "cpa": 427177.7917, "ctr": 0.0902}, {"name": "push-cpc-tn-web", "cost": 161553000.0, "verified": 560.0, "cpa": 288487.5, "ctr": 0.0025}, {"name": "inapp-cpc-gold-u-web", "cost": 121022500.0, "verified": 377.0, "cpa": 321014.5889, "ctr": 0.072}, {"name": "inapp-cpa-pb-web", "cost": 102950000.0, "verified": 295.0, "cpa": 348983.0508, "ctr": 0.2026}, {"name": "sms-all-5sh-web", "cost": 83102630.0, "verified": 146.0, "cpa": 569196.0959, "ctr": 0.0083}, {"name": "push-cpc-web", "cost": 76758600.0, "verified": 171.0, "cpa": 448880.7018, "ctr": 0.0009}, {"name": "سایر (58 کمپین)", "cost": 833686987.0, "verified": 2618.0, "cpa": 318444.2273, "ctr": null}]}, "benchmark": {"current": {"gold_app": [{"name": "tochal.gold", "owner": "Erfan", "view": 1084121.0, "click": 143950.0, "ctr": 0.13278038152567842, "install": 1094.0, "install_rate": 0.007599861063, "register": 97.0, "register_rate": 0.0886654479, "kyc": 128.0, "kyc_rate": 1.319587629, "trade": 73.0, "trade_rate": 0.5703125}, {"name": "Tlyn", "owner": "Erfan", "view": 23805493.0, "click": 2932520.0, "ctr": 0.1231866947683041, "install": 85246.0, "install_rate": 0.02906919646, "register": 10036.0, "register_rate": 0.1177298642, "kyc": 11621.0, "kyc_rate": 1.157931447, "trade": 12309.0, "trade_rate": 1.059203167}, {"name": "Melli Gold", "owner": "Fateme", "view": 26980288.0, "click": 1166245.0, "ctr": 0.04322581730780635, "install": 20486.0, "install_rate": 0.01756577735, "register": 9282.0, "register_rate": 0.4530899151, "kyc": 5266.0, "kyc_rate": 0.5673346262, "trade": 39323.0, "trade_rate": 7.467337638}, {"name": "Tala Sea", "owner": "Fateme", "view": 33815660.0, "click": 1590470.0, "ctr": 0.047033534167305914, "install": 27265.0, "install_rate": 0.01714273139, "register": null, "register_rate": null, "kyc": 4689.0, "kyc_rate": null, "trade": null, "trade_rate": 0.0}, {"name": "noghresea.adivery", "owner": "Fateme", "view": 2559574.0, "click": 96170.0, "ctr": 0.03757265857521603, "install": 4357.0, "install_rate": 0.04530518873, "register": null, "register_rate": null, "kyc": 1515.0, "kyc_rate": null, "trade": null, "trade_rate": 0.0}, {"name": "zarpin.adivery", "owner": "Fateme", "view": 854691.0, "click": 70262.0, "ctr": 0.08220748785233493, "install": 821.0, "install_rate": 0.01168483675, "register": 133.0, "register_rate": 0.1619975639, "kyc": 124.0, "kyc_rate": 0.9323308271, "trade": null, "trade_rate": 0.0}, {"name": "Milli Gold", "owner": "Ali", "view": 12226964.0, "click": 266766.0, "ctr": 0.021817844560595746, "install": 4343.0, "install_rate": 0.01628018563, "register": null, "register_rate": null, "kyc": null, "kyc_rate": null, "trade": null, "trade_rate": null}], "gold_web": [{"name": "Eco Gold", "owner": "Ali", "view": 22430134.0, "click": 26606.0, "ctr": 0.0011861721378927117, "session": 26366.0, "session_rate": 0.9909794783, "register": 136.0, "register_rate": 0.005158158234, "kyc": 45.0, "kyc_rate": 0.3308823529, "trade": null, "trade_rate": 0.0}, {"name": "Tochal.Web.New", "owner": "Erfan", "view": 46969451.0, "click": 102736.0, "ctr": 0.0021872940350101174, "session": 74009.0, "session_rate": 0.7203803925, "register": 2288.333333, "register_rate": 0.03091966292, "kyc": 1373.0, "kyc_rate": 0.6, "trade": 268.0, "trade_rate": 0.195193008}, {"name": "Melli Gold (web)", "owner": "Fateme", "view": 1321171921.0, "click": 6444986.0, "ctr": 0.004878234162834588, "session": 3633271.0, "session_rate": 0.5637360578, "register": 74941.0, "register_rate": 0.02062631717, "kyc": 37406.0, "kyc_rate": 0.4991393229, "trade": null, "trade_rate": 0.0}, {"name": "Tala Sea", "owner": "Fateme", "view": null, "click": null, "ctr": null, "session": null, "session_rate": null, "register": null, "register_rate": null, "kyc": null, "kyc_rate": null, "trade": null, "trade_rate": 0.0}, {"name": "noghre sea", "owner": "Fateme", "view": null, "click": null, "ctr": null, "session": null, "session_rate": null, "register": null, "register_rate": null, "kyc": null, "kyc_rate": null, "trade": null, "trade_rate": 0.0}, {"name": "zarpin.web", "owner": "Fateme", "view": null, "click": null, "ctr": null, "session": null, "session_rate": null, "register": null, "register_rate": null, "kyc": null, "kyc_rate": null, "trade": null, "trade_rate": 0.0}, {"name": "Wallgold (web)", "owner": "Ali", "view": "PAUSE", "click": null, "ctr": null, "session": null, "session_rate": null, "register": null, "register_rate": null, "kyc": null, "kyc_rate": null, "trade": null, "trade_rate": 0.0}, {"name": "Tlyn", "owner": "Erfan", "view": 166113993.0, "click": 2479586.0, "ctr": 0.014927014607372661, "session": 3110723.0, "session_rate": 1.254533216, "register": 20909.52380952381, "register_rate": 0.006721756907, "kyc": 13173.0, "kyc_rate": 0.63, "trade": null, "trade_rate": null}], "exch_app": [{"name": "Tabdeal (app)", "owner": "Ali", "view": 34570454.0, "click": 2828678.0, "ctr": 0.08182357107604082, "install": 54890.0, "install_rate": 0.01940482444, "register": 16895.0, "register_rate": 0.307797413, "kyc": null, "kyc_rate": null, "trade": null, "trade_rate": null}, {"name": "Raastin (app)", "owner": "Ali", "view": 9254037.0, "click": 1480773.0, "ctr": 0.16001373238512015, "install": 5777.0, "install_rate": 0.003901340719, "register": 1077.0, "register_rate": 0.1864289424, "kyc": 755.0, "kyc_rate": 0.7010213556, "trade": 730.0, "trade_rate": 0.9668874172}, {"name": "Arzplus (app)", "owner": "Erfan", "view": 1991120.0, "click": 155658.0, "ctr": 0.07817610189240226, "install": 2982.0, "install_rate": 0.01915738349, "register": 523.0, "register_rate": 0.1753856472, "kyc": 375.0, "kyc_rate": 0.7170172084, "trade": 148.0, "trade_rate": 0.3946666667}, {"name": "Bitpin", "owner": "Fateme", "view": null, "click": null, "ctr": null, "install": null, "install_rate": null, "register": null, "register_rate": null, "kyc": null, "kyc_rate": null, "trade": null, "trade_rate": null}, {"name": "Nobitex (app)", "owner": "Fateme", "view": null, "click": null, "ctr": null, "install": null, "install_rate": null, "register": null, "register_rate": null, "kyc": null, "kyc_rate": null, "trade": null, "trade_rate": null}, {"name": "Aban Tether (app)", "owner": "Fateme", "view": null, "click": null, "ctr": null, "install": null, "install_rate": null, "register": null, "register_rate": null, "kyc": null, "kyc_rate": null, "trade": null, "trade_rate": null}, {"name": "Kebrin (APP)", "owner": "Fateme", "view": null, "click": null, "ctr": null, "install": null, "install_rate": null, "register": null, "register_rate": null, "kyc": null, "kyc_rate": null, "trade": null, "trade_rate": null}, {"name": "Wallex (app)", "owner": "Ali", "view": 3852990.0, "click": 183831.0, "ctr": 0.047711258010013004, "install": 2010.0, "install_rate": 0.01093395564, "register": 528.0, "register_rate": 0.2626865672, "kyc": null, "kyc_rate": 0.0, "trade": 256.0, "trade_rate": null}], "exch_web": [{"name": "Tabdeal (web)", "owner": "Ali", "view": 164473916.0, "click": 817466.0, "ctr": 0.004970186275615886, "session": null, "session_rate": 0.0, "register": 14028.0, "register_rate": null, "kyc": 3355.0, "kyc_rate": 0.2391645281, "trade": null, "trade_rate": 0.0}, {"name": "Raastin (web)", "owner": "Ali", "view": 34246497.0, "click": 41612.0, "ctr": 0.0012150731796014057, "session": 47423.0, "session_rate": 1.139647217, "register": 786.0, "register_rate": 0.01657423613, "kyc": 291.0, "kyc_rate": 0.3702290076, "trade": 114.0, "trade_rate": 0.3917525773}, {"name": "Arzplus (web)", "owner": "Erfan", "view": 18544693.0, "click": 49587.0, "ctr": 0.002673918624589795, "session": 34265.0, "session_rate": 0.6910077238, "register": 555.0, "register_rate": 0.01619728586, "kyc": 210.0, "kyc_rate": 0.3783783784, "trade": 61.0, "trade_rate": 0.2904761905}, {"name": "Aban Tether (web)", "owner": "Fateme", "view": null, "click": null, "ctr": null, "session": null, "session_rate": null, "register": null, "register_rate": null, "kyc": null, "kyc_rate": null, "trade": null, "trade_rate": null}, {"name": "banvest.ir", "owner": "Fateme", "view": null, "click": null, "ctr": null, "session": null, "session_rate": null, "register": null, "register_rate": null, "kyc": null, "kyc_rate": null, "trade": null, "trade_rate": null}, {"name": "Wallex (web)", "owner": "Ali", "view": 69715068.0, "click": 122484.0, "ctr": 0.001756922907971631, "session": 74938.0, "session_rate": null, "register": 339.0, "register_rate": null, "kyc": null, "kyc_rate": null, "trade": null, "trade_rate": null}], "bank_app": [{"name": "Wepod", "owner": "Erfan", "view": 110454896.0, "click": 7054890.0, "ctr": 0.06387122939303659, "install": 198225.0, "install_rate": 0.02809753235, "card_order": 86999.0, "reg_rate": 0.4388901501}, {"name": "Bankino", "owner": "Erfan", "view": 18819650.0, "click": 2380682.0, "ctr": 0.12649980206858258, "install": 28509.0, "install_rate": 0.0119751399, "card_order": 8179.0, "reg_rate": 0.2868918587}, {"name": "Blu Bank", "owner": "Erfan", "view": 21953683.0, "click": 1710452.0, "ctr": 0.07791184741075108, "install": 190773.0, "install_rate": 0.1115336765, "card_order": 78232.0, "reg_rate": 0.4100789944}, {"name": "banvest.ir", "owner": "Fateme", "view": null, "click": null, "ctr": null, "install": null, "install_rate": null, "card_order": null, "reg_rate": null}]}, "historical": {"gold_app": [{"name": "Tlyn", "state": "Before War", "view": 7976263.0, "click": 185910.0, "ctr": 0.02330790747496666, "install": 7288.0, "install_rate": 0.03920176429, "register": 1847.0, "kyc": 1722.0, "kyc_rate": 0.9323226854}, {"name": "daric.app", "state": "Before War", "view": 11835397.0, "click": 566411.0, "ctr": 0.0478573722537571, "install": 8974.0, "install_rate": 0.01584361886, "register": null, "kyc": null, "kyc_rate": null}, {"name": "zarpaad", "state": "Before War", "view": 13037307.0, "click": 680365.0, "ctr": 0.05218600743236314, "install": 11180.0, "install_rate": 0.01643235616, "register": null, "kyc": null, "kyc_rate": null}, {"name": "banket", "state": "Before War", "view": 4528734.0, "click": 69107.0, "ctr": 0.015259673012369461, "install": 2094.0, "install_rate": 0.03030083783, "register": null, "kyc": null, "kyc_rate": null}, {"name": "Goldika", "state": "Before War", "view": 105238882.0, "click": 3926439.0, "ctr": 0.03730977491760127, "install": 55890.0, "install_rate": 0.01423427182, "register": null, "kyc": null, "kyc_rate": null}, {"name": "Talasea", "state": "Before War", "view": 13061374.0, "click": 1304587.0, "ctr": 0.09988129885875713, "install": 9829.0, "install_rate": 0.007534185148, "register": null, "kyc": 1521.0, "kyc_rate": null}, {"name": "MilliGold", "state": "Before War", "view": 68111142.0, "click": 2349979.0, "ctr": 0.03450212301535041, "install": 22306.0, "install_rate": 0.009491999716, "register": null, "kyc": null, "kyc_rate": null}, {"name": "Tlyn", "state": "After War", "view": 22575663.0, "click": 363642.0, "ctr": 0.016107699694135228, "install": 5314.0, "install_rate": 0.01461327349, "register": 757.0, "kyc": 748.0, "kyc_rate": 0.9881109643}, {"name": "Talasea", "state": "After War", "view": 77751712.0, "click": 3087556.0, "ctr": 0.039710456793543014, "install": 37481.0, "install_rate": 0.01213937496, "register": null, "kyc": 3282.0, "kyc_rate": null}], "gold_web": [{"name": "Talasea", "state": "Before War", "view": 784402806.0, "click": 1481452.0, "ctr": 0.0018886367930713395, "session": 551979.0, "session_rate": 0.3725932396, "register": 45000.0, "kyc": 22184.0, "kyc_rate": 0.4929777778}, {"name": "Zarpaad", "state": "Before War", "view": 781320693.0, "click": 1541665.0, "ctr": 0.001973152655256758, "session": 1222858.0, "session_rate": 0.7932060467, "register": 19645.0, "kyc": 7818.0, "kyc_rate": 0.3979638585}, {"name": "Wallgold", "state": "Before War", "view": 327158639.0, "click": 308056.0, "ctr": 0.0009416104705093849, "session": 214201.0, "session_rate": 0.6953313683, "register": 8981.0, "kyc": 4338.0, "kyc_rate": 0.4830197083}, {"name": "Goldika", "state": "Before War", "view": 323441535.0, "click": 1314463.0, "ctr": 0.004063989493495324, "session": 1051739.0, "session_rate": 0.8001282653, "register": 22018.0, "kyc": null, "kyc_rate": null}, {"name": "Talano", "state": "Before War", "view": 88105830.0, "click": 339304.0, "ctr": 0.003851095892292258, "session": 246798.0, "session_rate": 0.7273654304, "register": 1073.0, "kyc": null, "kyc_rate": null}, {"name": "Invi", "state": "Before War", "view": 175123118.0, "click": 491306.0, "ctr": 0.002805489107383298, "session": 392647.0, "session_rate": 0.7991903213, "register": 4287.0, "kyc": null, "kyc_rate": null}, {"name": "MelliGold", "state": "Before War", "view": 1024158421.0, "click": 2482187.0, "ctr": 0.002423635786323335, "session": 1279227.0, "session_rate": 0.5153628635, "register": 38841.0, "kyc": null, "kyc_rate": null}, {"name": "MelliGold", "state": "After War", "view": 41943115.0, "click": 118063.0, "ctr": 0.002814836237127357, "session": 90531.0, "session_rate": 0.7668024699, "register": 1373.0, "kyc": null, "kyc_rate": null}], "exch_app": [{"name": "Tabdeal", "state": "Before War", "view": 30996197.0, "click": 3880169.0, "ctr": 0.12518209895233276, "install": 29110.0, "install_rate": 0.007502250546, "register": 11502.0, "kyc": null, "kyc_rate": null}, {"name": "Aban tether", "state": "Before War", "view": 9525694.0, "click": 194946.0, "ctr": 0.020465280534940553, "install": 2854.0, "install_rate": 0.01463995158, "register": 1119.0, "kyc": 433.0, "kyc_rate": 0.3869526363}, {"name": "Nobitex", "state": "Before War", "view": 4441105.0, "click": 385020.0, "ctr": 0.0866946401852692, "install": 4031.0, "install_rate": 0.010469586, "register": 892.0, "kyc": 526.0, "kyc_rate": 0.5896860987}, {"name": "hamtapay", "state": "Before War", "view": 29242645.0, "click": 186642.0, "ctr": 0.006382527982677353, "install": 8846.0, "install_rate": 0.0473955487, "register": null, "kyc": null, "kyc_rate": null}, {"name": "wallex", "state": "Before War", "view": 105110995.0, "click": 2043680.0, "ctr": 0.01944306587526833, "install": 22833.0, "install_rate": 0.01117249276, "register": 1232.0, "kyc": 622.0, "kyc_rate": 0.5048701299}, {"name": "Bitpin", "state": "Before War", "view": 5207036.0, "click": 190794.0, "ctr": 0.036641574976627775, "install": 509.0, "install_rate": 0.002667798778, "register": 145.0, "kyc": 77.0, "kyc_rate": 0.5310344828}, {"name": "Raastin", "state": "Before War", "view": 531270.0, "click": 13058.0, "ctr": 0.024578839384870217, "install": 328.0, "install_rate": 0.02511870118, "register": 43.0, "kyc": 39.0, "kyc_rate": 0.9069767442}, {"name": "Arzplus", "state": "Before War", "view": 30161.0, "click": 2199.0, "ctr": 0.07290872318557078, "install": 324.0, "install_rate": 0.1473396999, "register": 61.0, "kyc": 52.0, "kyc_rate": 0.8524590164}, {"name": "Tabdeal", "state": "After War", "view": 75400212.0, "click": 9796900.0, "ctr": 0.12993199541667072, "install": 64427.0, "install_rate": 0.00657626392, "register": 18615.0, "kyc": null, "kyc_rate": null}, {"name": "Aban tether", "state": "After War", "view": 4465401.0, "click": 881634.0, "ctr": 0.19743669157596372, "install": 4982.0, "install_rate": 0.005650870996, "register": 2077.0, "kyc": 885.0, "kyc_rate": 0.4260953298}, {"name": "hamtapay", "state": "After War", "view": 2520647.0, "click": 183020.0, "ctr": 0.07260834222324665, "install": 11150.0, "install_rate": 0.06092230357, "register": null, "kyc": null, "kyc_rate": null}, {"name": "Bitpin", "state": "After War", "view": 1861523.0, "click": 258217.0, "ctr": 0.1387127636886571, "install": 7140.0, "install_rate": 0.02765116162, "register": 1191.0, "kyc": 729.0, "kyc_rate": 0.6120906801}, {"name": "Raastin", "state": "After War", "view": 4402503.0, "click": 101235.0, "ctr": 0.02299487359804184, "install": 436.0, "install_rate": 0.004306810886, "register": 75.0, "kyc": 60.0, "kyc_rate": 0.8}, {"name": "Arzplus", "state": "After War", "view": 732351.0, "click": 25906.0, "ctr": 0.03537374838021659, "install": 473.0, "install_rate": 0.01825831854, "register": 80.0, "kyc": 76.0, "kyc_rate": 0.95}], "exch_web": [{"name": "Wallex", "state": "Before War", "view": 253333041.0, "click": 568886.0, "ctr": 0.002245605222889185, "session": 412957.0, "session_rate": 0.7259046628, "register": 2215.0, "kyc": null, "kyc_rate": null}, {"name": "Tabdeal", "state": "Before War", "view": 267775906.0, "click": 571879.0, "ctr": 0.0021356626462128376, "session": 398416.0, "session_rate": 0.6966788429, "register": 6148.0, "kyc": null, "kyc_rate": null}, {"name": "OMP", "state": "Before War", "view": 59006019.0, "click": 439494.0, "ctr": 0.007448290995533863, "session": 244994.0, "session_rate": 0.5574456079, "register": 3487.0, "kyc": null, "kyc_rate": null}, {"name": "Bitpin", "state": "Before War", "view": 27856106.0, "click": 67154.0, "ctr": 0.002410746139464001, "session": 43233.0, "session_rate": 0.6437889031, "register": 825.0, "kyc": 237.0, "kyc_rate": 0.2872727273}, {"name": "Nobitex", "state": "Before War", "view": 107392765.0, "click": 289949.0, "ctr": 0.002699893237686915, "session": 133100.0, "session_rate": 0.4590462461, "register": 1402.0, "kyc": 372.0, "kyc_rate": 0.2653352354}, {"name": "Raastin", "state": "Before War", "view": 323017136.0, "click": 296123.0, "ctr": 0.0009167408381702697, "session": 188854.0, "session_rate": 0.6377552571, "register": 3348.0, "kyc": 1625.0, "kyc_rate": 0.4853643967}, {"name": "Arzplus", "state": "Before War", "view": 124432627.0, "click": 223390.0, "ctr": 0.0017952686958863289, "session": 170769.0, "session_rate": 0.7644433502, "register": 2786.0, "kyc": 1295.0, "kyc_rate": 0.4648241206}, {"name": "Wallex", "state": "After War", "view": 277015543.0, "click": 287162.0, "ctr": 0.0010366277534109342, "session": 128580.0, "session_rate": 0.447761194, "register": 7483.0, "kyc": null, "kyc_rate": null}, {"name": "Tabdeal", "state": "After War", "view": 1185167123.0, "click": 4174953.0, "ctr": 0.0035226702791349707, "session": 2307030.0, "session_rate": 0.5525882567, "register": 43472.0, "kyc": null, "kyc_rate": null}, {"name": "Bitpin", "state": "After War", "view": 102309086.0, "click": 139824.0, "ctr": 0.0013666821341752578, "session": 84925.0, "session_rate": 0.6073706946, "register": 545.0, "kyc": 125.0, "kyc_rate": 0.2293577982}, {"name": "Raastin", "state": "After War", "view": 257048255.0, "click": 156137.0, "ctr": 0.0006074229136470893, "session": 76815.0, "session_rate": 0.491971794, "register": 1663.0, "kyc": 919.0, "kyc_rate": 0.5526157547}, {"name": "Arzplus", "state": "After War", "view": 43397445.0, "click": 81368.0, "ctr": 0.0018749490897447996, "session": 58191.0, "session_rate": 0.7151582932, "register": 713.0, "kyc": 273.0, "kyc_rate": 0.3828892006}], "bank_app": [{"name": "Blubank", "state": "Before War", "view": 288019372.0, "click": 4559917.0, "ctr": 0.015831980218330592, "install": 161066.0, "install_rate": 0.03532213415}, {"name": "Blu-junior", "state": "Before War", "view": 28402983.0, "click": 319095.0, "ctr": 0.01123455941229835, "install": 16000.0, "install_rate": 0.0501418073}, {"name": "top", "state": "Before War", "view": 18403335.0, "click": 226143.0, "ctr": 0.012288153207013838, "install": 8730.0, "install_rate": 0.03860389223}, {"name": "sep", "state": "Before War", "view": 20567208.0, "click": 1356807.0, "ctr": 0.06596943056150353, "install": 31369.0, "install_rate": 0.02311972152}, {"name": "abank", "state": "Before War", "view": 11913655.0, "click": 101887.0, "ctr": 0.008552119395768972, "install": 5450.0, "install_rate": 0.05349063178}, {"name": "bajet", "state": "Before War", "view": 3468588.0, "click": 225588.0, "ctr": 0.06503741580147311, "install": 2640.0, "install_rate": 0.01170275015}, {"name": "wepod", "state": "Before War", "view": 118441974.0, "click": 5322959.0, "ctr": 0.04494149177216516, "install": 43650.0, "install_rate": 0.008200326172}, {"name": "bankino", "state": "Before War", "view": 8638637.0, "click": 65389.0, "ctr": 0.007569365398731305, "install": 2945.0, "install_rate": 0.04503815626}, {"name": "Blubank", "state": "After War", "view": 317822830.0, "click": 11998632.0, "ctr": 0.03775258058082234, "install": 172000.0, "install_rate": 0.01433496752}, {"name": "Blu-junior", "state": "After War", "view": 20325182.0, "click": 661898.0, "ctr": 0.0325654156503986, "install": 24936.0, "install_rate": 0.03767347839}, {"name": "top", "state": "After War", "view": 10636578.0, "click": 235709.0, "ctr": 0.022160228599837278, "install": 4170.0, "install_rate": 0.01769130581}, {"name": "bajet", "state": "After War", "view": 25373643.0, "click": 610562.0, "ctr": 0.024062843478959643, "install": 5666.0, "install_rate": 0.009279974843}, {"name": "wepod", "state": "After War", "view": 80950588.0, "click": 4679715.0, "ctr": 0.05780952449659785, "install": 51400.0, "install_rate": 0.01098357485}, {"name": "bankino", "state": "After War", "view": 10391787.0, "click": 620627.0, "ctr": 0.05972283689032502, "install": 14270.0, "install_rate": 0.02299287656}]}}}
 </script>
@@ -842,38 +1016,83 @@ new Chart(document.getElementById('chartWarMarket'), {
 });
 
 
-/* ================= TAB NAVIGATION (switch panels instead of scrolling) ================= */
-const navLinks = [...document.querySelectorAll('.scroll-nav a[href^="#"]')];
-const panelIds = navLinks.map(a=>a.getAttribute('href').slice(1));
-const panels = panelIds.map(id=>document.getElementById(id));
+/* ================= SLIDE DECK NAVIGATION ================= */
+const deck = document.getElementById('deck');
+const slides = [...deck.querySelectorAll('.slide')];
+const jumpLinks = [...document.querySelectorAll('.jump-links a[href^="#"]')];
+const prevBtn = document.getElementById('prevSlide');
+const nextBtn = document.getElementById('nextSlide');
+const curEl = document.getElementById('slideCurrent');
+const totalEl = document.getElementById('slideTotal');
 
-function activateTab(id){
-  if(!panelIds.includes(id)) id = panelIds[0];
-  panels.forEach(p=> p && p.classList.toggle('active', p.id===id));
-  navLinks.forEach(a=> a.classList.toggle('active', a.getAttribute('href')==='#'+id));
-  window.scrollTo({ top:0, behavior:'auto' });
-  /* Chart.js measures canvas size when created; charts built while their tab was
-     hidden (display:none) come out zero-size, so force a resize now that the
-     panel is actually visible. */
-  const activePanel = panels.find(p=>p && p.id===id);
-  if(activePanel){
-    activePanel.querySelectorAll('canvas').forEach(cv=>{
-      const ch = Chart.getChart(cv);
-      if(ch) ch.resize();
-    });
+totalEl.textContent = slides.length.toLocaleString('fa-IR');
+
+/* which slide id starts each "part", for highlighting the right jump link */
+const partStarts = jumpLinks.map(a => a.getAttribute('href').slice(1));
+
+let activeIndex = 0;
+
+function faNumLocal(n){ return n.toLocaleString('fa-IR'); }
+
+function setActive(index){
+  activeIndex = Math.max(0, Math.min(slides.length - 1, index));
+  curEl.textContent = faNumLocal(activeIndex + 1);
+  prevBtn.disabled = activeIndex === 0;
+  nextBtn.disabled = activeIndex === slides.length - 1;
+
+  /* highlight the jump link for the current part: the last part-start at or before this slide */
+  const activeId = slides[activeIndex].id;
+  let currentPart = partStarts[0];
+  for (const id of partStarts){
+    const idx = slides.findIndex(s => s.id === id);
+    if (idx <= activeIndex) currentPart = id; else break;
   }
+  jumpLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href').slice(1) === currentPart));
+  history.replaceState(null, '', '#' + activeId);
 }
 
-navLinks.forEach(a=>{
-  a.addEventListener('click', (e)=>{
+function goTo(index){
+  const target = slides[Math.max(0, Math.min(slides.length - 1, index))];
+  target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+/* IntersectionObserver tracks which slide is actually in view during snap-scrolling */
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting && entry.intersectionRatio >= 0.55){
+      const idx = slides.indexOf(entry.target);
+      if (idx !== -1) setActive(idx);
+    }
+  });
+}, { root: deck, threshold: [0.55] });
+slides.forEach(s => io.observe(s));
+
+prevBtn.addEventListener('click', () => goTo(activeIndex - 1));
+nextBtn.addEventListener('click', () => goTo(activeIndex + 1));
+
+jumpLinks.forEach(a => {
+  a.addEventListener('click', (e) => {
     e.preventDefault();
     const id = a.getAttribute('href').slice(1);
-    activateTab(id);
-    history.replaceState(null, '', '#'+id);
+    const idx = slides.findIndex(s => s.id === id);
+    if (idx !== -1) goTo(idx);
   });
 });
 
-activateTab((location.hash || '#'+panelIds[0]).slice(1));
+document.addEventListener('keydown', (e) => {
+  if (['ArrowDown', 'PageDown'].includes(e.key)){ e.preventDefault(); goTo(activeIndex + 1); }
+  else if (['ArrowUp', 'PageUp'].includes(e.key)){ e.preventDefault(); goTo(activeIndex - 1); }
+  else if (e.key === 'Home'){ e.preventDefault(); goTo(0); }
+  else if (e.key === 'End'){ e.preventDefault(); goTo(slides.length - 1); }
+});
+
+/* land on the slide named by the URL hash, if any, without an animated scroll */
+const initialId = location.hash.slice(1);
+const initialIdx = initialId ? slides.findIndex(s => s.id === initialId) : 0;
+if (initialIdx > 0){
+  slides[initialIdx].scrollIntoView({ block: 'start' });
+}
+setActive(initialIdx === -1 ? 0 : initialIdx);
 
 })();
 </script>
