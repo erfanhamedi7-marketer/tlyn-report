@@ -178,11 +178,11 @@ html, body{
 
 /* ---------- cover slide ---------- */
 .slide.cover{
-  position:relative;
   background:linear-gradient(155deg, var(--purple-deep), var(--purple) 70%);
   color:#F2E8FB;
   overflow:hidden;
   justify-content:center;
+  padding-bottom:100px; /* reserve room so centered content never collides with .scroll-hint */
 }
 .slide.cover::after{
   content:"";
@@ -305,7 +305,7 @@ tr.hl td:first-child{ border-inline-start:3px solid var(--gold-ink); }
 
 /* ---------- closing / sources slide ---------- */
 .slide.closing{
-  background:linear-gradient(155deg, var(--purple-deep), var(--purple) 70%); color:#E9DBF7; position:relative;
+  background:linear-gradient(155deg, var(--purple-deep), var(--purple) 70%); color:#E9DBF7;
 }
 .slide.closing::before{
   content:""; position:absolute; inset:0 0 auto 0; height:4px;
