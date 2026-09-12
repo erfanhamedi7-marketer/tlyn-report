@@ -294,6 +294,14 @@ h1.brand span{ color:var(--gold); }
 }
 .cmp-ratio.up{ color:var(--positive); border-color:rgba(31,138,99,0.35); background:rgba(31,138,99,0.08); }
 .cmp-ratio.down{ color:var(--negative); border-color:rgba(193,68,46,0.35); background:rgba(193,68,46,0.08); }
+/* the end-to-end step (install/session all the way to KYC) carries the headline
+   of each comparison, so its card is lifted out of the row */
+.cmp-cell.is-key{
+  background:linear-gradient(180deg, #FFF6DC 0%, #FFFDF6 70%);
+  border-color:var(--gold);
+  box-shadow:0 0 0 3px var(--gold-soft), var(--shadow-soft);
+}
+.cmp-cell.is-key h5{ color:var(--gold-ink); }
 @media (max-width:1100px){ .cmp-grid{ grid-template-columns:repeat(3, 1fr); } }
 @media (max-width:640px){ .cmp-grid{ grid-template-columns:repeat(2, 1fr); } }
 
@@ -957,7 +965,7 @@ function buildFunnelCmp(gridId, tblId, steps, tlynRow, competitorRows){
     const canvasId = `${gridId}-c${i}`;
 
     const cell = document.createElement('div');
-    cell.className = 'cmp-cell';
+    cell.className = 'cmp-cell' + (s.key ? ' is-key' : '');
     cell.innerHTML =
       `<h5>${s.label}</h5>
        <div class="cmp-chart"><canvas id="${canvasId}"></canvas></div>
@@ -996,7 +1004,7 @@ buildFunnelCmp('cmpGoldApp', 'tbl-gold-app-cmp', [
   {label:'نرخ نصب از کلیک', field:'install_rate'},
   {label:'نرخ ثبت‌نام از نصب', field:'register_rate'},
   {label:'نرخ KYC از ثبت‌نام', field:'kyc_rate'},
-  {label:'نرخ KYC از نصب', field:'kyc_per_install'}
+  {label:'نرخ KYC از نصب', field:'kyc_per_install', key:true}
 ], tlynGoldApp, BENCH.current.gold_app);
 
 /* ---- 2.2 gold web funnel ---- */
@@ -1006,7 +1014,7 @@ buildFunnelCmp('cmpGoldWeb', 'tbl-gold-web-cmp', [
   {label:'نرخ سشن از کلیک', field:'session_rate'},
   {label:'نرخ ثبت‌نام از سشن', field:'register_rate'},
   {label:'نرخ KYC از ثبت‌نام', field:'kyc_rate'},
-  {label:'نرخ KYC از سشن', field:'kyc_per_session'}
+  {label:'نرخ KYC از سشن', field:'kyc_per_session', key:true}
 ], tlynGoldWeb, BENCH.current.gold_web);
 
 
