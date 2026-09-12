@@ -430,64 +430,64 @@ tr.hl td:first-child{ border-inline-start:3px solid var(--gold-ink); }
     </div>
   </section>
 
-  <!-- S2: summary — insights -->
-  <section class="slide" id="s-summary-insights">
-    <div class="wrap">
-      <div class="subhead"><h3>جمع‌بندی سریع</h3></div>
-      <div class="insights">
-        <div class="insight-card">
-          <span class="tag">تمرکز بودجه</span>
-          <p>در اپلیکیشن، <b>۳ کمپین برتر</b> (inapp_CPI_11، inapp-cpi-pb-ad، inapp_ow) به‌تنهایی <b>۷۱٪</b> از کل بودجهٔ اپ را مصرف می‌کنند؛ در وب برعکس، بودجه میان <b>۶۸ کمپین فعال</b> پخش شده است.</p>
-        </div>
-        <div class="insight-card pos">
-          <span class="tag">جایگاه رقابتی</span>
-          <p>طلاین در وب با نرخ کلیک <b>۱.۴۹٪</b> نزدیک به <b>۵.۴ برابر</b> میانگین صنعت طلای دیجیتال (۰.۲۸٪) عمل می‌کند.</p>
-        </div>
-        <div class="insight-card neg">
-          <span class="tag">نقطهٔ بهبود</span>
-          <p>با وجود بهترین CTR وب، نرخ تبدیل سشن‌به‌ثبت‌نام طلاین (<b>۰.۶۷٪</b>) حدود یک‌سوم میانگین صنعت (۱.۸۹٪) است.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- S3: part1 divider -->
+  <!-- S2: part1 divider -->
   <section class="slide divider" id="s-part1-divider">
     <div class="wrap">
       <div class="section-head">
         <div class="section-num">۱</div>
         <h2 class="section-title">عملکرد کمپین‌های طلاین</h2>
       </div>
-      <p class="section-desc">مرور روند هفتگی هزینه، نصب/تایید و هزینهٔ جذب، به‌همراه تفکیک کامل کمپین‌ها برای هر دو پلتفرم اپلیکیشن و وب.</p>
+      <p class="section-desc">مرور روند هفتگی هزینه، نصب/تایید و هزینهٔ جذب.</p>
     </div>
   </section>
 
-  <!-- S4: 1.1 app weekly trend -->
+  <!-- S3: 1.1 overall weekly trend -->
+  <section class="slide" id="s-part1-overall-weekly">
+    <div class="wrap">
+      <div class="subhead">
+        <span class="chip total">کل (اپ + وب)</span>
+        <h3>۱.۱ روند هفتگی — کلی</h3>
+        <p class="note">مجموع اپلیکیشن و وب</p>
+      </div>
+      <div class="grid-2">
+        <div class="panel">
+          <div class="panel-title"><h4>روند هزینه</h4><span class="legend-note">تومان</span></div>
+          <div class="chart-box"><canvas id="chartOverallCost"></canvas></div>
+        </div>
+        <div class="panel">
+          <div class="panel-title"><h4>تعداد احراز و هزینه به ازای احراز</h4><span class="legend-note">ستون: تعداد احراز — خط: هزینه به ازای احراز (تومان)</span></div>
+          <div class="chart-box"><canvas id="chartOverallKyc"></canvas></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- S4: 1.2 app weekly trend -->
   <section class="slide" id="s-part1-app-weekly">
     <div class="wrap">
       <div class="subhead">
         <span class="chip app">اپلیکیشن</span>
-        <h3>۱.۱ روند هفتگی — اپلیکیشن</h3>
+        <h3>۱.۲ روند هفتگی — اپلیکیشن</h3>
         <p class="note">۱۹ کمپین تعریف‌شده، ۱۴ کمپین دارای هزینه</p>
       </div>
       <div class="grid-2">
         <div class="panel">
-          <div class="panel-title"><h4>هزینه و نصب به تفکیک هفته</h4><span class="legend-note">ستون: هزینه (ریال) — خط: تعداد نصب</span></div>
+          <div class="panel-title"><h4>روند هزینه</h4><span class="legend-note">تومان</span></div>
           <div class="chart-box"><canvas id="chartAppWeekly"></canvas></div>
         </div>
         <div class="panel">
-          <div class="panel-title"><h4>روند CPI و CPA (KYC)</h4><span class="legend-note">ریال به‌ازای هر رویداد</span></div>
+          <div class="panel-title"><h4>روند هزینه به ازای نصب (CPI)</h4><span class="legend-note">تومان به‌ازای هر نصب</span></div>
           <div class="chart-box"><canvas id="chartAppEfficiency"></canvas></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- S5: 1.2 app funnel -->
+  <!-- S5: 1.3 app funnel -->
   <section class="slide" id="s-part1-app-funnel">
     <div class="wrap">
       <div class="subhead">
-        <h3>۱.۲ قیف تبدیل اپلیکیشن</h3>
+        <h3>۱.۳ قیف تبدیل اپلیکیشن</h3>
         <p class="note">مجموع بازهٔ گزارش</p>
       </div>
       <div class="panel">
@@ -496,46 +496,7 @@ tr.hl td:first-child{ border-inline-start:3px solid var(--gold-ink); }
     </div>
   </section>
 
-  <!-- S6: 1.3 app campaign charts -->
-  <section class="slide" id="s-part1-app-camp-charts">
-    <div class="wrap">
-      <div class="subhead">
-        <h3>۱.۳ تفکیک کمپین‌های اپلیکیشن</h3>
-        <p class="note">مرتب‌شده بر اساس هزینه</p>
-      </div>
-      <div class="grid-2">
-        <div class="panel">
-          <div class="panel-title"><h4>هزینه به تفکیک کمپین</h4></div>
-          <div class="chart-box tall"><canvas id="chartAppCampCost"></canvas></div>
-        </div>
-        <div class="panel">
-          <div class="panel-title"><h4>CPA در برابر حجم نصب</h4><span class="legend-note">اندازهٔ دایره = هزینه</span></div>
-          <div class="chart-box tall"><canvas id="chartAppScatter"></canvas></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- S7: 1.3 app campaign table -->
-  <section class="slide" id="s-part1-app-camp-table">
-    <div class="wrap">
-      <div class="subhead">
-        <h3>۱.۳ تفکیک کمپین‌های اپلیکیشن — جدول</h3>
-        <p class="note">مرتب‌شده بر اساس هزینه</p>
-      </div>
-      <div class="table-wrap">
-        <table>
-          <thead><tr>
-            <th>کمپین</th><th class="num">هزینه (ریال)</th><th class="num">نصب</th><th class="num">KYC</th>
-            <th class="num">CPI</th><th class="num">CPA</th><th class="num">نرخ تبدیل</th>
-          </tr></thead>
-          <tbody id="tbl-app-campaigns"></tbody>
-        </table>
-      </div>
-    </div>
-  </section>
-
-  <!-- S8: 1.4 web weekly trend -->
+  <!-- S6: 1.4 web weekly trend -->
   <section class="slide" id="s-part1-web-weekly">
     <div class="wrap">
       <div class="subhead">
@@ -545,23 +506,23 @@ tr.hl td:first-child{ border-inline-start:3px solid var(--gold-ink); }
       </div>
       <div class="grid-2">
         <div class="panel">
-          <div class="panel-title"><h4>هزینه و کاربران تایید‌شده به تفکیک هفته</h4><span class="legend-note">ستون: هزینه (ریال) — خط: کاربر تایید‌شده</span></div>
+          <div class="panel-title"><h4>روند هزینه</h4><span class="legend-note">تومان</span></div>
           <div class="chart-box"><canvas id="chartWebWeekly"></canvas></div>
         </div>
         <div class="panel">
-          <div class="panel-title"><h4>روند CPA (کاربر تایید‌شده)</h4><span class="legend-note">ریال به‌ازای هر کاربر</span></div>
+          <div class="panel-title"><h4>تعداد تایید‌شده و هزینه به ازای تایید (CPA)</h4><span class="legend-note">ستون: تعداد تایید‌شده — خط: CPA (تومان)</span></div>
           <div class="chart-box"><canvas id="chartWebEfficiency"></canvas></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- S9: 1.5 web campaign charts -->
+  <!-- S7: 1.5 web campaign charts -->
   <section class="slide" id="s-part1-web-camp-charts">
     <div class="wrap">
       <div class="subhead">
         <h3>۱.۵ تفکیک کمپین‌های وب</h3>
-        <p class="note">۱۰ کمپین برتر + مجموع سایر کمپین‌ها</p>
+        <p class="note">بر اساس نوع کانال</p>
       </div>
       <div class="grid-2">
         <div class="panel">
@@ -569,24 +530,24 @@ tr.hl td:first-child{ border-inline-start:3px solid var(--gold-ink); }
           <div class="chart-box tall"><canvas id="chartWebDonut"></canvas></div>
         </div>
         <div class="panel">
-          <div class="panel-title"><h4>CPA کمپین‌های برتر وب</h4></div>
+          <div class="panel-title"><h4>CPA به تفکیک کانال</h4></div>
           <div class="chart-box tall"><canvas id="chartWebCampCpa"></canvas></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- S10: 1.5 web campaign table -->
+  <!-- S8: 1.6 web campaign table -->
   <section class="slide" id="s-part1-web-camp-table">
     <div class="wrap">
       <div class="subhead">
-        <h3>۱.۵ تفکیک کمپین‌های وب — جدول</h3>
-        <p class="note">۱۰ کمپین برتر + مجموع سایر کمپین‌ها</p>
+        <h3>۱.۶ تفکیک کمپین‌های وب — جدول</h3>
+        <p class="note">بر اساس نوع کانال</p>
       </div>
       <div class="table-wrap">
         <table>
           <thead><tr>
-            <th>کمپین</th><th class="num">هزینه (ریال)</th><th class="num">تایید‌شده</th><th class="num">CPA</th><th class="num">CTR</th>
+            <th>کانال</th><th class="num">هزینه (تومان)</th><th class="num">تایید‌شده</th><th class="num">CPA</th><th class="num">CTR</th>
           </tr></thead>
           <tbody id="tbl-web-campaigns"></tbody>
         </table>
@@ -594,49 +555,7 @@ tr.hl td:first-child{ border-inline-start:3px solid var(--gold-ink); }
     </div>
   </section>
 
-  <!-- S11: 1.6 trends insights A -->
-  <section class="slide" id="s-part1-insights-a">
-    <div class="wrap">
-      <div class="subhead"><h3>۱.۶ جمع‌بندی روندها</h3></div>
-      <div class="insights">
-        <div class="insight-card">
-          <span class="tag">بزرگ‌ترین کمپین اپ</span>
-          <p><b>inapp_CPI_11</b> با هزینهٔ ۱٫۰۶ میلیارد ریال، بزرگ‌ترین کمپین اپلیکیشن است؛ CPA آن (۱۵۰٬۸۶۳ ریال) پایین‌تر از میانگین کل اپ است.</p>
-        </div>
-        <div class="insight-card neg">
-          <span class="tag">کمپین کم‌بازده اپ</span>
-          <p><b>inapp-cpi-bnr</b> ارزان‌ترین CPI (۱۷٬۴۵۸ ریال) را دارد اما نرخ تبدیل آن تنها <b>۱.۸٪</b> است و CPA آن به <b>۹۸۶٬۷۴۵ ریال</b> می‌رسد — نصب ارزان، کیفیت پایین.</p>
-        </div>
-        <div class="insight-card pos">
-          <span class="tag">بهترین کمپین مقیاس‌پذیر</span>
-          <p><b>inapp_ow</b> با نرخ تبدیل <b>۴۵.۹٪</b> و CPA ۱۳۴٬۸۶۳ ریال، در مقیاس بالا (۱۵٬۷۵۳ نصب) کارآمدترین کمپین اپ محسوب می‌شود.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- S12: 1.6 trends insights B -->
-  <section class="slide" id="s-part1-insights-b">
-    <div class="wrap">
-      <div class="subhead"><h3>۱.۶ جمع‌بندی روندها (ادامه)</h3></div>
-      <div class="insights">
-        <div class="insight-card neg">
-          <span class="tag">شکاف کارایی دو پلتفرم</span>
-          <p>CPA احراز‌هویت در وب (۲۶۸٬۱۸۶ ریال) نسبت به اپ (۲۰۸٬۰۴۱ ریال) حدود <b>۲۹٪ گران‌تر</b> است، در حالی‌که حجم هزینهٔ وب تقریباً دو‌برابر اپ است.</p>
-        </div>
-        <div class="insight-card">
-          <span class="tag">دو کمپین بزرگ وب</span>
-          <p><b>sl-ch-cpa</b> (CPA ۲۲۴٬۶۲۷) و <b>inapp-cpc-pb-ad-web</b> (CPA ۳۴۳٬۵۱۷) با هم <b>۶۴٪</b> از بودجهٔ وب را مصرف می‌کنند؛ کیفیت این دو کمپین فاصلهٔ زیادی دارد.</p>
-        </div>
-        <div class="insight-card">
-          <span class="tag">دنبالهٔ بلند وب</span>
-          <p>۵۸ کمپین کوچک وب («سایر») تنها <b>۱۰.۴٪</b> بودجه ولی <b>۸.۷٪</b> از کاربران تایید‌شده را تامین می‌کنند — کمی کم‌بازده‌تر از میانگین.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- S13: part2 divider -->
+  <!-- S9: part2 divider -->
   <section class="slide divider" id="s-part2-divider">
     <div class="wrap">
       <div class="section-head">
@@ -777,7 +696,7 @@ tr.hl td:first-child{ border-inline-start:3px solid var(--gold-ink); }
       <div class="cols">
         <div>
           <h5>دربارهٔ این گزارش</h5>
-          <p>این گزارش به‌صورت خودکار از چهار فایل دادهٔ خام تولید شده: جدول هزینهٔ کمپین‌های اپلیکیشن و وب طلاین، و دو فایل بنچمارک رقابتی بازار طلای دیجیتال (اپ و وب). اعداد بر پایهٔ همان ستون‌های خام محاسبه شده‌اند و هیچ عددی به‌صورت دستی وارد نشده است. واحد پولی تمام مبالغ، ریال است.</p>
+          <p>این گزارش به‌صورت خودکار از چهار فایل دادهٔ خام تولید شده: جدول هزینهٔ کمپین‌های اپلیکیشن و وب طلاین، و دو فایل بنچمارک رقابتی بازار طلای دیجیتال (اپ و وب). اعداد بر پایهٔ همان ستون‌های خام محاسبه شده‌اند و هیچ عددی به‌صورت دستی وارد نشده است. واحد پولی تمام مبالغ، تومان است.</p>
         </div>
         <div>
           <h5>منابع داده</h5>
@@ -798,7 +717,7 @@ tr.hl td:first-child{ border-inline-start:3px solid var(--gold-ink); }
 
 </main>
 <script id="report-data" type="application/json">
-{"campaigns": {"totals": {"app": {"cost": 4276692000.0, "installs": 105437, "kyc": 20557, "clicks": 2973297.0, "impressions": 25888744.0, "cpi": 40561.5865, "cpa": 208040.6674, "convRate": 0.195, "activeCampaigns": 14}, "web": {"cost": 8047711517.0, "verified": 30008.0, "clicks": 2448972.0, "impressions": 161062577.0, "cpa": 268185.5344, "activeCampaigns": 68}, "period": {"start": "23 Jul 2026", "end": "6 Sep 2026", "start_fa": "1 مرداد ۱۴۰۴", "end_fa": "15 شهریور ۱۴۰۴"}}, "app_weekly": [{"week": "24 Jul", "cost": 268604000.0, "installs": 6183, "kyc": 1259, "cpi": 43442.3419, "cpa": 213347.1009, "convRate": 0.2036, "impressions": 1523463.0, "clicks": 159593.0}, {"week": "31 Jul", "cost": 736175000.0, "installs": 15585, "kyc": 3803, "cpi": 47236.1245, "cpa": 193577.4389, "convRate": 0.244, "impressions": 4132289.0, "clicks": 429413.0}, {"week": "07 Aug", "cost": 668650000.0, "installs": 18159, "kyc": 2649, "cpi": 36821.9616, "cpa": 252416.006, "convRate": 0.1459, "impressions": 3621613.0, "clicks": 417276.0}, {"week": "14 Aug", "cost": 803634000.0, "installs": 22261, "kyc": 4075, "cpi": 36100.5346, "cpa": 197210.7975, "convRate": 0.1831, "impressions": 4960554.0, "clicks": 544318.0}, {"week": "21 Aug", "cost": 625025000.0, "installs": 16290, "kyc": 3039, "cpi": 38368.6311, "cpa": 205667.9829, "convRate": 0.1866, "impressions": 5041785.0, "clicks": 540032.0}, {"week": "28 Aug", "cost": 711868000.0, "installs": 16617, "kyc": 3765, "cpi": 42839.7424, "cpa": 189075.166, "convRate": 0.2266, "impressions": 3721984.0, "clicks": 515472.0}, {"week": "04 Sep", "cost": 365705000.0, "installs": 8896, "kyc": 1549, "cpi": 41108.9254, "cpa": 236091.0265, "convRate": 0.1741, "impressions": 2434008.0, "clicks": 311400.0}, {"week": "11 Sep", "cost": 97031000.0, "installs": 1446, "kyc": 418, "cpi": 67103.0429, "cpa": 232131.5789, "convRate": 0.2891, "impressions": 453048.0, "clicks": 55793.0}], "web_weekly": [{"week": "24 Jul", "cost": 330279373.0, "verified": 1735.0, "cpa": 190362.751, "impressions": 13707399.0, "clicks": 138332.0}, {"week": "31 Jul", "cost": 1295978207.0, "verified": 5234.0, "cpa": 247607.6055, "impressions": 13616088.0, "clicks": 362416.0}, {"week": "07 Aug", "cost": 1375422559.0, "verified": 5348.0, "cpa": 257184.4725, "impressions": 12707083.0, "clicks": 571680.0}, {"week": "14 Aug", "cost": 1267473840.0, "verified": 4509.0, "cpa": 281098.656, "impressions": 8590958.0, "clicks": 371326.0}, {"week": "21 Aug", "cost": 872494832.0, "verified": 3267.0, "cpa": 267063.0034, "impressions": 36295846.0, "clicks": 291940.0}, {"week": "28 Aug", "cost": 1443108000.0, "verified": 4884.0, "cpa": 295476.6585, "impressions": 46226152.0, "clicks": 341089.0}, {"week": "04 Sep", "cost": 1208786503.0, "verified": 4112.0, "cpa": 293965.5893, "impressions": 26116028.0, "clicks": 320466.0}, {"week": "11 Sep", "cost": 254168203.0, "verified": 919.0, "cpa": 276570.4059, "impressions": 3803023.0, "clicks": 51723.0}], "app_campaigns": [{"name": "inapp_CPI_11", "cost": 1056038000.0, "installs": 21062, "kyc": 7000, "cpi": 50139.4929, "cpa": 150862.5714, "convRate": 0.3324, "ctr": null}, {"name": "inapp-cpi-pb-ad", "cost": 1027027000.0, "installs": 25042, "kyc": 2059, "cpi": 41012.1795, "cpa": 498798.9315, "convRate": 0.0822, "ctr": 0.175}, {"name": "inapp_ow", "cost": 973978000.0, "installs": 15753, "kyc": 7222, "cpi": 61828.0962, "cpa": 134862.6419, "convRate": 0.4585, "ctr": 0.025}, {"name": "inapp-cpi-win", "cost": 252304000.0, "installs": 4341, "kyc": 1725, "cpi": 58121.1702, "cpa": 146263.1884, "convRate": 0.3974, "ctr": 0.0193}, {"name": "inapp-cpi-gold-u", "cost": 196306000.0, "installs": 3916, "kyc": 491, "cpi": 50129.2135, "cpa": 399808.554, "convRate": 0.1254, "ctr": 0.0188}, {"name": "inapp-cpi-bnr", "cost": 193402000.0, "installs": 11078, "kyc": 196, "cpi": 17458.2055, "cpa": 986744.898, "convRate": 0.0177, "ctr": 0.0649}, {"name": "inapp-cpi-pb-b-ad", "cost": 172357000.0, "installs": 8822, "kyc": 469, "cpi": 19537.1798, "cpa": 367498.9339, "convRate": 0.0532, "ctr": 0.1785}, {"name": "inapp-cpi-bnr-b", "cost": 168555000.0, "installs": 10992, "kyc": 401, "cpi": 15334.3341, "cpa": 420336.6584, "convRate": 0.0365, "ctr": 0.0155}, {"name": "inapp-cpi-pb-tr", "cost": 100561000.0, "installs": 1322, "kyc": 183, "cpi": 76067.3222, "cpa": 549513.6612, "convRate": 0.1384, "ctr": 0.2049}, {"name": "inapp_CPI_24", "cost": 89476000.0, "installs": 1423, "kyc": 500, "cpi": 62878.4259, "cpa": 178952.0, "convRate": 0.3514, "ctr": null}, {"name": "inapp-cpi-vid", "cost": 24189000.0, "installs": 1130, "kyc": 70, "cpi": 21406.1947, "cpa": 345557.1429, "convRate": 0.0619, "ctr": 0.113}, {"name": "inapp-cpi-31", "cost": 16196000.0, "installs": 287, "kyc": 84, "cpi": 56432.0557, "cpa": 192809.5238, "convRate": 0.2927, "ctr": null}, {"name": "inapp-cpi-crypto-u", "cost": 5989000.0, "installs": 247, "kyc": 30, "cpi": 24246.9636, "cpa": 199633.3333, "convRate": 0.1215, "ctr": 0.0172}, {"name": "inapp-cpi-dwallet-u", "cost": 314000.0, "installs": 16, "kyc": 12, "cpi": 19625.0, "cpa": 26166.6667, "convRate": 0.75, "ctr": 1.5833}], "web_campaigns": [{"name": "sl-ch-cpa", "cost": 2637350000.0, "verified": 11741.0, "cpa": 224627.3742, "ctr": null}, {"name": "inapp-cpc-pb-ad-web", "cost": 2564357100.0, "verified": 7465.0, "cpa": 343517.361, "ctr": 0.078}, {"name": "inapp-w-kyc-web", "cost": 729270000.0, "verified": 3355.0, "cpa": 217368.1073, "ctr": 0.0707}, {"name": "inapp-w-kyc-js-web", "cost": 397200000.0, "verified": 1714.0, "cpa": 231738.6231, "ctr": 0.0664}, {"name": "inapp-cpc-pb-ad-b-web", "cost": 340460700.0, "verified": 797.0, "cpa": 427177.7917, "ctr": 0.0902}, {"name": "push-cpc-tn-web", "cost": 161553000.0, "verified": 560.0, "cpa": 288487.5, "ctr": 0.0025}, {"name": "inapp-cpc-gold-u-web", "cost": 121022500.0, "verified": 377.0, "cpa": 321014.5889, "ctr": 0.072}, {"name": "inapp-cpa-pb-web", "cost": 102950000.0, "verified": 295.0, "cpa": 348983.0508, "ctr": 0.2026}, {"name": "sms-all-5sh-web", "cost": 83102630.0, "verified": 146.0, "cpa": 569196.0959, "ctr": 0.0083}, {"name": "push-cpc-web", "cost": 76758600.0, "verified": 171.0, "cpa": 448880.7018, "ctr": 0.0009}, {"name": "سایر (58 کمپین)", "cost": 833686987.0, "verified": 2618.0, "cpa": 318444.2273, "ctr": null}]}, "benchmark": {"current": {"gold_app": [{"name": "tochal.gold", "owner": "Erfan", "view": 1084121.0, "click": 143950.0, "ctr": 0.13278038152567842, "install": 1094.0, "install_rate": 0.007599861063, "register": 97.0, "register_rate": 0.0886654479, "kyc": 128.0, "kyc_rate": 1.319587629, "trade": 73.0, "trade_rate": 0.5703125}, {"name": "Tlyn", "owner": "Erfan", "view": 23805493.0, "click": 2932520.0, "ctr": 0.1231866947683041, "install": 85246.0, "install_rate": 0.02906919646, "register": 10036.0, "register_rate": 0.1177298642, "kyc": 11621.0, "kyc_rate": 1.157931447, "trade": 12309.0, "trade_rate": 1.059203167}, {"name": "Melli Gold", "owner": "Fateme", "view": 26980288.0, "click": 1166245.0, "ctr": 0.04322581730780635, "install": 20486.0, "install_rate": 0.01756577735, "register": 9282.0, "register_rate": 0.4530899151, "kyc": 5266.0, "kyc_rate": 0.5673346262, "trade": 39323.0, "trade_rate": 7.467337638}, {"name": "Tala Sea", "owner": "Fateme", "view": 33815660.0, "click": 1590470.0, "ctr": 0.047033534167305914, "install": 27265.0, "install_rate": 0.01714273139, "register": null, "register_rate": null, "kyc": 4689.0, "kyc_rate": null, "trade": null, "trade_rate": 0.0}, {"name": "noghresea.adivery", "owner": "Fateme", "view": 2559574.0, "click": 96170.0, "ctr": 0.03757265857521603, "install": 4357.0, "install_rate": 0.04530518873, "register": null, "register_rate": null, "kyc": 1515.0, "kyc_rate": null, "trade": null, "trade_rate": 0.0}, {"name": "zarpin.adivery", "owner": "Fateme", "view": 854691.0, "click": 70262.0, "ctr": 0.08220748785233493, "install": 821.0, "install_rate": 0.01168483675, "register": 133.0, "register_rate": 0.1619975639, "kyc": 124.0, "kyc_rate": 0.9323308271, "trade": null, "trade_rate": 0.0}, {"name": "Milli Gold", "owner": "Ali", "view": 12226964.0, "click": 266766.0, "ctr": 0.021817844560595746, "install": 4343.0, "install_rate": 0.01628018563, "register": null, "register_rate": null, "kyc": null, "kyc_rate": null, "trade": null, "trade_rate": null}], "gold_web": [{"name": "Eco Gold", "owner": "Ali", "view": 22430134.0, "click": 26606.0, "ctr": 0.0011861721378927117, "session": 26366.0, "session_rate": 0.9909794783, "register": 136.0, "register_rate": 0.005158158234, "kyc": 45.0, "kyc_rate": 0.3308823529, "trade": null, "trade_rate": 0.0}, {"name": "Tochal.Web.New", "owner": "Erfan", "view": 46969451.0, "click": 102736.0, "ctr": 0.0021872940350101174, "session": 74009.0, "session_rate": 0.7203803925, "register": 2288.333333, "register_rate": 0.03091966292, "kyc": 1373.0, "kyc_rate": 0.6, "trade": 268.0, "trade_rate": 0.195193008}, {"name": "Melli Gold (web)", "owner": "Fateme", "view": 1321171921.0, "click": 6444986.0, "ctr": 0.004878234162834588, "session": 3633271.0, "session_rate": 0.5637360578, "register": 74941.0, "register_rate": 0.02062631717, "kyc": 37406.0, "kyc_rate": 0.4991393229, "trade": null, "trade_rate": 0.0}, {"name": "Tala Sea", "owner": "Fateme", "view": null, "click": null, "ctr": null, "session": null, "session_rate": null, "register": null, "register_rate": null, "kyc": null, "kyc_rate": null, "trade": null, "trade_rate": 0.0}, {"name": "noghre sea", "owner": "Fateme", "view": null, "click": null, "ctr": null, "session": null, "session_rate": null, "register": null, "register_rate": null, "kyc": null, "kyc_rate": null, "trade": null, "trade_rate": 0.0}, {"name": "zarpin.web", "owner": "Fateme", "view": null, "click": null, "ctr": null, "session": null, "session_rate": null, "register": null, "register_rate": null, "kyc": null, "kyc_rate": null, "trade": null, "trade_rate": 0.0}, {"name": "Wallgold (web)", "owner": "Ali", "view": "PAUSE", "click": null, "ctr": null, "session": null, "session_rate": null, "register": null, "register_rate": null, "kyc": null, "kyc_rate": null, "trade": null, "trade_rate": 0.0}, {"name": "Tlyn", "owner": "Erfan", "view": 166113993.0, "click": 2479586.0, "ctr": 0.014927014607372661, "session": 3110723.0, "session_rate": 1.254533216, "register": 20909.52380952381, "register_rate": 0.006721756907, "kyc": 13173.0, "kyc_rate": 0.63, "trade": null, "trade_rate": null}], "exch_app": [{"name": "Tabdeal (app)", "owner": "Ali", "view": 34570454.0, "click": 2828678.0, "ctr": 0.08182357107604082, "install": 54890.0, "install_rate": 0.01940482444, "register": 16895.0, "register_rate": 0.307797413, "kyc": null, "kyc_rate": null, "trade": null, "trade_rate": null}, {"name": "Raastin (app)", "owner": "Ali", "view": 9254037.0, "click": 1480773.0, "ctr": 0.16001373238512015, "install": 5777.0, "install_rate": 0.003901340719, "register": 1077.0, "register_rate": 0.1864289424, "kyc": 755.0, "kyc_rate": 0.7010213556, "trade": 730.0, "trade_rate": 0.9668874172}, {"name": "Arzplus (app)", "owner": "Erfan", "view": 1991120.0, "click": 155658.0, "ctr": 0.07817610189240226, "install": 2982.0, "install_rate": 0.01915738349, "register": 523.0, "register_rate": 0.1753856472, "kyc": 375.0, "kyc_rate": 0.7170172084, "trade": 148.0, "trade_rate": 0.3946666667}, {"name": "Bitpin", "owner": "Fateme", "view": null, "click": null, "ctr": null, "install": null, "install_rate": null, "register": null, "register_rate": null, "kyc": null, "kyc_rate": null, "trade": null, "trade_rate": null}, {"name": "Nobitex (app)", "owner": "Fateme", "view": null, "click": null, "ctr": null, "install": null, "install_rate": null, "register": null, "register_rate": null, "kyc": null, "kyc_rate": null, "trade": null, "trade_rate": null}, {"name": "Aban Tether (app)", "owner": "Fateme", "view": null, "click": null, "ctr": null, "install": null, "install_rate": null, "register": null, "register_rate": null, "kyc": null, "kyc_rate": null, "trade": null, "trade_rate": null}, {"name": "Kebrin (APP)", "owner": "Fateme", "view": null, "click": null, "ctr": null, "install": null, "install_rate": null, "register": null, "register_rate": null, "kyc": null, "kyc_rate": null, "trade": null, "trade_rate": null}, {"name": "Wallex (app)", "owner": "Ali", "view": 3852990.0, "click": 183831.0, "ctr": 0.047711258010013004, "install": 2010.0, "install_rate": 0.01093395564, "register": 528.0, "register_rate": 0.2626865672, "kyc": null, "kyc_rate": 0.0, "trade": 256.0, "trade_rate": null}], "exch_web": [{"name": "Tabdeal (web)", "owner": "Ali", "view": 164473916.0, "click": 817466.0, "ctr": 0.004970186275615886, "session": null, "session_rate": 0.0, "register": 14028.0, "register_rate": null, "kyc": 3355.0, "kyc_rate": 0.2391645281, "trade": null, "trade_rate": 0.0}, {"name": "Raastin (web)", "owner": "Ali", "view": 34246497.0, "click": 41612.0, "ctr": 0.0012150731796014057, "session": 47423.0, "session_rate": 1.139647217, "register": 786.0, "register_rate": 0.01657423613, "kyc": 291.0, "kyc_rate": 0.3702290076, "trade": 114.0, "trade_rate": 0.3917525773}, {"name": "Arzplus (web)", "owner": "Erfan", "view": 18544693.0, "click": 49587.0, "ctr": 0.002673918624589795, "session": 34265.0, "session_rate": 0.6910077238, "register": 555.0, "register_rate": 0.01619728586, "kyc": 210.0, "kyc_rate": 0.3783783784, "trade": 61.0, "trade_rate": 0.2904761905}, {"name": "Aban Tether (web)", "owner": "Fateme", "view": null, "click": null, "ctr": null, "session": null, "session_rate": null, "register": null, "register_rate": null, "kyc": null, "kyc_rate": null, "trade": null, "trade_rate": null}, {"name": "banvest.ir", "owner": "Fateme", "view": null, "click": null, "ctr": null, "session": null, "session_rate": null, "register": null, "register_rate": null, "kyc": null, "kyc_rate": null, "trade": null, "trade_rate": null}, {"name": "Wallex (web)", "owner": "Ali", "view": 69715068.0, "click": 122484.0, "ctr": 0.001756922907971631, "session": 74938.0, "session_rate": null, "register": 339.0, "register_rate": null, "kyc": null, "kyc_rate": null, "trade": null, "trade_rate": null}], "bank_app": [{"name": "Wepod", "owner": "Erfan", "view": 110454896.0, "click": 7054890.0, "ctr": 0.06387122939303659, "install": 198225.0, "install_rate": 0.02809753235, "card_order": 86999.0, "reg_rate": 0.4388901501}, {"name": "Bankino", "owner": "Erfan", "view": 18819650.0, "click": 2380682.0, "ctr": 0.12649980206858258, "install": 28509.0, "install_rate": 0.0119751399, "card_order": 8179.0, "reg_rate": 0.2868918587}, {"name": "Blu Bank", "owner": "Erfan", "view": 21953683.0, "click": 1710452.0, "ctr": 0.07791184741075108, "install": 190773.0, "install_rate": 0.1115336765, "card_order": 78232.0, "reg_rate": 0.4100789944}, {"name": "banvest.ir", "owner": "Fateme", "view": null, "click": null, "ctr": null, "install": null, "install_rate": null, "card_order": null, "reg_rate": null}]}, "historical": {"gold_app": [{"name": "Tlyn", "state": "Before War", "view": 7976263.0, "click": 185910.0, "ctr": 0.02330790747496666, "install": 7288.0, "install_rate": 0.03920176429, "register": 1847.0, "kyc": 1722.0, "kyc_rate": 0.9323226854}, {"name": "daric.app", "state": "Before War", "view": 11835397.0, "click": 566411.0, "ctr": 0.0478573722537571, "install": 8974.0, "install_rate": 0.01584361886, "register": null, "kyc": null, "kyc_rate": null}, {"name": "zarpaad", "state": "Before War", "view": 13037307.0, "click": 680365.0, "ctr": 0.05218600743236314, "install": 11180.0, "install_rate": 0.01643235616, "register": null, "kyc": null, "kyc_rate": null}, {"name": "banket", "state": "Before War", "view": 4528734.0, "click": 69107.0, "ctr": 0.015259673012369461, "install": 2094.0, "install_rate": 0.03030083783, "register": null, "kyc": null, "kyc_rate": null}, {"name": "Goldika", "state": "Before War", "view": 105238882.0, "click": 3926439.0, "ctr": 0.03730977491760127, "install": 55890.0, "install_rate": 0.01423427182, "register": null, "kyc": null, "kyc_rate": null}, {"name": "Talasea", "state": "Before War", "view": 13061374.0, "click": 1304587.0, "ctr": 0.09988129885875713, "install": 9829.0, "install_rate": 0.007534185148, "register": null, "kyc": 1521.0, "kyc_rate": null}, {"name": "MilliGold", "state": "Before War", "view": 68111142.0, "click": 2349979.0, "ctr": 0.03450212301535041, "install": 22306.0, "install_rate": 0.009491999716, "register": null, "kyc": null, "kyc_rate": null}, {"name": "Tlyn", "state": "After War", "view": 22575663.0, "click": 363642.0, "ctr": 0.016107699694135228, "install": 5314.0, "install_rate": 0.01461327349, "register": 757.0, "kyc": 748.0, "kyc_rate": 0.9881109643}, {"name": "Talasea", "state": "After War", "view": 77751712.0, "click": 3087556.0, "ctr": 0.039710456793543014, "install": 37481.0, "install_rate": 0.01213937496, "register": null, "kyc": 3282.0, "kyc_rate": null}], "gold_web": [{"name": "Talasea", "state": "Before War", "view": 784402806.0, "click": 1481452.0, "ctr": 0.0018886367930713395, "session": 551979.0, "session_rate": 0.3725932396, "register": 45000.0, "kyc": 22184.0, "kyc_rate": 0.4929777778}, {"name": "Zarpaad", "state": "Before War", "view": 781320693.0, "click": 1541665.0, "ctr": 0.001973152655256758, "session": 1222858.0, "session_rate": 0.7932060467, "register": 19645.0, "kyc": 7818.0, "kyc_rate": 0.3979638585}, {"name": "Wallgold", "state": "Before War", "view": 327158639.0, "click": 308056.0, "ctr": 0.0009416104705093849, "session": 214201.0, "session_rate": 0.6953313683, "register": 8981.0, "kyc": 4338.0, "kyc_rate": 0.4830197083}, {"name": "Goldika", "state": "Before War", "view": 323441535.0, "click": 1314463.0, "ctr": 0.004063989493495324, "session": 1051739.0, "session_rate": 0.8001282653, "register": 22018.0, "kyc": null, "kyc_rate": null}, {"name": "Talano", "state": "Before War", "view": 88105830.0, "click": 339304.0, "ctr": 0.003851095892292258, "session": 246798.0, "session_rate": 0.7273654304, "register": 1073.0, "kyc": null, "kyc_rate": null}, {"name": "Invi", "state": "Before War", "view": 175123118.0, "click": 491306.0, "ctr": 0.002805489107383298, "session": 392647.0, "session_rate": 0.7991903213, "register": 4287.0, "kyc": null, "kyc_rate": null}, {"name": "MelliGold", "state": "Before War", "view": 1024158421.0, "click": 2482187.0, "ctr": 0.002423635786323335, "session": 1279227.0, "session_rate": 0.5153628635, "register": 38841.0, "kyc": null, "kyc_rate": null}, {"name": "MelliGold", "state": "After War", "view": 41943115.0, "click": 118063.0, "ctr": 0.002814836237127357, "session": 90531.0, "session_rate": 0.7668024699, "register": 1373.0, "kyc": null, "kyc_rate": null}], "exch_app": [{"name": "Tabdeal", "state": "Before War", "view": 30996197.0, "click": 3880169.0, "ctr": 0.12518209895233276, "install": 29110.0, "install_rate": 0.007502250546, "register": 11502.0, "kyc": null, "kyc_rate": null}, {"name": "Aban tether", "state": "Before War", "view": 9525694.0, "click": 194946.0, "ctr": 0.020465280534940553, "install": 2854.0, "install_rate": 0.01463995158, "register": 1119.0, "kyc": 433.0, "kyc_rate": 0.3869526363}, {"name": "Nobitex", "state": "Before War", "view": 4441105.0, "click": 385020.0, "ctr": 0.0866946401852692, "install": 4031.0, "install_rate": 0.010469586, "register": 892.0, "kyc": 526.0, "kyc_rate": 0.5896860987}, {"name": "hamtapay", "state": "Before War", "view": 29242645.0, "click": 186642.0, "ctr": 0.006382527982677353, "install": 8846.0, "install_rate": 0.0473955487, "register": null, "kyc": null, "kyc_rate": null}, {"name": "wallex", "state": "Before War", "view": 105110995.0, "click": 2043680.0, "ctr": 0.01944306587526833, "install": 22833.0, "install_rate": 0.01117249276, "register": 1232.0, "kyc": 622.0, "kyc_rate": 0.5048701299}, {"name": "Bitpin", "state": "Before War", "view": 5207036.0, "click": 190794.0, "ctr": 0.036641574976627775, "install": 509.0, "install_rate": 0.002667798778, "register": 145.0, "kyc": 77.0, "kyc_rate": 0.5310344828}, {"name": "Raastin", "state": "Before War", "view": 531270.0, "click": 13058.0, "ctr": 0.024578839384870217, "install": 328.0, "install_rate": 0.02511870118, "register": 43.0, "kyc": 39.0, "kyc_rate": 0.9069767442}, {"name": "Arzplus", "state": "Before War", "view": 30161.0, "click": 2199.0, "ctr": 0.07290872318557078, "install": 324.0, "install_rate": 0.1473396999, "register": 61.0, "kyc": 52.0, "kyc_rate": 0.8524590164}, {"name": "Tabdeal", "state": "After War", "view": 75400212.0, "click": 9796900.0, "ctr": 0.12993199541667072, "install": 64427.0, "install_rate": 0.00657626392, "register": 18615.0, "kyc": null, "kyc_rate": null}, {"name": "Aban tether", "state": "After War", "view": 4465401.0, "click": 881634.0, "ctr": 0.19743669157596372, "install": 4982.0, "install_rate": 0.005650870996, "register": 2077.0, "kyc": 885.0, "kyc_rate": 0.4260953298}, {"name": "hamtapay", "state": "After War", "view": 2520647.0, "click": 183020.0, "ctr": 0.07260834222324665, "install": 11150.0, "install_rate": 0.06092230357, "register": null, "kyc": null, "kyc_rate": null}, {"name": "Bitpin", "state": "After War", "view": 1861523.0, "click": 258217.0, "ctr": 0.1387127636886571, "install": 7140.0, "install_rate": 0.02765116162, "register": 1191.0, "kyc": 729.0, "kyc_rate": 0.6120906801}, {"name": "Raastin", "state": "After War", "view": 4402503.0, "click": 101235.0, "ctr": 0.02299487359804184, "install": 436.0, "install_rate": 0.004306810886, "register": 75.0, "kyc": 60.0, "kyc_rate": 0.8}, {"name": "Arzplus", "state": "After War", "view": 732351.0, "click": 25906.0, "ctr": 0.03537374838021659, "install": 473.0, "install_rate": 0.01825831854, "register": 80.0, "kyc": 76.0, "kyc_rate": 0.95}], "exch_web": [{"name": "Wallex", "state": "Before War", "view": 253333041.0, "click": 568886.0, "ctr": 0.002245605222889185, "session": 412957.0, "session_rate": 0.7259046628, "register": 2215.0, "kyc": null, "kyc_rate": null}, {"name": "Tabdeal", "state": "Before War", "view": 267775906.0, "click": 571879.0, "ctr": 0.0021356626462128376, "session": 398416.0, "session_rate": 0.6966788429, "register": 6148.0, "kyc": null, "kyc_rate": null}, {"name": "OMP", "state": "Before War", "view": 59006019.0, "click": 439494.0, "ctr": 0.007448290995533863, "session": 244994.0, "session_rate": 0.5574456079, "register": 3487.0, "kyc": null, "kyc_rate": null}, {"name": "Bitpin", "state": "Before War", "view": 27856106.0, "click": 67154.0, "ctr": 0.002410746139464001, "session": 43233.0, "session_rate": 0.6437889031, "register": 825.0, "kyc": 237.0, "kyc_rate": 0.2872727273}, {"name": "Nobitex", "state": "Before War", "view": 107392765.0, "click": 289949.0, "ctr": 0.002699893237686915, "session": 133100.0, "session_rate": 0.4590462461, "register": 1402.0, "kyc": 372.0, "kyc_rate": 0.2653352354}, {"name": "Raastin", "state": "Before War", "view": 323017136.0, "click": 296123.0, "ctr": 0.0009167408381702697, "session": 188854.0, "session_rate": 0.6377552571, "register": 3348.0, "kyc": 1625.0, "kyc_rate": 0.4853643967}, {"name": "Arzplus", "state": "Before War", "view": 124432627.0, "click": 223390.0, "ctr": 0.0017952686958863289, "session": 170769.0, "session_rate": 0.7644433502, "register": 2786.0, "kyc": 1295.0, "kyc_rate": 0.4648241206}, {"name": "Wallex", "state": "After War", "view": 277015543.0, "click": 287162.0, "ctr": 0.0010366277534109342, "session": 128580.0, "session_rate": 0.447761194, "register": 7483.0, "kyc": null, "kyc_rate": null}, {"name": "Tabdeal", "state": "After War", "view": 1185167123.0, "click": 4174953.0, "ctr": 0.0035226702791349707, "session": 2307030.0, "session_rate": 0.5525882567, "register": 43472.0, "kyc": null, "kyc_rate": null}, {"name": "Bitpin", "state": "After War", "view": 102309086.0, "click": 139824.0, "ctr": 0.0013666821341752578, "session": 84925.0, "session_rate": 0.6073706946, "register": 545.0, "kyc": 125.0, "kyc_rate": 0.2293577982}, {"name": "Raastin", "state": "After War", "view": 257048255.0, "click": 156137.0, "ctr": 0.0006074229136470893, "session": 76815.0, "session_rate": 0.491971794, "register": 1663.0, "kyc": 919.0, "kyc_rate": 0.5526157547}, {"name": "Arzplus", "state": "After War", "view": 43397445.0, "click": 81368.0, "ctr": 0.0018749490897447996, "session": 58191.0, "session_rate": 0.7151582932, "register": 713.0, "kyc": 273.0, "kyc_rate": 0.3828892006}], "bank_app": [{"name": "Blubank", "state": "Before War", "view": 288019372.0, "click": 4559917.0, "ctr": 0.015831980218330592, "install": 161066.0, "install_rate": 0.03532213415}, {"name": "Blu-junior", "state": "Before War", "view": 28402983.0, "click": 319095.0, "ctr": 0.01123455941229835, "install": 16000.0, "install_rate": 0.0501418073}, {"name": "top", "state": "Before War", "view": 18403335.0, "click": 226143.0, "ctr": 0.012288153207013838, "install": 8730.0, "install_rate": 0.03860389223}, {"name": "sep", "state": "Before War", "view": 20567208.0, "click": 1356807.0, "ctr": 0.06596943056150353, "install": 31369.0, "install_rate": 0.02311972152}, {"name": "abank", "state": "Before War", "view": 11913655.0, "click": 101887.0, "ctr": 0.008552119395768972, "install": 5450.0, "install_rate": 0.05349063178}, {"name": "bajet", "state": "Before War", "view": 3468588.0, "click": 225588.0, "ctr": 0.06503741580147311, "install": 2640.0, "install_rate": 0.01170275015}, {"name": "wepod", "state": "Before War", "view": 118441974.0, "click": 5322959.0, "ctr": 0.04494149177216516, "install": 43650.0, "install_rate": 0.008200326172}, {"name": "bankino", "state": "Before War", "view": 8638637.0, "click": 65389.0, "ctr": 0.007569365398731305, "install": 2945.0, "install_rate": 0.04503815626}, {"name": "Blubank", "state": "After War", "view": 317822830.0, "click": 11998632.0, "ctr": 0.03775258058082234, "install": 172000.0, "install_rate": 0.01433496752}, {"name": "Blu-junior", "state": "After War", "view": 20325182.0, "click": 661898.0, "ctr": 0.0325654156503986, "install": 24936.0, "install_rate": 0.03767347839}, {"name": "top", "state": "After War", "view": 10636578.0, "click": 235709.0, "ctr": 0.022160228599837278, "install": 4170.0, "install_rate": 0.01769130581}, {"name": "bajet", "state": "After War", "view": 25373643.0, "click": 610562.0, "ctr": 0.024062843478959643, "install": 5666.0, "install_rate": 0.009279974843}, {"name": "wepod", "state": "After War", "view": 80950588.0, "click": 4679715.0, "ctr": 0.05780952449659785, "install": 51400.0, "install_rate": 0.01098357485}, {"name": "bankino", "state": "After War", "view": 10391787.0, "click": 620627.0, "ctr": 0.05972283689032502, "install": 14270.0, "install_rate": 0.02299287656}]}}}
+{"campaigns": {"totals": {"app": {"cost": 4276692000.0, "installs": 105437, "kyc": 20557, "clicks": 2973297.0, "impressions": 25888744.0, "cpi": 40561.5865, "cpa": 208040.6674, "convRate": 0.195, "activeCampaigns": 14}, "web": {"cost": 8047711517.0, "verified": 30008.0, "clicks": 2448972.0, "impressions": 161062577.0, "cpa": 268185.5344, "activeCampaigns": 68}, "period": {"start": "23 Jul 2026", "end": "6 Sep 2026", "start_fa": "1 مرداد ۱۴۰۴", "end_fa": "15 شهریور ۱۴۰۴"}}, "app_weekly": [{"week": "24 Jul", "cost": 268604000.0, "installs": 6183, "kyc": 1259, "cpi": 43442.3419, "cpa": 213347.1009, "convRate": 0.2036, "impressions": 1523463.0, "clicks": 159593.0}, {"week": "31 Jul", "cost": 736175000.0, "installs": 15585, "kyc": 3803, "cpi": 47236.1245, "cpa": 193577.4389, "convRate": 0.244, "impressions": 4132289.0, "clicks": 429413.0}, {"week": "07 Aug", "cost": 668650000.0, "installs": 18159, "kyc": 2649, "cpi": 36821.9616, "cpa": 252416.006, "convRate": 0.1459, "impressions": 3621613.0, "clicks": 417276.0}, {"week": "14 Aug", "cost": 803634000.0, "installs": 22261, "kyc": 4075, "cpi": 36100.5346, "cpa": 197210.7975, "convRate": 0.1831, "impressions": 4960554.0, "clicks": 544318.0}, {"week": "21 Aug", "cost": 625025000.0, "installs": 16290, "kyc": 3039, "cpi": 38368.6311, "cpa": 205667.9829, "convRate": 0.1866, "impressions": 5041785.0, "clicks": 540032.0}, {"week": "28 Aug", "cost": 711868000.0, "installs": 16617, "kyc": 3765, "cpi": 42839.7424, "cpa": 189075.166, "convRate": 0.2266, "impressions": 3721984.0, "clicks": 515472.0}, {"week": "04 Sep", "cost": 365705000.0, "installs": 8896, "kyc": 1549, "cpi": 41108.9254, "cpa": 236091.0265, "convRate": 0.1741, "impressions": 2434008.0, "clicks": 311400.0}, {"week": "11 Sep", "cost": 97031000.0, "installs": 1446, "kyc": 418, "cpi": 67103.0429, "cpa": 232131.5789, "convRate": 0.2891, "impressions": 453048.0, "clicks": 55793.0}], "web_weekly": [{"week": "24 Jul", "cost": 330279373.0, "verified": 1735.0, "cpa": 190362.751, "impressions": 13707399.0, "clicks": 138332.0}, {"week": "31 Jul", "cost": 1295978207.0, "verified": 5234.0, "cpa": 247607.6055, "impressions": 13616088.0, "clicks": 362416.0}, {"week": "07 Aug", "cost": 1375422559.0, "verified": 5348.0, "cpa": 257184.4725, "impressions": 12707083.0, "clicks": 571680.0}, {"week": "14 Aug", "cost": 1267473840.0, "verified": 4509.0, "cpa": 281098.656, "impressions": 8590958.0, "clicks": 371326.0}, {"week": "21 Aug", "cost": 872494832.0, "verified": 3267.0, "cpa": 267063.0034, "impressions": 36295846.0, "clicks": 291940.0}, {"week": "28 Aug", "cost": 1443108000.0, "verified": 4884.0, "cpa": 295476.6585, "impressions": 46226152.0, "clicks": 341089.0}, {"week": "04 Sep", "cost": 1208786503.0, "verified": 4112.0, "cpa": 293965.5893, "impressions": 26116028.0, "clicks": 320466.0}, {"week": "11 Sep", "cost": 254168203.0, "verified": 919.0, "cpa": 276570.4059, "impressions": 3803023.0, "clicks": 51723.0}], "app_campaigns": [{"name": "inapp_CPI_11", "cost": 1056038000.0, "installs": 21062, "kyc": 7000, "cpi": 50139.4929, "cpa": 150862.5714, "convRate": 0.3324, "ctr": null}, {"name": "inapp-cpi-pb-ad", "cost": 1027027000.0, "installs": 25042, "kyc": 2059, "cpi": 41012.1795, "cpa": 498798.9315, "convRate": 0.0822, "ctr": 0.175}, {"name": "inapp_ow", "cost": 973978000.0, "installs": 15753, "kyc": 7222, "cpi": 61828.0962, "cpa": 134862.6419, "convRate": 0.4585, "ctr": 0.025}, {"name": "inapp-cpi-win", "cost": 252304000.0, "installs": 4341, "kyc": 1725, "cpi": 58121.1702, "cpa": 146263.1884, "convRate": 0.3974, "ctr": 0.0193}, {"name": "inapp-cpi-gold-u", "cost": 196306000.0, "installs": 3916, "kyc": 491, "cpi": 50129.2135, "cpa": 399808.554, "convRate": 0.1254, "ctr": 0.0188}, {"name": "inapp-cpi-bnr", "cost": 193402000.0, "installs": 11078, "kyc": 196, "cpi": 17458.2055, "cpa": 986744.898, "convRate": 0.0177, "ctr": 0.0649}, {"name": "inapp-cpi-pb-b-ad", "cost": 172357000.0, "installs": 8822, "kyc": 469, "cpi": 19537.1798, "cpa": 367498.9339, "convRate": 0.0532, "ctr": 0.1785}, {"name": "inapp-cpi-bnr-b", "cost": 168555000.0, "installs": 10992, "kyc": 401, "cpi": 15334.3341, "cpa": 420336.6584, "convRate": 0.0365, "ctr": 0.0155}, {"name": "inapp-cpi-pb-tr", "cost": 100561000.0, "installs": 1322, "kyc": 183, "cpi": 76067.3222, "cpa": 549513.6612, "convRate": 0.1384, "ctr": 0.2049}, {"name": "inapp_CPI_24", "cost": 89476000.0, "installs": 1423, "kyc": 500, "cpi": 62878.4259, "cpa": 178952.0, "convRate": 0.3514, "ctr": null}, {"name": "inapp-cpi-vid", "cost": 24189000.0, "installs": 1130, "kyc": 70, "cpi": 21406.1947, "cpa": 345557.1429, "convRate": 0.0619, "ctr": 0.113}, {"name": "inapp-cpi-31", "cost": 16196000.0, "installs": 287, "kyc": 84, "cpi": 56432.0557, "cpa": 192809.5238, "convRate": 0.2927, "ctr": null}, {"name": "inapp-cpi-crypto-u", "cost": 5989000.0, "installs": 247, "kyc": 30, "cpi": 24246.9636, "cpa": 199633.3333, "convRate": 0.1215, "ctr": 0.0172}, {"name": "inapp-cpi-dwallet-u", "cost": 314000.0, "installs": 16, "kyc": 12, "cpi": 19625.0, "cpa": 26166.6667, "convRate": 0.75, "ctr": 1.5833}], "web_campaigns": [{"name": "In App", "cost": 4342606860.0, "verified": 14247.0, "cpa": 304808.5112655296, "ctr": 0.06566185836841988, "campaigns": 10}, {"name": "Social (CPA)", "cost": 2641460000.0, "verified": 11766.0, "cpa": 224499.4050654428, "ctr": null, "campaigns": 4}, {"name": "SMS", "cost": 697625590.0, "verified": 2291.0, "cpa": 304507.02313400264, "ctr": 0.009622056408701615, "campaigns": 41}, {"name": "Push", "cost": 260455630.0, "verified": 846.0, "cpa": 307867.1749408984, "ctr": 0.0015974939673192039, "campaigns": 4}, {"name": "Pouya", "cost": 61880395.0, "verified": 72.0, "cpa": 859449.9305555555, "ctr": 0.002513486463137871, "campaigns": 5}, {"name": "Digital Billboard", "cost": 30595902.0, "verified": 75.0, "cpa": 407945.36, "ctr": 0.008990189226269058, "campaigns": 6}, {"name": "Video", "cost": 13087140.0, "verified": 8.0, "cpa": 1635892.5, "ctr": 0.0009508911089077562, "campaigns": 3}, {"name": "سایر", "cost": 0.0, "verified": 703.0, "cpa": null, "ctr": null, "campaigns": 26}]}, "benchmark": {"current": {"gold_app": [{"name": "tochal.gold", "owner": "Erfan", "view": 1084121.0, "click": 143950.0, "ctr": 0.13278038152567842, "install": 1094.0, "install_rate": 0.007599861063, "register": 97.0, "register_rate": 0.0886654479, "kyc": 128.0, "kyc_rate": 1.319587629, "trade": 73.0, "trade_rate": 0.5703125}, {"name": "Tlyn", "owner": "Erfan", "view": 23805493.0, "click": 2932520.0, "ctr": 0.1231866947683041, "install": 85246.0, "install_rate": 0.02906919646, "register": 10036.0, "register_rate": 0.1177298642, "kyc": 11621.0, "kyc_rate": 1.157931447, "trade": 12309.0, "trade_rate": 1.059203167}, {"name": "Melli Gold", "owner": "Fateme", "view": 26980288.0, "click": 1166245.0, "ctr": 0.04322581730780635, "install": 20486.0, "install_rate": 0.01756577735, "register": 9282.0, "register_rate": 0.4530899151, "kyc": 5266.0, "kyc_rate": 0.5673346262, "trade": 39323.0, "trade_rate": 7.467337638}, {"name": "Tala Sea", "owner": "Fateme", "view": 33815660.0, "click": 1590470.0, "ctr": 0.047033534167305914, "install": 27265.0, "install_rate": 0.01714273139, "register": null, "register_rate": null, "kyc": 4689.0, "kyc_rate": null, "trade": null, "trade_rate": 0.0}, {"name": "noghresea.adivery", "owner": "Fateme", "view": 2559574.0, "click": 96170.0, "ctr": 0.03757265857521603, "install": 4357.0, "install_rate": 0.04530518873, "register": null, "register_rate": null, "kyc": 1515.0, "kyc_rate": null, "trade": null, "trade_rate": 0.0}, {"name": "zarpin.adivery", "owner": "Fateme", "view": 854691.0, "click": 70262.0, "ctr": 0.08220748785233493, "install": 821.0, "install_rate": 0.01168483675, "register": 133.0, "register_rate": 0.1619975639, "kyc": 124.0, "kyc_rate": 0.9323308271, "trade": null, "trade_rate": 0.0}, {"name": "Milli Gold", "owner": "Ali", "view": 12226964.0, "click": 266766.0, "ctr": 0.021817844560595746, "install": 4343.0, "install_rate": 0.01628018563, "register": null, "register_rate": null, "kyc": null, "kyc_rate": null, "trade": null, "trade_rate": null}], "gold_web": [{"name": "Eco Gold", "owner": "Ali", "view": 22430134.0, "click": 26606.0, "ctr": 0.0011861721378927117, "session": 26366.0, "session_rate": 0.9909794783, "register": 136.0, "register_rate": 0.005158158234, "kyc": 45.0, "kyc_rate": 0.3308823529, "trade": null, "trade_rate": 0.0}, {"name": "Tochal.Web.New", "owner": "Erfan", "view": 46969451.0, "click": 102736.0, "ctr": 0.0021872940350101174, "session": 74009.0, "session_rate": 0.7203803925, "register": 2288.333333, "register_rate": 0.03091966292, "kyc": 1373.0, "kyc_rate": 0.6, "trade": 268.0, "trade_rate": 0.195193008}, {"name": "Melli Gold (web)", "owner": "Fateme", "view": 1321171921.0, "click": 6444986.0, "ctr": 0.004878234162834588, "session": 3633271.0, "session_rate": 0.5637360578, "register": 74941.0, "register_rate": 0.02062631717, "kyc": 37406.0, "kyc_rate": 0.4991393229, "trade": null, "trade_rate": 0.0}, {"name": "Tala Sea", "owner": "Fateme", "view": null, "click": null, "ctr": null, "session": null, "session_rate": null, "register": null, "register_rate": null, "kyc": null, "kyc_rate": null, "trade": null, "trade_rate": 0.0}, {"name": "noghre sea", "owner": "Fateme", "view": null, "click": null, "ctr": null, "session": null, "session_rate": null, "register": null, "register_rate": null, "kyc": null, "kyc_rate": null, "trade": null, "trade_rate": 0.0}, {"name": "zarpin.web", "owner": "Fateme", "view": null, "click": null, "ctr": null, "session": null, "session_rate": null, "register": null, "register_rate": null, "kyc": null, "kyc_rate": null, "trade": null, "trade_rate": 0.0}, {"name": "Wallgold (web)", "owner": "Ali", "view": "PAUSE", "click": null, "ctr": null, "session": null, "session_rate": null, "register": null, "register_rate": null, "kyc": null, "kyc_rate": null, "trade": null, "trade_rate": 0.0}, {"name": "Tlyn", "owner": "Erfan", "view": 166113993.0, "click": 2479586.0, "ctr": 0.014927014607372661, "session": 3110723.0, "session_rate": 1.254533216, "register": 20909.52380952381, "register_rate": 0.006721756907, "kyc": 13173.0, "kyc_rate": 0.63, "trade": null, "trade_rate": null}], "exch_app": [{"name": "Tabdeal (app)", "owner": "Ali", "view": 34570454.0, "click": 2828678.0, "ctr": 0.08182357107604082, "install": 54890.0, "install_rate": 0.01940482444, "register": 16895.0, "register_rate": 0.307797413, "kyc": null, "kyc_rate": null, "trade": null, "trade_rate": null}, {"name": "Raastin (app)", "owner": "Ali", "view": 9254037.0, "click": 1480773.0, "ctr": 0.16001373238512015, "install": 5777.0, "install_rate": 0.003901340719, "register": 1077.0, "register_rate": 0.1864289424, "kyc": 755.0, "kyc_rate": 0.7010213556, "trade": 730.0, "trade_rate": 0.9668874172}, {"name": "Arzplus (app)", "owner": "Erfan", "view": 1991120.0, "click": 155658.0, "ctr": 0.07817610189240226, "install": 2982.0, "install_rate": 0.01915738349, "register": 523.0, "register_rate": 0.1753856472, "kyc": 375.0, "kyc_rate": 0.7170172084, "trade": 148.0, "trade_rate": 0.3946666667}, {"name": "Bitpin", "owner": "Fateme", "view": null, "click": null, "ctr": null, "install": null, "install_rate": null, "register": null, "register_rate": null, "kyc": null, "kyc_rate": null, "trade": null, "trade_rate": null}, {"name": "Nobitex (app)", "owner": "Fateme", "view": null, "click": null, "ctr": null, "install": null, "install_rate": null, "register": null, "register_rate": null, "kyc": null, "kyc_rate": null, "trade": null, "trade_rate": null}, {"name": "Aban Tether (app)", "owner": "Fateme", "view": null, "click": null, "ctr": null, "install": null, "install_rate": null, "register": null, "register_rate": null, "kyc": null, "kyc_rate": null, "trade": null, "trade_rate": null}, {"name": "Kebrin (APP)", "owner": "Fateme", "view": null, "click": null, "ctr": null, "install": null, "install_rate": null, "register": null, "register_rate": null, "kyc": null, "kyc_rate": null, "trade": null, "trade_rate": null}, {"name": "Wallex (app)", "owner": "Ali", "view": 3852990.0, "click": 183831.0, "ctr": 0.047711258010013004, "install": 2010.0, "install_rate": 0.01093395564, "register": 528.0, "register_rate": 0.2626865672, "kyc": null, "kyc_rate": 0.0, "trade": 256.0, "trade_rate": null}], "exch_web": [{"name": "Tabdeal (web)", "owner": "Ali", "view": 164473916.0, "click": 817466.0, "ctr": 0.004970186275615886, "session": null, "session_rate": 0.0, "register": 14028.0, "register_rate": null, "kyc": 3355.0, "kyc_rate": 0.2391645281, "trade": null, "trade_rate": 0.0}, {"name": "Raastin (web)", "owner": "Ali", "view": 34246497.0, "click": 41612.0, "ctr": 0.0012150731796014057, "session": 47423.0, "session_rate": 1.139647217, "register": 786.0, "register_rate": 0.01657423613, "kyc": 291.0, "kyc_rate": 0.3702290076, "trade": 114.0, "trade_rate": 0.3917525773}, {"name": "Arzplus (web)", "owner": "Erfan", "view": 18544693.0, "click": 49587.0, "ctr": 0.002673918624589795, "session": 34265.0, "session_rate": 0.6910077238, "register": 555.0, "register_rate": 0.01619728586, "kyc": 210.0, "kyc_rate": 0.3783783784, "trade": 61.0, "trade_rate": 0.2904761905}, {"name": "Aban Tether (web)", "owner": "Fateme", "view": null, "click": null, "ctr": null, "session": null, "session_rate": null, "register": null, "register_rate": null, "kyc": null, "kyc_rate": null, "trade": null, "trade_rate": null}, {"name": "banvest.ir", "owner": "Fateme", "view": null, "click": null, "ctr": null, "session": null, "session_rate": null, "register": null, "register_rate": null, "kyc": null, "kyc_rate": null, "trade": null, "trade_rate": null}, {"name": "Wallex (web)", "owner": "Ali", "view": 69715068.0, "click": 122484.0, "ctr": 0.001756922907971631, "session": 74938.0, "session_rate": null, "register": 339.0, "register_rate": null, "kyc": null, "kyc_rate": null, "trade": null, "trade_rate": null}], "bank_app": [{"name": "Wepod", "owner": "Erfan", "view": 110454896.0, "click": 7054890.0, "ctr": 0.06387122939303659, "install": 198225.0, "install_rate": 0.02809753235, "card_order": 86999.0, "reg_rate": 0.4388901501}, {"name": "Bankino", "owner": "Erfan", "view": 18819650.0, "click": 2380682.0, "ctr": 0.12649980206858258, "install": 28509.0, "install_rate": 0.0119751399, "card_order": 8179.0, "reg_rate": 0.2868918587}, {"name": "Blu Bank", "owner": "Erfan", "view": 21953683.0, "click": 1710452.0, "ctr": 0.07791184741075108, "install": 190773.0, "install_rate": 0.1115336765, "card_order": 78232.0, "reg_rate": 0.4100789944}, {"name": "banvest.ir", "owner": "Fateme", "view": null, "click": null, "ctr": null, "install": null, "install_rate": null, "card_order": null, "reg_rate": null}]}, "historical": {"gold_app": [{"name": "Tlyn", "state": "Before War", "view": 7976263.0, "click": 185910.0, "ctr": 0.02330790747496666, "install": 7288.0, "install_rate": 0.03920176429, "register": 1847.0, "kyc": 1722.0, "kyc_rate": 0.9323226854}, {"name": "daric.app", "state": "Before War", "view": 11835397.0, "click": 566411.0, "ctr": 0.0478573722537571, "install": 8974.0, "install_rate": 0.01584361886, "register": null, "kyc": null, "kyc_rate": null}, {"name": "zarpaad", "state": "Before War", "view": 13037307.0, "click": 680365.0, "ctr": 0.05218600743236314, "install": 11180.0, "install_rate": 0.01643235616, "register": null, "kyc": null, "kyc_rate": null}, {"name": "banket", "state": "Before War", "view": 4528734.0, "click": 69107.0, "ctr": 0.015259673012369461, "install": 2094.0, "install_rate": 0.03030083783, "register": null, "kyc": null, "kyc_rate": null}, {"name": "Goldika", "state": "Before War", "view": 105238882.0, "click": 3926439.0, "ctr": 0.03730977491760127, "install": 55890.0, "install_rate": 0.01423427182, "register": null, "kyc": null, "kyc_rate": null}, {"name": "Talasea", "state": "Before War", "view": 13061374.0, "click": 1304587.0, "ctr": 0.09988129885875713, "install": 9829.0, "install_rate": 0.007534185148, "register": null, "kyc": 1521.0, "kyc_rate": null}, {"name": "MilliGold", "state": "Before War", "view": 68111142.0, "click": 2349979.0, "ctr": 0.03450212301535041, "install": 22306.0, "install_rate": 0.009491999716, "register": null, "kyc": null, "kyc_rate": null}, {"name": "Tlyn", "state": "After War", "view": 22575663.0, "click": 363642.0, "ctr": 0.016107699694135228, "install": 5314.0, "install_rate": 0.01461327349, "register": 757.0, "kyc": 748.0, "kyc_rate": 0.9881109643}, {"name": "Talasea", "state": "After War", "view": 77751712.0, "click": 3087556.0, "ctr": 0.039710456793543014, "install": 37481.0, "install_rate": 0.01213937496, "register": null, "kyc": 3282.0, "kyc_rate": null}], "gold_web": [{"name": "Talasea", "state": "Before War", "view": 784402806.0, "click": 1481452.0, "ctr": 0.0018886367930713395, "session": 551979.0, "session_rate": 0.3725932396, "register": 45000.0, "kyc": 22184.0, "kyc_rate": 0.4929777778}, {"name": "Zarpaad", "state": "Before War", "view": 781320693.0, "click": 1541665.0, "ctr": 0.001973152655256758, "session": 1222858.0, "session_rate": 0.7932060467, "register": 19645.0, "kyc": 7818.0, "kyc_rate": 0.3979638585}, {"name": "Wallgold", "state": "Before War", "view": 327158639.0, "click": 308056.0, "ctr": 0.0009416104705093849, "session": 214201.0, "session_rate": 0.6953313683, "register": 8981.0, "kyc": 4338.0, "kyc_rate": 0.4830197083}, {"name": "Goldika", "state": "Before War", "view": 323441535.0, "click": 1314463.0, "ctr": 0.004063989493495324, "session": 1051739.0, "session_rate": 0.8001282653, "register": 22018.0, "kyc": null, "kyc_rate": null}, {"name": "Talano", "state": "Before War", "view": 88105830.0, "click": 339304.0, "ctr": 0.003851095892292258, "session": 246798.0, "session_rate": 0.7273654304, "register": 1073.0, "kyc": null, "kyc_rate": null}, {"name": "Invi", "state": "Before War", "view": 175123118.0, "click": 491306.0, "ctr": 0.002805489107383298, "session": 392647.0, "session_rate": 0.7991903213, "register": 4287.0, "kyc": null, "kyc_rate": null}, {"name": "MelliGold", "state": "Before War", "view": 1024158421.0, "click": 2482187.0, "ctr": 0.002423635786323335, "session": 1279227.0, "session_rate": 0.5153628635, "register": 38841.0, "kyc": null, "kyc_rate": null}, {"name": "MelliGold", "state": "After War", "view": 41943115.0, "click": 118063.0, "ctr": 0.002814836237127357, "session": 90531.0, "session_rate": 0.7668024699, "register": 1373.0, "kyc": null, "kyc_rate": null}], "exch_app": [{"name": "Tabdeal", "state": "Before War", "view": 30996197.0, "click": 3880169.0, "ctr": 0.12518209895233276, "install": 29110.0, "install_rate": 0.007502250546, "register": 11502.0, "kyc": null, "kyc_rate": null}, {"name": "Aban tether", "state": "Before War", "view": 9525694.0, "click": 194946.0, "ctr": 0.020465280534940553, "install": 2854.0, "install_rate": 0.01463995158, "register": 1119.0, "kyc": 433.0, "kyc_rate": 0.3869526363}, {"name": "Nobitex", "state": "Before War", "view": 4441105.0, "click": 385020.0, "ctr": 0.0866946401852692, "install": 4031.0, "install_rate": 0.010469586, "register": 892.0, "kyc": 526.0, "kyc_rate": 0.5896860987}, {"name": "hamtapay", "state": "Before War", "view": 29242645.0, "click": 186642.0, "ctr": 0.006382527982677353, "install": 8846.0, "install_rate": 0.0473955487, "register": null, "kyc": null, "kyc_rate": null}, {"name": "wallex", "state": "Before War", "view": 105110995.0, "click": 2043680.0, "ctr": 0.01944306587526833, "install": 22833.0, "install_rate": 0.01117249276, "register": 1232.0, "kyc": 622.0, "kyc_rate": 0.5048701299}, {"name": "Bitpin", "state": "Before War", "view": 5207036.0, "click": 190794.0, "ctr": 0.036641574976627775, "install": 509.0, "install_rate": 0.002667798778, "register": 145.0, "kyc": 77.0, "kyc_rate": 0.5310344828}, {"name": "Raastin", "state": "Before War", "view": 531270.0, "click": 13058.0, "ctr": 0.024578839384870217, "install": 328.0, "install_rate": 0.02511870118, "register": 43.0, "kyc": 39.0, "kyc_rate": 0.9069767442}, {"name": "Arzplus", "state": "Before War", "view": 30161.0, "click": 2199.0, "ctr": 0.07290872318557078, "install": 324.0, "install_rate": 0.1473396999, "register": 61.0, "kyc": 52.0, "kyc_rate": 0.8524590164}, {"name": "Tabdeal", "state": "After War", "view": 75400212.0, "click": 9796900.0, "ctr": 0.12993199541667072, "install": 64427.0, "install_rate": 0.00657626392, "register": 18615.0, "kyc": null, "kyc_rate": null}, {"name": "Aban tether", "state": "After War", "view": 4465401.0, "click": 881634.0, "ctr": 0.19743669157596372, "install": 4982.0, "install_rate": 0.005650870996, "register": 2077.0, "kyc": 885.0, "kyc_rate": 0.4260953298}, {"name": "hamtapay", "state": "After War", "view": 2520647.0, "click": 183020.0, "ctr": 0.07260834222324665, "install": 11150.0, "install_rate": 0.06092230357, "register": null, "kyc": null, "kyc_rate": null}, {"name": "Bitpin", "state": "After War", "view": 1861523.0, "click": 258217.0, "ctr": 0.1387127636886571, "install": 7140.0, "install_rate": 0.02765116162, "register": 1191.0, "kyc": 729.0, "kyc_rate": 0.6120906801}, {"name": "Raastin", "state": "After War", "view": 4402503.0, "click": 101235.0, "ctr": 0.02299487359804184, "install": 436.0, "install_rate": 0.004306810886, "register": 75.0, "kyc": 60.0, "kyc_rate": 0.8}, {"name": "Arzplus", "state": "After War", "view": 732351.0, "click": 25906.0, "ctr": 0.03537374838021659, "install": 473.0, "install_rate": 0.01825831854, "register": 80.0, "kyc": 76.0, "kyc_rate": 0.95}], "exch_web": [{"name": "Wallex", "state": "Before War", "view": 253333041.0, "click": 568886.0, "ctr": 0.002245605222889185, "session": 412957.0, "session_rate": 0.7259046628, "register": 2215.0, "kyc": null, "kyc_rate": null}, {"name": "Tabdeal", "state": "Before War", "view": 267775906.0, "click": 571879.0, "ctr": 0.0021356626462128376, "session": 398416.0, "session_rate": 0.6966788429, "register": 6148.0, "kyc": null, "kyc_rate": null}, {"name": "OMP", "state": "Before War", "view": 59006019.0, "click": 439494.0, "ctr": 0.007448290995533863, "session": 244994.0, "session_rate": 0.5574456079, "register": 3487.0, "kyc": null, "kyc_rate": null}, {"name": "Bitpin", "state": "Before War", "view": 27856106.0, "click": 67154.0, "ctr": 0.002410746139464001, "session": 43233.0, "session_rate": 0.6437889031, "register": 825.0, "kyc": 237.0, "kyc_rate": 0.2872727273}, {"name": "Nobitex", "state": "Before War", "view": 107392765.0, "click": 289949.0, "ctr": 0.002699893237686915, "session": 133100.0, "session_rate": 0.4590462461, "register": 1402.0, "kyc": 372.0, "kyc_rate": 0.2653352354}, {"name": "Raastin", "state": "Before War", "view": 323017136.0, "click": 296123.0, "ctr": 0.0009167408381702697, "session": 188854.0, "session_rate": 0.6377552571, "register": 3348.0, "kyc": 1625.0, "kyc_rate": 0.4853643967}, {"name": "Arzplus", "state": "Before War", "view": 124432627.0, "click": 223390.0, "ctr": 0.0017952686958863289, "session": 170769.0, "session_rate": 0.7644433502, "register": 2786.0, "kyc": 1295.0, "kyc_rate": 0.4648241206}, {"name": "Wallex", "state": "After War", "view": 277015543.0, "click": 287162.0, "ctr": 0.0010366277534109342, "session": 128580.0, "session_rate": 0.447761194, "register": 7483.0, "kyc": null, "kyc_rate": null}, {"name": "Tabdeal", "state": "After War", "view": 1185167123.0, "click": 4174953.0, "ctr": 0.0035226702791349707, "session": 2307030.0, "session_rate": 0.5525882567, "register": 43472.0, "kyc": null, "kyc_rate": null}, {"name": "Bitpin", "state": "After War", "view": 102309086.0, "click": 139824.0, "ctr": 0.0013666821341752578, "session": 84925.0, "session_rate": 0.6073706946, "register": 545.0, "kyc": 125.0, "kyc_rate": 0.2293577982}, {"name": "Raastin", "state": "After War", "view": 257048255.0, "click": 156137.0, "ctr": 0.0006074229136470893, "session": 76815.0, "session_rate": 0.491971794, "register": 1663.0, "kyc": 919.0, "kyc_rate": 0.5526157547}, {"name": "Arzplus", "state": "After War", "view": 43397445.0, "click": 81368.0, "ctr": 0.0018749490897447996, "session": 58191.0, "session_rate": 0.7151582932, "register": 713.0, "kyc": 273.0, "kyc_rate": 0.3828892006}], "bank_app": [{"name": "Blubank", "state": "Before War", "view": 288019372.0, "click": 4559917.0, "ctr": 0.015831980218330592, "install": 161066.0, "install_rate": 0.03532213415}, {"name": "Blu-junior", "state": "Before War", "view": 28402983.0, "click": 319095.0, "ctr": 0.01123455941229835, "install": 16000.0, "install_rate": 0.0501418073}, {"name": "top", "state": "Before War", "view": 18403335.0, "click": 226143.0, "ctr": 0.012288153207013838, "install": 8730.0, "install_rate": 0.03860389223}, {"name": "sep", "state": "Before War", "view": 20567208.0, "click": 1356807.0, "ctr": 0.06596943056150353, "install": 31369.0, "install_rate": 0.02311972152}, {"name": "abank", "state": "Before War", "view": 11913655.0, "click": 101887.0, "ctr": 0.008552119395768972, "install": 5450.0, "install_rate": 0.05349063178}, {"name": "bajet", "state": "Before War", "view": 3468588.0, "click": 225588.0, "ctr": 0.06503741580147311, "install": 2640.0, "install_rate": 0.01170275015}, {"name": "wepod", "state": "Before War", "view": 118441974.0, "click": 5322959.0, "ctr": 0.04494149177216516, "install": 43650.0, "install_rate": 0.008200326172}, {"name": "bankino", "state": "Before War", "view": 8638637.0, "click": 65389.0, "ctr": 0.007569365398731305, "install": 2945.0, "install_rate": 0.04503815626}, {"name": "Blubank", "state": "After War", "view": 317822830.0, "click": 11998632.0, "ctr": 0.03775258058082234, "install": 172000.0, "install_rate": 0.01433496752}, {"name": "Blu-junior", "state": "After War", "view": 20325182.0, "click": 661898.0, "ctr": 0.0325654156503986, "install": 24936.0, "install_rate": 0.03767347839}, {"name": "top", "state": "After War", "view": 10636578.0, "click": 235709.0, "ctr": 0.022160228599837278, "install": 4170.0, "install_rate": 0.01769130581}, {"name": "bajet", "state": "After War", "view": 25373643.0, "click": 610562.0, "ctr": 0.024062843478959643, "install": 5666.0, "install_rate": 0.009279974843}, {"name": "wepod", "state": "After War", "view": 80950588.0, "click": 4679715.0, "ctr": 0.05780952449659785, "install": 51400.0, "install_rate": 0.01098357485}, {"name": "bankino", "state": "After War", "view": 10391787.0, "click": 620627.0, "ctr": 0.05972283689032502, "install": 14270.0, "install_rate": 0.02299287656}]}}}
 </script>
 
 <script>
@@ -813,7 +732,7 @@ const faInt = (n) => (n===null||n===undefined||Number.isNaN(n)) ? '—' : Math.r
 const faNum = (n,d=1) => (n===null||n===undefined||Number.isNaN(n)) ? '—' : n.toLocaleString('fa-IR',{maximumFractionDigits:d, minimumFractionDigits:0});
 const faPct = (n,d=1) => (n===null||n===undefined||Number.isNaN(n)) ? '—' : (n*100).toLocaleString('fa-IR',{maximumFractionDigits:d}) + '٪';
 const faCompact = (n) => (n===null||n===undefined||Number.isNaN(n)) ? '—' : n.toLocaleString('fa-IR',{notation:'compact', maximumFractionDigits:1});
-const faRial = (n) => (n===null||n===undefined||Number.isNaN(n)) ? '—' : faInt(n) + ' ریال';
+const faRial = (n) => (n===null||n===undefined||Number.isNaN(n)) ? '—' : faInt(n/10) + ' تومان';
 
 /* ---------------- chart.js global theme (light, brand palette) ---------------- */
 const GOLD = '#FFC72C';
@@ -852,64 +771,98 @@ const baseTicks = { color: INK_DIM, font:{size:11} };
 const totalCost = CAMP.totals.app.cost + CAMP.totals.web.cost;
 const totalKyc = CAMP.totals.app.kyc + CAMP.totals.web.verified;
 const totalCpa = totalCost / totalKyc;
-document.getElementById('s-total-cost').innerHTML = faCompact(totalCost) + ' <small>ریال</small>';
+document.getElementById('s-total-cost').innerHTML = faCompact(totalCost/10) + ' <small>تومان</small>';
 document.getElementById('s-total-kyc').textContent = faInt(totalKyc);
-document.getElementById('s-total-cpa').innerHTML = faInt(totalCpa) + ' <small>ریال</small>';
+document.getElementById('s-total-cpa').innerHTML = faInt(totalCpa/10) + ' <small>تومان</small>';
 
-document.getElementById('s-app-cost').innerHTML = faCompact(CAMP.totals.app.cost) + ' <small>ریال</small>';
+document.getElementById('s-app-cost').innerHTML = faCompact(CAMP.totals.app.cost/10) + ' <small>تومان</small>';
 document.getElementById('s-app-kyc').textContent = faInt(CAMP.totals.app.kyc);
-document.getElementById('s-app-cpa').innerHTML = faInt(CAMP.totals.app.cpa) + ' <small>ریال</small>';
-document.getElementById('s-web-cost').innerHTML = faCompact(CAMP.totals.web.cost) + ' <small>ریال</small>';
+document.getElementById('s-app-cpa').innerHTML = faInt(CAMP.totals.app.cpa/10) + ' <small>تومان</small>';
+document.getElementById('s-web-cost').innerHTML = faCompact(CAMP.totals.web.cost/10) + ' <small>تومان</small>';
 document.getElementById('s-web-verified').textContent = faInt(CAMP.totals.web.verified);
-document.getElementById('s-web-cpa').innerHTML = faInt(CAMP.totals.web.cpa) + ' <small>ریال</small>';
+document.getElementById('s-web-cpa').innerHTML = faInt(CAMP.totals.web.cpa/10) + ' <small>تومان</small>';
 
 
-/* ================= PART 1 — APP ================= */
+/* ================= PART 1 — WEEKLY TRENDS (Jalali week labels) ================= */
+const JALALI_WEEKS = ['۲ مرداد','۹ مرداد','۱۶ مرداد','۲۳ مرداد','۳۰ مرداد','۶ شهریور','۱۳ شهریور','۲۰ شهریور'];
 const aw = CAMP.app_weekly;
-new Chart(document.getElementById('chartAppWeekly'), {
-  data: {
-    labels: aw.map(x=>x.week),
-    datasets: [
-      { type:'bar', label:'هزینه (ریال)', data: aw.map(x=>x.cost), backgroundColor:'rgba(255,199,44,0.55)', borderColor:GOLD_INK, borderWidth:1, borderRadius:3, yAxisID:'y', order:2 },
-      { type:'line', label:'نصب', data: aw.map(x=>x.installs), borderColor:GOLD_INK, backgroundColor:GOLD, tension:.35, yAxisID:'y1', pointRadius:3, order:1 }
+const ww = CAMP.web_weekly;
+
+/* ---- 1.1 overall (app + web combined) ---- */
+const overallCost = aw.map((x,i)=> x.cost + ww[i].cost);
+const overallKyc = aw.map((x,i)=> x.kyc + ww[i].verified);
+const overallCpa = overallCost.map((c,i)=> c / overallKyc[i]);
+
+new Chart(document.getElementById('chartOverallCost'), {
+  type:'line',
+  data:{
+    labels: JALALI_WEEKS,
+    datasets:[{ label:'هزینه', data: overallCost, borderColor:PURPLE, backgroundColor:'rgba(61,0,102,0.12)', fill:true, tension:.35, pointRadius:3 }]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    scales:{ x:{ grid:{display:false}, ticks:baseTicks }, y:{ grid:baseGrid, ticks:{...baseTicks, callback:v=>faCompact(v/10)} } },
+    plugins:{ legend:{display:false}, tooltip:{ callbacks:{ label:c=>faRial(c.parsed.y) } } }
+  }
+});
+
+new Chart(document.getElementById('chartOverallKyc'), {
+  data:{
+    labels: JALALI_WEEKS,
+    datasets:[
+      { type:'bar', label:'تعداد احراز', data: overallKyc, backgroundColor:'rgba(61,0,102,0.35)', borderColor:PURPLE, borderWidth:1, borderRadius:3, yAxisID:'y', order:2 },
+      { type:'line', label:'هزینه به ازای احراز', data: overallCpa, borderColor:GOLD_INK, backgroundColor:GOLD, tension:.35, yAxisID:'y1', pointRadius:3, order:1 }
     ]
   },
-  options: {
-    responsive:true, maintainAspectRatio:false,
-    interaction:{ mode:'index', intersect:false },
+  options:{
+    responsive:true, maintainAspectRatio:false, interaction:{mode:'index', intersect:false},
     scales:{
       x:{ grid:{display:false}, ticks:baseTicks },
-      y:{ position:'left', grid:baseGrid, ticks:{...baseTicks, callback:v=>faCompact(v)} },
-      y1:{ position:'right', grid:{display:false}, ticks:{...baseTicks, callback:v=>faInt(v)} }
+      y:{ position:'left', grid:baseGrid, ticks:{...baseTicks, callback:v=>faInt(v)} },
+      y1:{ position:'right', grid:{display:false}, ticks:{...baseTicks, callback:v=>faCompact(v/10)} }
     },
     plugins:{ legend:{position:'top', align:'end'},
-      tooltip:{ callbacks:{ label:(c)=> c.dataset.label + ': ' + (c.dataset.yAxisID==='y'? faRial(c.parsed.y): faInt(c.parsed.y)) } } }
+      tooltip:{ callbacks:{ label:(c)=> c.dataset.label + ': ' + (c.dataset.yAxisID==='y1'? faRial(c.parsed.y): faInt(c.parsed.y)) } } }
+  }
+});
+
+/* ---- 1.2 app weekly ---- */
+new Chart(document.getElementById('chartAppWeekly'), {
+  type:'line',
+  data:{
+    labels: JALALI_WEEKS,
+    datasets:[{ label:'هزینه', data: aw.map(x=>x.cost), borderColor:GOLD_INK, backgroundColor:'rgba(255,199,44,0.18)', fill:true, tension:.35, pointRadius:3 }]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    scales:{ x:{ grid:{display:false}, ticks:baseTicks }, y:{ grid:baseGrid, ticks:{...baseTicks, callback:v=>faCompact(v/10)} } },
+    plugins:{ legend:{display:false}, tooltip:{ callbacks:{ label:c=>faRial(c.parsed.y) } } }
   }
 });
 
 new Chart(document.getElementById('chartAppEfficiency'), {
   type:'line',
   data:{
-    labels: aw.map(x=>x.week),
-    datasets:[
-      { label:'CPI', data: aw.map(x=>x.cpi), borderColor:GOLD_INK, backgroundColor:'rgba(255,199,44,0.16)', fill:true, tension:.35, pointRadius:3 },
-      { label:'CPA (KYC)', data: aw.map(x=>x.cpa), borderColor:PURPLE, backgroundColor:'rgba(61,0,102,0.10)', fill:true, tension:.35, pointRadius:3 }
-    ]
+    labels: JALALI_WEEKS,
+    datasets:[{ label:'CPI', data: aw.map(x=>x.cpi), borderColor:PURPLE, backgroundColor:'rgba(61,0,102,0.10)', fill:true, tension:.35, pointRadius:3 }]
   },
   options:{
     responsive:true, maintainAspectRatio:false,
-    scales:{ x:{ grid:{display:false}, ticks:baseTicks }, y:{ grid:baseGrid, ticks:{...baseTicks, callback:v=>faCompact(v)} } },
-    plugins:{ legend:{position:'top', align:'end'}, tooltip:{ callbacks:{ label:c=> c.dataset.label+': '+faRial(c.parsed.y) } } }
+    scales:{ x:{ grid:{display:false}, ticks:baseTicks }, y:{ grid:baseGrid, ticks:{...baseTicks, callback:v=>faCompact(v/10)} } },
+    plugins:{ legend:{display:false}, tooltip:{ callbacks:{ label:c=>faRial(c.parsed.y) } } }
   }
 });
 
+/* ---- 1.3 app funnel: click → install → KYC, with stage-to-stage % ---- */
 const at = CAMP.totals.app;
+const installPct = at.installs / at.clicks;
+const kycPct = at.kyc / at.installs;
 new Chart(document.getElementById('chartAppFunnel'), {
   type:'bar',
   data:{
-    labels:['نمایش','کلیک','نصب','KYC'],
-    datasets:[{ data:[at.impressions, at.clicks, at.installs, at.kyc],
-      backgroundColor:GOLD_SEQ, borderRadius:4 }]
+    labels:['کلیک', `نصب (${faPct(installPct)})`, `KYC (${faPct(kycPct)} از نصب)`],
+    datasets:[{ data:[at.clicks, at.installs, at.kyc],
+      backgroundColor:GOLD_SEQ.slice(1), borderRadius:4 }]
   },
   options:{
     indexAxis:'y', responsive:true, maintainAspectRatio:false,
@@ -918,79 +871,41 @@ new Chart(document.getElementById('chartAppFunnel'), {
   }
 });
 
-const ac = CAMP.app_campaigns.slice().sort((a,b)=>a.cost-b.cost);
-new Chart(document.getElementById('chartAppCampCost'), {
-  type:'bar',
-  data:{ labels: ac.map(x=>x.name), datasets:[{ data: ac.map(x=>x.cost), backgroundColor:'rgba(255,199,44,0.65)', borderColor:GOLD_INK, borderWidth:1, borderRadius:3 }] },
-  options:{
-    indexAxis:'y', responsive:true, maintainAspectRatio:false,
-    scales:{ x:{ grid:baseGrid, ticks:{...baseTicks, callback:v=>faCompact(v)} }, y:{ grid:{display:false}, ticks:{...baseTicks, font:{size:10.5}} } },
-    plugins:{ legend:{display:false}, tooltip:{ callbacks:{ label:c=>faRial(c.parsed.x) } } }
-  }
-});
-
-new Chart(document.getElementById('chartAppScatter'), {
-  type:'bubble',
-  data:{ datasets:[{
-    label:'کمپین',
-    data: CAMP.app_campaigns.filter(x=>x.cpa).map(x=>({ x:x.installs, y:x.cpa, r: Math.max(5, Math.sqrt(x.cost/1e6)) , name:x.name })),
-    backgroundColor:'rgba(255,199,44,0.5)', borderColor:GOLD_INK, borderWidth:1.5
-  }]},
+/* ---- 1.4 web weekly ---- */
+new Chart(document.getElementById('chartWebWeekly'), {
+  type:'line',
+  data:{
+    labels: JALALI_WEEKS,
+    datasets:[{ label:'هزینه', data: ww.map(x=>x.cost), borderColor:PURPLE, backgroundColor:'rgba(61,0,102,0.14)', fill:true, tension:.35, pointRadius:3 }]
+  },
   options:{
     responsive:true, maintainAspectRatio:false,
-    scales:{
-      x:{ title:{display:true,text:'تعداد نصب', color:INK_DIM, font:{size:11}}, grid:baseGrid, ticks:{...baseTicks, callback:v=>faInt(v)} },
-      y:{ title:{display:true,text:'CPA (ریال)', color:INK_DIM, font:{size:11}}, grid:baseGrid, ticks:{...baseTicks, callback:v=>faCompact(v)} }
-    },
-    plugins:{ legend:{display:false}, tooltip:{ callbacks:{
-      title:(c)=> c[0].raw.name,
-      label:(c)=> ['نصب: '+faInt(c.raw.x), 'CPA: '+faRial(c.raw.y)]
-    } } }
+    scales:{ x:{ grid:{display:false}, ticks:baseTicks }, y:{ grid:baseGrid, ticks:{...baseTicks, callback:v=>faCompact(v/10)} } },
+    plugins:{ legend:{display:false}, tooltip:{ callbacks:{ label:c=>faRial(c.parsed.y) } } }
   }
 });
 
-const tblApp = document.getElementById('tbl-app-campaigns');
-CAMP.app_campaigns.forEach(c=>{
-  tblApp.insertAdjacentHTML('beforeend', `<tr>
-    <td>${c.name}</td><td class="num">${faInt(c.cost)}</td><td class="num">${faInt(c.installs)}</td>
-    <td class="num">${faInt(c.kyc)}</td><td class="num">${faInt(c.cpi)}</td><td class="num">${faInt(c.cpa)}</td>
-    <td class="num">${faPct(c.convRate)}</td></tr>`);
-});
-
-/* ================= PART 1 — WEB ================= */
-const ww = CAMP.web_weekly;
-new Chart(document.getElementById('chartWebWeekly'), {
+new Chart(document.getElementById('chartWebEfficiency'), {
   data:{
-    labels: ww.map(x=>x.week),
+    labels: JALALI_WEEKS,
     datasets:[
-      { type:'bar', label:'هزینه (ریال)', data: ww.map(x=>x.cost), backgroundColor:'rgba(61,0,102,0.14)', borderColor:PURPLE, borderWidth:1, borderRadius:3, yAxisID:'y', order:2 },
-      { type:'line', label:'تایید‌شده', data: ww.map(x=>x.verified), borderColor:PURPLE, backgroundColor:PURPLE, tension:.35, yAxisID:'y1', pointRadius:3, order:1 }
+      { type:'bar', label:'تایید‌شده', data: ww.map(x=>x.verified), backgroundColor:'rgba(61,0,102,0.35)', borderColor:PURPLE, borderWidth:1, borderRadius:3, yAxisID:'y', order:2 },
+      { type:'line', label:'CPA', data: ww.map(x=>x.cpa), borderColor:GOLD_INK, backgroundColor:GOLD, tension:.35, yAxisID:'y1', pointRadius:3, order:1 }
     ]
   },
   options:{
     responsive:true, maintainAspectRatio:false, interaction:{mode:'index', intersect:false},
     scales:{
       x:{ grid:{display:false}, ticks:baseTicks },
-      y:{ position:'left', grid:baseGrid, ticks:{...baseTicks, callback:v=>faCompact(v)} },
-      y1:{ position:'right', grid:{display:false}, ticks:{...baseTicks, callback:v=>faInt(v)} }
+      y:{ position:'left', grid:baseGrid, ticks:{...baseTicks, callback:v=>faInt(v)} },
+      y1:{ position:'right', grid:{display:false}, ticks:{...baseTicks, callback:v=>faCompact(v/10)} }
     },
     plugins:{ legend:{position:'top', align:'end'},
-      tooltip:{ callbacks:{ label:(c)=> c.dataset.label + ': ' + (c.dataset.yAxisID==='y'? faRial(c.parsed.y): faInt(c.parsed.y)) } } }
+      tooltip:{ callbacks:{ label:(c)=> c.dataset.label + ': ' + (c.dataset.yAxisID==='y1'? faRial(c.parsed.y): faInt(c.parsed.y)) } } }
   }
 });
 
-new Chart(document.getElementById('chartWebEfficiency'), {
-  type:'line',
-  data:{ labels: ww.map(x=>x.week), datasets:[
-    { label:'CPA (تایید‌شده)', data: ww.map(x=>x.cpa), borderColor:PURPLE, backgroundColor:'rgba(61,0,102,0.12)', fill:true, tension:.35, pointRadius:3 }
-  ]},
-  options:{
-    responsive:true, maintainAspectRatio:false,
-    scales:{ x:{ grid:{display:false}, ticks:baseTicks }, y:{ grid:baseGrid, ticks:{...baseTicks, callback:v=>faCompact(v)} } },
-    plugins:{ legend:{position:'top', align:'end'}, tooltip:{ callbacks:{ label:c=>faRial(c.parsed.y) } } }
-  }
-});
-
+/* ---- 1.5 / 1.6 web campaigns grouped by channel type ---- */
 const wc = CAMP.web_campaigns;
 new Chart(document.getElementById('chartWebDonut'), {
   type:'doughnut',
@@ -1004,15 +919,15 @@ new Chart(document.getElementById('chartWebDonut'), {
   }
 });
 
-const wcTop = wc.filter(x=>!x.name.startsWith('سایر')).slice().sort((a,b)=>a.cpa-b.cpa);
+const wcCpaRanked = wc.filter(x=>typeof x.cpa === 'number').slice().sort((a,b)=>a.cpa-b.cpa);
 new Chart(document.getElementById('chartWebCampCpa'), {
   type:'bar',
-  data:{ labels: wcTop.map(x=>x.name), datasets:[{ data: wcTop.map(x=>x.cpa),
-    backgroundColor: wcTop.map(x=> x.cpa < CAMP.totals.web.cpa ? 'rgba(31,138,99,0.5)' : 'rgba(193,68,46,0.45)'),
-    borderColor: wcTop.map(x=> x.cpa < CAMP.totals.web.cpa ? POSITIVE : NEGATIVE), borderWidth:1, borderRadius:3 }] },
+  data:{ labels: wcCpaRanked.map(x=>x.name), datasets:[{ data: wcCpaRanked.map(x=>x.cpa),
+    backgroundColor: wcCpaRanked.map(x=> x.cpa < CAMP.totals.web.cpa ? 'rgba(31,138,99,0.5)' : 'rgba(193,68,46,0.45)'),
+    borderColor: wcCpaRanked.map(x=> x.cpa < CAMP.totals.web.cpa ? POSITIVE : NEGATIVE), borderWidth:1, borderRadius:3 }] },
   options:{
     indexAxis:'y', responsive:true, maintainAspectRatio:false,
-    scales:{ x:{ grid:baseGrid, ticks:{...baseTicks, callback:v=>faCompact(v)} }, y:{ grid:{display:false}, ticks:{...baseTicks, font:{size:10.5}} } },
+    scales:{ x:{ grid:baseGrid, ticks:{...baseTicks, callback:v=>faCompact(v/10)} }, y:{ grid:{display:false}, ticks:{...baseTicks, font:{size:10.5}} } },
     plugins:{ legend:{display:false}, tooltip:{ callbacks:{ label:c=>faRial(c.parsed.x) } } }
   }
 });
@@ -1020,8 +935,8 @@ new Chart(document.getElementById('chartWebCampCpa'), {
 const tblWeb = document.getElementById('tbl-web-campaigns');
 wc.forEach(c=>{
   tblWeb.insertAdjacentHTML('beforeend', `<tr>
-    <td>${c.name}</td><td class="num">${faInt(c.cost)}</td><td class="num">${faInt(c.verified)}</td>
-    <td class="num">${faInt(c.cpa)}</td><td class="num">${c.ctr?faPct(c.ctr,2):'—'}</td></tr>`);
+    <td>${c.name}</td><td class="num">${faInt(c.cost/10)}</td><td class="num">${faInt(c.verified)}</td>
+    <td class="num">${c.cpa!=null?faInt(c.cpa/10):'—'}</td><td class="num">${c.ctr?faPct(c.ctr,2):'—'}</td></tr>`);
 });
 
 
