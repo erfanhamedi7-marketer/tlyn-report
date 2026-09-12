@@ -685,7 +685,7 @@ tr.hl td:first-child{ border-inline-start:3px solid var(--gold-ink); }
         </div>
         <div class="insight-card">
           <span class="tag">گلوگاه دقیقاً کجاست</span>
-          <p>گلوگاه اصلی فانل طلاین بین سشن و احراز هویت است؛ برای اینکه دقیق‌تر مشخص شود ریزش در کدام مرحله است، نیاز است برای تمامی مراحل احراز هویت ایونت جداگانه تعریف شود. تعریف url جداگانه برای هر مرحله از فانل احراز هویت در نسخه وب می‌تواند به پیدا کردن نقطه اصلی ریزش کمک کند.</p>
+          <p>گلوگاه اصلی فانل طلاین بین سشن و احراز هویت است؛ برای اینکه دقیق‌تر مشخص شود در کدام مرحله ریزش داریم، نیاز است برای تمامی مراحل احراز هویت ایونت جداگانه تعریف شود. تعریف url جداگانه برای هر مرحله از فانل احراز هویت در نسخه وب می‌تواند به پیدا کردن نقطه اصلی ریزش کمک کند.</p>
         </div>
         <div class="insight-card pos">
           <span class="tag">اثر رفع گلوگاه</span>
@@ -1000,20 +1000,20 @@ function buildFunnelCmp(gridId, tblId, steps, tlynRow, competitorRows){
 const tlynGoldApp = BENCH.current.gold_app.find(x=>x.name==='Tlyn');
 buildFunnelCmp('cmpGoldApp', 'tbl-gold-app-cmp', [
   {label:'CTR', field:'ctr'},
-  {label:'نرخ نصب از کلیک', field:'install_rate'},
-  {label:'نرخ ثبت‌نام از نصب', field:'register_rate'},
-  {label:'نرخ KYC از ثبت‌نام', field:'kyc_rate'},
-  {label:'نرخ KYC از نصب', field:'kyc_per_install', key:true}
+  {label:'نسبت نصب به کلیک', field:'install_rate'},
+  {label:'نسبت ثبت‌نام به نصب', field:'register_rate'},
+  {label:'نسبت KYC به ثبت‌نام', field:'kyc_rate'},
+  {label:'نسبت KYC به نصب', field:'kyc_per_install', key:true}
 ], tlynGoldApp, BENCH.current.gold_app);
 
 /* ---- 2.2 gold web funnel ---- */
 const tlynGoldWeb = BENCH.current.gold_web.find(x=>x.name==='Tlyn');
 buildFunnelCmp('cmpGoldWeb', 'tbl-gold-web-cmp', [
   {label:'CTR', field:'ctr'},
-  {label:'نرخ سشن از کلیک', field:'session_rate'},
-  {label:'نرخ ثبت‌نام از سشن', field:'register_rate'},
-  {label:'نرخ KYC از ثبت‌نام', field:'kyc_rate'},
-  {label:'نرخ KYC از سشن', field:'kyc_per_session', key:true}
+  {label:'نسبت سشن به کلیک', field:'session_rate'},
+  {label:'نسبت ثبت‌نام به سشن', field:'register_rate'},
+  {label:'نسبت KYC به ثبت‌نام', field:'kyc_rate'},
+  {label:'نسبت KYC به سشن', field:'kyc_per_session', key:true}
 ], tlynGoldWeb, BENCH.current.gold_web);
 
 
