@@ -238,19 +238,24 @@ h1.brand span{ color:var(--gold); }
 
 /* ---------- per-slide subhead (acts as that slide's title) ---------- */
 .subhead{ display:flex; align-items:center; flex-wrap:wrap; gap:12px; margin:0 0 18px; }
-.subhead .chip{
+.chip{
   font-size:12.5px; padding:4px 12px; border-radius:100px; border:1px solid; font-weight:600;
 }
 .chip.app{ color:var(--gold-ink); border-color:var(--gold); background:var(--gold-soft); }
 .chip.web{ color:var(--purple); border-color:var(--purple-soft-2); background:var(--purple-soft); }
+.chip.total{ color:var(--ink-dim); border-color:var(--border-strong); background:var(--surface-2); }
 .subhead h3{ font-size:20.5px; margin:0; font-weight:700; }
 .subhead p.note{ color:var(--ink-dimmer); font-size:13.5px; margin:0 0 0 auto; }
 
 /* ---------- stat cards ---------- */
+.stat-row{ display:flex; flex-direction:column; align-items:flex-start; gap:10px; margin-bottom:20px; }
+.stat-row:last-child{ margin-bottom:0; }
+.stat-row .stat-grid{ width:100%; }
 .stat-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:14px; }
 .stat-card{ background:var(--surface); padding:22px 22px; border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow-soft); }
 .stat-card.accent-app{ border-inline-start:3px solid var(--gold); }
 .stat-card.accent-web{ border-inline-start:3px solid var(--purple); }
+.stat-card.accent-total{ border-inline-start:3px solid var(--ink-dimmer); }
 .stat-card .label{ font-size:12.5px; color:var(--ink-dim); margin-bottom:12px; font-weight:500; }
 .stat-card .value{ font-size:30px; font-weight:800; color:var(--ink); letter-spacing:-0.01em; }
 .stat-card .value small{ font-size:14px; color:var(--ink-dim); font-weight:500; margin-right:4px; }
@@ -368,32 +373,58 @@ tr.hl td:first-child{ border-inline-start:3px solid var(--gold-ink); }
         <div class="section-num">۰</div>
         <h2 class="section-title">خلاصه مدیریتی</h2>
       </div>
-      <p class="section-desc">در بازهٔ ۱ مرداد تا ۱۵ شهریور، طلاین مجموعاً بیش از <b style="color:var(--purple)">۱۲.۳ میلیارد ریال</b> در دو کانال اپلیکیشن و وب هزینه کرده و بیش از <b style="color:var(--ink)">۵۰ هزار</b> کاربر احراز‌هویت‌شده (KYC) جذب کرده است. کانال وب حجم هزینهٔ بیشتری دارد اما کانال اپلیکیشن به‌ازای هر کاربر واجد شرایط، هزینهٔ کمتری می‌پردازد.</p>
 
-      <div class="stat-grid" style="margin-top:28px;">
-        <div class="stat-card accent-app">
-          <div class="label">هزینهٔ کل — اپلیکیشن</div>
-          <div class="value" id="s-app-cost">—</div>
+      <div class="stat-row" style="margin-top:30px;">
+        <span class="chip total">کل (اپ + وب)</span>
+        <div class="stat-grid">
+          <div class="stat-card accent-total">
+            <div class="label">هزینهٔ کل</div>
+            <div class="value" id="s-total-cost">—</div>
+          </div>
+          <div class="stat-card accent-total">
+            <div class="label">KYC کل</div>
+            <div class="value" id="s-total-kyc">—</div>
+          </div>
+          <div class="stat-card accent-total">
+            <div class="label">CPA کل</div>
+            <div class="value" id="s-total-cpa">—</div>
+          </div>
         </div>
-        <div class="stat-card accent-app">
-          <div class="label">نصب‌های اپلیکیشن</div>
-          <div class="value" id="s-app-installs">—</div>
+      </div>
+
+      <div class="stat-row">
+        <span class="chip web">وب</span>
+        <div class="stat-grid">
+          <div class="stat-card accent-web">
+            <div class="label">هزینهٔ کل — وب</div>
+            <div class="value" id="s-web-cost">—</div>
+          </div>
+          <div class="stat-card accent-web">
+            <div class="label">KYC — وب</div>
+            <div class="value" id="s-web-verified">—</div>
+          </div>
+          <div class="stat-card accent-web">
+            <div class="label">CPA — وب</div>
+            <div class="value" id="s-web-cpa">—</div>
+          </div>
         </div>
-        <div class="stat-card accent-app">
-          <div class="label">CPA احراز‌هویت (اپ)</div>
-          <div class="value" id="s-app-cpa">—</div>
-        </div>
-        <div class="stat-card accent-web">
-          <div class="label">هزینهٔ کل — وب</div>
-          <div class="value" id="s-web-cost">—</div>
-        </div>
-        <div class="stat-card accent-web">
-          <div class="label">احراز‌هویت‌شده‌های وب</div>
-          <div class="value" id="s-web-verified">—</div>
-        </div>
-        <div class="stat-card accent-web">
-          <div class="label">CPA احراز‌هویت (وب)</div>
-          <div class="value" id="s-web-cpa">—</div>
+      </div>
+
+      <div class="stat-row">
+        <span class="chip app">اپلیکیشن</span>
+        <div class="stat-grid">
+          <div class="stat-card accent-app">
+            <div class="label">هزینهٔ کل — اپلیکیشن</div>
+            <div class="value" id="s-app-cost">—</div>
+          </div>
+          <div class="stat-card accent-app">
+            <div class="label">KYC — اپلیکیشن</div>
+            <div class="value" id="s-app-kyc">—</div>
+          </div>
+          <div class="stat-card accent-app">
+            <div class="label">CPA — اپلیکیشن</div>
+            <div class="value" id="s-app-cpa">—</div>
+          </div>
         </div>
       </div>
     </div>
@@ -818,8 +849,15 @@ const baseTicks = { color: INK_DIM, font:{size:11} };
 
 
 /* ---------------- executive summary stat cards ---------------- */
+const totalCost = CAMP.totals.app.cost + CAMP.totals.web.cost;
+const totalKyc = CAMP.totals.app.kyc + CAMP.totals.web.verified;
+const totalCpa = totalCost / totalKyc;
+document.getElementById('s-total-cost').innerHTML = faCompact(totalCost) + ' <small>ریال</small>';
+document.getElementById('s-total-kyc').textContent = faInt(totalKyc);
+document.getElementById('s-total-cpa').innerHTML = faInt(totalCpa) + ' <small>ریال</small>';
+
 document.getElementById('s-app-cost').innerHTML = faCompact(CAMP.totals.app.cost) + ' <small>ریال</small>';
-document.getElementById('s-app-installs').textContent = faInt(CAMP.totals.app.installs);
+document.getElementById('s-app-kyc').textContent = faInt(CAMP.totals.app.kyc);
 document.getElementById('s-app-cpa').innerHTML = faInt(CAMP.totals.app.cpa) + ' <small>ریال</small>';
 document.getElementById('s-web-cost').innerHTML = faCompact(CAMP.totals.web.cost) + ' <small>ریال</small>';
 document.getElementById('s-web-verified').textContent = faInt(CAMP.totals.web.verified);
