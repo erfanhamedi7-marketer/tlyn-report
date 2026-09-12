@@ -447,7 +447,7 @@ tr.hl td:first-child{ border-inline-start:3px solid var(--gold-ink); }
       <div class="subhead">
         <span class="chip total">کل (اپ + وب)</span>
         <h3>۱.۱ روند هفتگی — کلی</h3>
-        <p class="note">مجموع اپلیکیشن و وب</p>
+        <p class="note">مجموع اپلیکیشن و وب — هفته‌ها شنبه‌شروع؛ هفتهٔ اول و آخر ناقص‌اند</p>
       </div>
       <div class="grid-2">
         <div class="panel">
@@ -468,7 +468,7 @@ tr.hl td:first-child{ border-inline-start:3px solid var(--gold-ink); }
       <div class="subhead">
         <span class="chip app">اپلیکیشن</span>
         <h3>۱.۲ روند هفتگی — اپلیکیشن</h3>
-        <p class="note">۱۹ کمپین تعریف‌شده، ۱۴ کمپین دارای هزینه</p>
+        <p class="note">۱۹ کمپین تعریف‌شده، ۱۴ کمپین دارای هزینه — هفتهٔ اول و آخر ناقص‌اند</p>
       </div>
       <div class="grid-2">
         <div class="panel">
@@ -502,7 +502,7 @@ tr.hl td:first-child{ border-inline-start:3px solid var(--gold-ink); }
       <div class="subhead">
         <span class="chip web">وب</span>
         <h3>۱.۴ روند هفتگی — وب</h3>
-        <p class="note">۹۹ کمپین تعریف‌شده، ۶۸ کمپین دارای هزینه</p>
+        <p class="note">۹۹ کمپین تعریف‌شده، ۶۸ کمپین دارای هزینه — هفتهٔ اول و آخر ناقص‌اند</p>
       </div>
       <div class="grid-2">
         <div class="panel">
@@ -715,7 +715,7 @@ const faInt = (n) => (n===null||n===undefined||Number.isNaN(n)) ? '—' : Math.r
 const faNum = (n,d=1) => (n===null||n===undefined||Number.isNaN(n)) ? '—' : n.toLocaleString('fa-IR',{maximumFractionDigits:d, minimumFractionDigits:0});
 const faPct = (n,d=1) => (n===null||n===undefined||Number.isNaN(n)) ? '—' : (n*100).toLocaleString('fa-IR',{maximumFractionDigits:d}) + '٪';
 const faCompact = (n) => (n===null||n===undefined||Number.isNaN(n)) ? '—' : n.toLocaleString('fa-IR',{notation:'compact', maximumFractionDigits:1});
-const faRial = (n) => (n===null||n===undefined||Number.isNaN(n)) ? '—' : faInt(n/10) + ' تومان';
+const faRial = (n) => (n===null||n===undefined||Number.isNaN(n)) ? '—' : faInt(n) + ' تومان';
 
 /* ---------------- chart.js global theme (light, brand palette) ---------------- */
 const GOLD = '#FFC72C';
@@ -754,20 +754,22 @@ const baseTicks = { color: INK_DIM, font:{size:11} };
 const totalCost = CAMP.totals.app.cost + CAMP.totals.web.cost;
 const totalKyc = CAMP.totals.app.kyc + CAMP.totals.web.verified;
 const totalCpa = totalCost / totalKyc;
-document.getElementById('s-total-cost').innerHTML = faCompact(totalCost/10) + ' <small>تومان</small>';
+document.getElementById('s-total-cost').innerHTML = faCompact(totalCost) + ' <small>تومان</small>';
 document.getElementById('s-total-kyc').textContent = faInt(totalKyc);
-document.getElementById('s-total-cpa').innerHTML = faInt(totalCpa/10) + ' <small>تومان</small>';
+document.getElementById('s-total-cpa').innerHTML = faInt(totalCpa) + ' <small>تومان</small>';
 
-document.getElementById('s-app-cost').innerHTML = faCompact(CAMP.totals.app.cost/10) + ' <small>تومان</small>';
+document.getElementById('s-app-cost').innerHTML = faCompact(CAMP.totals.app.cost) + ' <small>تومان</small>';
 document.getElementById('s-app-kyc').textContent = faInt(CAMP.totals.app.kyc);
-document.getElementById('s-app-cpa').innerHTML = faInt(CAMP.totals.app.cpa/10) + ' <small>تومان</small>';
-document.getElementById('s-web-cost').innerHTML = faCompact(CAMP.totals.web.cost/10) + ' <small>تومان</small>';
+document.getElementById('s-app-cpa').innerHTML = faInt(CAMP.totals.app.cpa) + ' <small>تومان</small>';
+document.getElementById('s-web-cost').innerHTML = faCompact(CAMP.totals.web.cost) + ' <small>تومان</small>';
 document.getElementById('s-web-verified').textContent = faInt(CAMP.totals.web.verified);
-document.getElementById('s-web-cpa').innerHTML = faInt(CAMP.totals.web.cpa/10) + ' <small>تومان</small>';
+document.getElementById('s-web-cpa').innerHTML = faInt(CAMP.totals.web.cpa) + ' <small>تومان</small>';
 
 
 /* ================= PART 1 — WEEKLY TRENDS (Jalali week labels) ================= */
-const JALALI_WEEKS = ['۲ مرداد','۹ مرداد','۱۶ مرداد','۲۳ مرداد','۳۰ مرداد','۶ شهریور','۱۳ شهریور','۲۰ شهریور'];
+/* week buckets start on Saturday; the first and last are partial because the
+   report window (1 Mordad - 15 Shahrivar) starts and ends mid-week */
+const JALALI_WEEKS = ['۲۷ تیر','۳ مرداد','۱۰ مرداد','۱۷ مرداد','۲۴ مرداد','۳۱ مرداد','۷ شهریور','۱۴ شهریور'];
 const aw = CAMP.app_weekly;
 const ww = CAMP.web_weekly;
 
@@ -784,7 +786,7 @@ new Chart(document.getElementById('chartOverallCost'), {
   },
   options:{
     responsive:true, maintainAspectRatio:false,
-    scales:{ x:{ grid:{display:false}, ticks:baseTicks }, y:{ grid:baseGrid, ticks:{...baseTicks, callback:v=>faCompact(v/10)} } },
+    scales:{ x:{ grid:{display:false}, ticks:baseTicks }, y:{ grid:baseGrid, ticks:{...baseTicks, callback:v=>faCompact(v)} } },
     plugins:{ legend:{display:false}, tooltip:{ callbacks:{ label:c=>faRial(c.parsed.y) } } }
   }
 });
@@ -802,7 +804,7 @@ new Chart(document.getElementById('chartOverallKyc'), {
     scales:{
       x:{ grid:{display:false}, ticks:baseTicks },
       y:{ position:'left', grid:baseGrid, ticks:{...baseTicks, callback:v=>faInt(v)} },
-      y1:{ position:'right', grid:{display:false}, ticks:{...baseTicks, callback:v=>faCompact(v/10)} }
+      y1:{ position:'right', grid:{display:false}, ticks:{...baseTicks, callback:v=>faCompact(v)} }
     },
     plugins:{ legend:{position:'top', align:'end'},
       tooltip:{ callbacks:{ label:(c)=> c.dataset.label + ': ' + (c.dataset.yAxisID==='y1'? faRial(c.parsed.y): faInt(c.parsed.y)) } } }
@@ -818,7 +820,7 @@ new Chart(document.getElementById('chartAppWeekly'), {
   },
   options:{
     responsive:true, maintainAspectRatio:false,
-    scales:{ x:{ grid:{display:false}, ticks:baseTicks }, y:{ grid:baseGrid, ticks:{...baseTicks, callback:v=>faCompact(v/10)} } },
+    scales:{ x:{ grid:{display:false}, ticks:baseTicks }, y:{ grid:baseGrid, ticks:{...baseTicks, callback:v=>faCompact(v)} } },
     plugins:{ legend:{display:false}, tooltip:{ callbacks:{ label:c=>faRial(c.parsed.y) } } }
   }
 });
@@ -831,7 +833,7 @@ new Chart(document.getElementById('chartAppEfficiency'), {
   },
   options:{
     responsive:true, maintainAspectRatio:false,
-    scales:{ x:{ grid:{display:false}, ticks:baseTicks }, y:{ grid:baseGrid, ticks:{...baseTicks, callback:v=>faCompact(v/10)} } },
+    scales:{ x:{ grid:{display:false}, ticks:baseTicks }, y:{ grid:baseGrid, ticks:{...baseTicks, callback:v=>faCompact(v)} } },
     plugins:{ legend:{display:false}, tooltip:{ callbacks:{ label:c=>faRial(c.parsed.y) } } }
   }
 });
@@ -863,7 +865,7 @@ new Chart(document.getElementById('chartWebWeekly'), {
   },
   options:{
     responsive:true, maintainAspectRatio:false,
-    scales:{ x:{ grid:{display:false}, ticks:baseTicks }, y:{ grid:baseGrid, ticks:{...baseTicks, callback:v=>faCompact(v/10)} } },
+    scales:{ x:{ grid:{display:false}, ticks:baseTicks }, y:{ grid:baseGrid, ticks:{...baseTicks, callback:v=>faCompact(v)} } },
     plugins:{ legend:{display:false}, tooltip:{ callbacks:{ label:c=>faRial(c.parsed.y) } } }
   }
 });
@@ -881,7 +883,7 @@ new Chart(document.getElementById('chartWebEfficiency'), {
     scales:{
       x:{ grid:{display:false}, ticks:baseTicks },
       y:{ position:'left', grid:baseGrid, ticks:{...baseTicks, callback:v=>faInt(v)} },
-      y1:{ position:'right', grid:{display:false}, ticks:{...baseTicks, callback:v=>faCompact(v/10)} }
+      y1:{ position:'right', grid:{display:false}, ticks:{...baseTicks, callback:v=>faCompact(v)} }
     },
     plugins:{ legend:{position:'top', align:'end'},
       tooltip:{ callbacks:{ label:(c)=> c.dataset.label + ': ' + (c.dataset.yAxisID==='y1'? faRial(c.parsed.y): faInt(c.parsed.y)) } } }
@@ -910,7 +912,7 @@ new Chart(document.getElementById('chartWebCampCpa'), {
     borderColor: wcCpaRanked.map(x=> x.cpa < CAMP.totals.web.cpa ? POSITIVE : NEGATIVE), borderWidth:1, borderRadius:3 }] },
   options:{
     indexAxis:'y', responsive:true, maintainAspectRatio:false,
-    scales:{ x:{ grid:baseGrid, ticks:{...baseTicks, callback:v=>faCompact(v/10)} }, y:{ grid:{display:false}, ticks:{...baseTicks, font:{size:10.5}} } },
+    scales:{ x:{ grid:baseGrid, ticks:{...baseTicks, callback:v=>faCompact(v)} }, y:{ grid:{display:false}, ticks:{...baseTicks, font:{size:10.5}} } },
     plugins:{ legend:{display:false}, tooltip:{ callbacks:{ label:c=>faRial(c.parsed.x) } } }
   }
 });
@@ -918,8 +920,8 @@ new Chart(document.getElementById('chartWebCampCpa'), {
 const tblWeb = document.getElementById('tbl-web-campaigns');
 wc.forEach(c=>{
   tblWeb.insertAdjacentHTML('beforeend', `<tr>
-    <td>${c.name}</td><td class="num">${faInt(c.cost/10)}</td><td class="num">${faInt(c.verified)}</td>
-    <td class="num">${c.cpa!=null?faInt(c.cpa/10):'—'}</td><td class="num">${c.ctr?faPct(c.ctr,2):'—'}</td></tr>`);
+    <td>${c.name}</td><td class="num">${faInt(c.cost)}</td><td class="num">${faInt(c.verified)}</td>
+    <td class="num">${c.cpa!=null?faInt(c.cpa):'—'}</td><td class="num">${c.ctr?faPct(c.ctr,2):'—'}</td></tr>`);
 });
 
 
