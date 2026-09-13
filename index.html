@@ -304,6 +304,9 @@ h1.brand span{ color:var(--gold); }
   box-shadow:0 0 0 3px var(--gold-soft), var(--shadow-soft);
 }
 .cmp-cell.is-key h5{ color:var(--gold-ink); }
+/* same step, called out in the table that repeats it */
+tbody tr.is-key{ background:var(--negative-soft); }
+tbody tr.is-key td{ color:var(--negative); font-weight:700; }
 @media (max-width:1100px){ .cmp-grid{ grid-template-columns:repeat(3, 1fr); } }
 @media (max-width:640px){ .cmp-grid{ grid-template-columns:repeat(2, 1fr); } }
 
@@ -526,25 +529,12 @@ tr.hl td:first-child{ border-inline-start:3px solid var(--gold-ink); }
     </div>
   </section>
 
-  <!-- S5: 1.3 app funnel -->
-  <section class="slide" id="s-part1-app-funnel">
-    <div class="wrap">
-      <div class="subhead">
-        <h3>۱.۳ قیف تبدیل اپلیکیشن</h3>
-        <p class="note">مجموع بازهٔ گزارش</p>
-      </div>
-      <div class="panel">
-        <div class="chart-box" style="height:min(260px,40vh);"><canvas id="chartAppFunnel"></canvas></div>
-      </div>
-    </div>
-  </section>
-
   <!-- S6: 1.4 web weekly trend -->
   <section class="slide" id="s-part1-web-weekly">
     <div class="wrap">
       <div class="subhead">
         <span class="chip web">وب</span>
-        <h3>۱.۴ روند هفتگی — وب</h3>
+        <h3>۱.۳ روند هفتگی — وب</h3>
       </div>
       <div class="grid-2">
         <div class="panel">
@@ -563,7 +553,7 @@ tr.hl td:first-child{ border-inline-start:3px solid var(--gold-ink); }
   <section class="slide" id="s-part1-web-camp-charts">
     <div class="wrap">
       <div class="subhead">
-        <h3>۱.۵ تفکیک کمپین‌های وب</h3>
+        <h3>۱.۴ تفکیک کمپین‌های وب</h3>
         <p class="note">بر اساس مدیوم</p>
       </div>
       <div class="grid-2">
@@ -572,27 +562,9 @@ tr.hl td:first-child{ border-inline-start:3px solid var(--gold-ink); }
           <div class="chart-box tall"><canvas id="chartWebDonut"></canvas></div>
         </div>
         <div class="panel">
-          <div class="panel-title"><h4>CPA به تفکیک کانال</h4></div>
-          <div class="chart-box tall"><canvas id="chartWebCampCpa"></canvas></div>
+          <div class="panel-title"><h4>سهم احراز از کل احرازهای وب</h4></div>
+          <div class="chart-box tall"><canvas id="chartWebKycShare"></canvas></div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- S8: 1.6 web campaign table -->
-  <section class="slide" id="s-part1-web-camp-table">
-    <div class="wrap">
-      <div class="subhead">
-        <h3>۱.۶ تفکیک کمپین‌های وب — جدول</h3>
-        <p class="note">بر اساس مدیوم</p>
-      </div>
-      <div class="table-wrap">
-        <table>
-          <thead><tr>
-            <th>کانال</th><th class="num">هزینه (تومان)</th><th class="num">تایید‌شده</th><th class="num">CPA</th><th class="num">CTR</th>
-          </tr></thead>
-          <tbody id="tbl-web-campaigns"></tbody>
-        </table>
       </div>
     </div>
   </section>
@@ -872,24 +844,6 @@ new Chart(document.getElementById('chartAppEfficiency'), {
   }
 });
 
-/* ---- 1.3 app funnel: click → install → KYC, with stage-to-stage % ---- */
-const at = CAMP.totals.app;
-const installPct = at.installs / at.clicks;
-const kycPct = at.kyc / at.installs;
-new Chart(document.getElementById('chartAppFunnel'), {
-  type:'bar',
-  data:{
-    labels:['کلیک', `نصب (${faPct(installPct)})`, `KYC (${faPct(kycPct)} از نصب)`],
-    datasets:[{ data:[at.clicks, at.installs, at.kyc],
-      backgroundColor:GOLD_SEQ.slice(1), borderRadius:4 }]
-  },
-  options:{
-    indexAxis:'y', responsive:true, maintainAspectRatio:false,
-    scales:{ x:{ grid:baseGrid, ticks:{...baseTicks, callback:v=>faCompact(v)} }, y:{ grid:{display:false}, ticks:{...baseTicks, font:{size:13}} } },
-    plugins:{ legend:{display:false}, tooltip:{ callbacks:{ label:c=>faInt(c.parsed.x) } } }
-  }
-});
-
 /* ---- 1.4 web weekly ---- */
 new Chart(document.getElementById('chartWebWeekly'), {
   type:'bar',
@@ -933,25 +887,21 @@ new Chart(document.getElementById('chartWebDonut'), {
   }
 });
 
-const wcCpaRanked = wc.filter(x=>typeof x.cpa === 'number').slice().sort((a,b)=>a.cpa-b.cpa);
-new Chart(document.getElementById('chartWebCampCpa'), {
-  type:'bar',
-  data:{ labels: wcCpaRanked.map(x=>x.name), datasets:[{ data: wcCpaRanked.map(x=>x.cpa),
-    backgroundColor: wcCpaRanked.map(x=> x.cpa < CAMP.totals.web.cpa ? 'rgba(31,138,99,0.5)' : 'rgba(193,68,46,0.45)'),
-    borderColor: wcCpaRanked.map(x=> x.cpa < CAMP.totals.web.cpa ? POSITIVE : NEGATIVE), borderWidth:1, borderRadius:3 }] },
+/* verification share sits beside the cost share, so the two donuts read as
+   "where the money went" against "where the verified users came from" */
+const GOLD_SEQ_8 = ['#E8A700','#FFC72C','#FFD24F','#FFDD75','#FFE79B','#FFEFBD','#FFF5D6','#EFE3CA'];
+const totalVerified = wc.reduce((a,x)=>a+x.verified,0);
+new Chart(document.getElementById('chartWebKycShare'), {
+  type:'doughnut',
+  data:{ labels: wc.map(x=>x.name), datasets:[{ data: wc.map(x=>x.verified),
+    backgroundColor:GOLD_SEQ_8, borderColor:'#FFFFFF', borderWidth:2 }] },
   options:{
-    indexAxis:'y', responsive:true, maintainAspectRatio:false,
-    scales:{ x:{ grid:baseGrid, ticks:{...baseTicks, callback:v=>faCompact(v)} }, y:{ grid:{display:false}, ticks:{...baseTicks, font:{size:10.5}} } },
-    plugins:{ legend:{display:false}, tooltip:{ callbacks:{ label:c=>faRial(c.parsed.x) } } }
+    responsive:true, maintainAspectRatio:false, cutout:'62%',
+    plugins:{ legend:{ position:'right', labels:{ font:{size:10.5}, color:INK_DIM } },
+      tooltip:{ callbacks:{ label:c=> c.label+': '+faInt(c.parsed)+' ('+faPct(c.parsed/totalVerified,1)+')' } } }
   }
 });
 
-const tblWeb = document.getElementById('tbl-web-campaigns');
-wc.forEach(c=>{
-  tblWeb.insertAdjacentHTML('beforeend', `<tr>
-    <td>${c.name}</td><td class="num">${faInt(c.cost)}</td><td class="num">${faInt(c.verified)}</td>
-    <td class="num">${c.cpa!=null?faInt(c.cpa):'—'}</td><td class="num">${c.ctr?faPct(c.ctr,2):'—'}</td></tr>`);
-});
 
 
 /* ================= PART 2 — COMPETITIVE BENCHMARK (gold only, anonymized) ================= */
@@ -1004,7 +954,7 @@ function buildFunnelCmp(gridId, tblId, steps, tlynRow, competitorRows){
       }
     });
 
-    tbl.insertAdjacentHTML('beforeend', `<tr>
+    tbl.insertAdjacentHTML('beforeend', `<tr class="${s.key ? 'is-key' : ''}">
       <td>${s.label}</td><td class="num">${faPct(t/100,2)}</td><td class="num">${faPct(ind/100,2)}</td>
       <td class="num">${ratio?faNum(ratio,2)+'×':'—'}</td></tr>`);
   });
@@ -1015,8 +965,6 @@ const tlynGoldApp = BENCH.current.gold_app.find(x=>x.name==='Tlyn');
 buildFunnelCmp('cmpGoldApp', 'tbl-gold-app-cmp', [
   {label:'CTR', field:'ctr'},
   {label:'نسبت نصب به کلیک', field:'install_rate'},
-  {label:'نسبت ثبت‌نام به نصب', field:'register_rate'},
-  {label:'نسبت KYC به ثبت‌نام', field:'kyc_rate'},
   {label:'نسبت KYC به نصب', field:'kyc_per_install', key:true}
 ], tlynGoldApp, BENCH.current.gold_app);
 
@@ -1025,9 +973,8 @@ const tlynGoldWeb = BENCH.current.gold_web.find(x=>x.name==='Tlyn');
 buildFunnelCmp('cmpGoldWeb', 'tbl-gold-web-cmp', [
   {label:'CTR', field:'ctr'},
   {label:'نسبت سشن به کلیک', field:'session_rate'},
-  {label:'نسبت ثبت‌نام به سشن', field:'register_rate'},
-  {label:'نسبت KYC به ثبت‌نام', field:'kyc_rate'},
-  {label:'نسبت KYC به سشن', field:'kyc_per_session', key:true}
+  {label:'نسبت ثبت‌نام به سشن', field:'register_rate', key:true},
+  {label:'نسبت KYC به ثبت‌نام', field:'kyc_rate'}
 ], tlynGoldWeb, BENCH.current.gold_web);
 
 
