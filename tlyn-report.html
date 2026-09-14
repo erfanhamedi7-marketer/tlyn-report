@@ -495,7 +495,7 @@ tr.hl td:first-child{ border-inline-start:3px solid var(--gold-ink); }
         <h3>۱.۱ روند هفتگی — کلی</h3>
         <p class="note">مجموع اپلیکیشن و وب</p>
       </div>
-      <div class="grid-2">
+      <div class="grid-2 even">
         <div class="panel">
           <div class="panel-title"><h4>روند هزینه</h4><span class="legend-note">تومان</span></div>
           <div class="chart-box"><canvas id="chartOverallCost"></canvas></div>
@@ -515,7 +515,7 @@ tr.hl td:first-child{ border-inline-start:3px solid var(--gold-ink); }
         <span class="chip app">اپلیکیشن</span>
         <h3>۱.۲ روند هفتگی — اپلیکیشن</h3>
       </div>
-      <div class="grid-2">
+      <div class="grid-2 even">
         <div class="panel">
           <div class="panel-title"><h4>هزینه و هزینه به ازای نصب</h4><span class="legend-note">ستون: هزینه — خط: هزینه به ازای نصب (تومان)</span></div>
           <div class="chart-box"><canvas id="chartAppWeekly"></canvas></div>
@@ -535,7 +535,7 @@ tr.hl td:first-child{ border-inline-start:3px solid var(--gold-ink); }
         <span class="chip web">وب</span>
         <h3>۱.۳ روند هفتگی — وب</h3>
       </div>
-      <div class="grid-2">
+      <div class="grid-2 even">
         <div class="panel">
           <div class="panel-title"><h4>روند هزینه</h4><span class="legend-note">تومان</span></div>
           <div class="chart-box"><canvas id="chartWebWeekly"></canvas></div>
@@ -656,25 +656,51 @@ tr.hl td:first-child{ border-inline-start:3px solid var(--gold-ink); }
     </div>
   </section>
 
-  <!-- S19: 2.4 end-to-end conversion analysis -->
+  <!-- S19: 2.4 app funnel, read from install-to-KYC -->
   <section class="slide" id="s-part2-insights-b">
     <div class="wrap">
       <div class="subhead">
-        <h3>۲.۴ تحلیل تبدیل نهایی — نصب و سشن تا KYC</h3>
-        <p class="note">کل مسیر از ورود کاربر تا احراز هویت، در برابر میانگین رقبا</p>
+        <span class="chip app">اپلیکیشن</span>
+        <h3>۲.۴ تحلیل فانل اپلیکیشن — نسبت KYC به نصب</h3>
+        <p class="note">تنها مرحله‌ای از قیف اپ که زیر میانگین رقباست</p>
       </div>
       <div class="insights">
         <div class="insight-card neg">
-          <span class="tag">نرخ تبدیل نهایی (احراز هویت) - پایین‌تر از میانگین</span>
-          <p>از هر نصب اپ، <b>۱۳.۶۳٪</b> به KYC می‌رسد در برابر ۲۱.۵۲٪ رقبا (<b>۰.۶۳ برابر</b>). در وب از هر سشن <b>۰.۴۲٪</b> در برابر ۱.۰۳٪ (<b>۰.۴۱ برابر</b>). با وجود برتری بزرگ در CTR، خروجی نهایی قیف در هر دو پلتفرم کمتر از رقباست.</p>
-        </div>
-        <div class="insight-card">
-          <span class="tag">گلوگاه دقیقاً کجاست</span>
-          <p>گلوگاه اصلی فانل طلاین بین سشن و احراز هویت است؛ برای اینکه دقیق‌تر مشخص شود در کدام مرحله ریزش داریم، نیاز است برای تمامی مراحل احراز هویت ایونت جداگانه تعریف شود. تعریف url جداگانه برای هر مرحله از فانل احراز هویت در نسخه وب می‌تواند به پیدا کردن نقطه اصلی ریزش کمک کند.</p>
+          <span class="tag">ریزش بعد از نصب</span>
+          <p>از هر ۱۰۰ نصب اپ، تنها <b>۱۳.۶</b> کاربر به احراز هویت می‌رسد، در برابر <b>۲۱.۵</b> کاربر در رقبا (<b>۰.۶۳ برابر</b>). این تنها نقطه‌ای از قیف اپلیکیشن است که طلاین از بازار عقب می‌افتد.</p>
         </div>
         <div class="insight-card pos">
-          <span class="tag">اثر رفع گلوگاه</span>
-          <p>اگر نرخ تبدیل احراز هویت طلاین به میانگین رقبا برسد، CPA احراز هویت هم در وب و هم در اپ تقریبا نصف خواهد شد و امکان افزایش حجم فراهم می‌شود.</p>
+          <span class="tag">دو مرحلهٔ قبلش بالاتر از رقباست</span>
+          <p>CTR اپ <b>۲.۰۳ برابر</b> و نرخ نصب از کلیک <b>۱.۵۱ برابر</b> رقباست. یعنی جذب و کیفیت ترافیک مشکل ندارد؛ طلاین ارزان‌تر و بیشتر از بازار کاربر وارد اپ می‌کند و ریزش دقیقاً پس از نصب و در مسیر آنبوردینگ تا احراز هویت اتفاق می‌افتد.</p>
+        </div>
+        <div class="insight-card">
+          <span class="tag">اثر رفع این ریزش</span>
+          <p>اگر نسبت KYC به نصب به میانگین رقبا برسد، با همان تعداد نصب و همان بودجه <b>۱.۶ برابر</b> کاربر احرازشده به دست می‌آید و CPA اپ از ۲۰۸ هزار به حدود <b>۱۳۲ هزار تومان</b> (<b>۳۷٪ کمتر</b>) می‌رسد.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- S20: 2.5 web funnel, read from session-to-registration -->
+  <section class="slide" id="s-part2-insights-c">
+    <div class="wrap">
+      <div class="subhead">
+        <span class="chip web">وب</span>
+        <h3>۲.۵ تحلیل فانل وب — نسبت ثبت‌نام به سشن</h3>
+        <p class="note">ضعیف‌ترین مرحلهٔ کل گزارش نسبت به رقبا</p>
+      </div>
+      <div class="insights">
+        <div class="insight-card neg">
+          <span class="tag">گلوگاه اصلی وب</span>
+          <p>از هر ۱۰۰۰ سشن وب تنها <b>۶.۷</b> ثبت‌نام حاصل می‌شود، در برابر <b>۱۹.۹</b> ثبت‌نام در رقبا (<b>۰.۳۴ برابر</b>) — بزرگ‌ترین فاصلهٔ منفی طلاین با بازار در کل این گزارش.</p>
+        </div>
+        <div class="insight-card pos">
+          <span class="tag">قبل و بعدش هر دو بالاتر از رقباست</span>
+          <p>CTR وب <b>۳.۸۵ برابر</b>، نسبت سشن به کلیک <b>۱.۹۳ برابر</b> و نسبت KYC به ثبت‌نام <b>۱.۲۸ برابر</b> رقباست. یعنی ترافیک درست وارد می‌شود و هر کس ثبت‌نام کند بهتر از بازار احراز هویت را تمام می‌کند؛ ریزش فقط و فقط روی خودِ مرحلهٔ ثبت‌نام متمرکز است.</p>
+        </div>
+        <div class="insight-card">
+          <span class="tag">قدم بعدی: دقیق‌کردن اندازه‌گیری</span>
+          <p>اگر این نرخ به میانگین رقبا برسد، تبدیل سشن به احراز از ۰.۴۲٪ به <b>۱.۲۶٪</b> می‌رسد (<b>۳ برابر</b>) و CPA وب از ۲۶۸ هزار به حدود <b>۹۰ هزار تومان</b> می‌رسد. برای اینکه مشخص شود ریزش در کدام گام از ثبت‌نام رخ می‌دهد، باید برای تمام مراحل ایونت جداگانه و در نسخهٔ وب url جداگانه تعریف شود.</p>
         </div>
       </div>
     </div>
